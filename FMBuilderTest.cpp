@@ -9,11 +9,15 @@
 #include "Util.hpp"
 
 TEST_CASE("gplTinyModel without ignore", "gplTinyModel") {
-	REQUIRE(Util::getProductCountFromFile("examples/gplTinyModel.xml", false) == 6);
+	REQUIRE(
+			Util::getProductCountFromFile("examples/gplTinyModel.xml", false)
+					== 6);
 }
 
 TEST_CASE("gplTinyModel with ignore", "gplTinyModel") {
-	REQUIRE(Util::getProductCountFromFile("examples/gplTinyModel.xml", true) == 6);
+	REQUIRE(
+			Util::getProductCountFromFile("examples/gplTinyModel.xml", true)
+					== 6);
 }
 
 TEST_CASE("carModel with ignore", "carModel") {
@@ -25,11 +29,45 @@ TEST_CASE("carModel without ignore", "carModel") {
 }
 
 TEST_CASE("aplModel with ignore", "aplModel") {
-	REQUIRE(Util::getProductCountFromFile("examples/aplModel.xml", true) == 159120);
+	REQUIRE(
+			Util::getProductCountFromFile("examples/aplModel.xml", true)
+					== 159120);
 }
 
 TEST_CASE("aplModel without ignore", "aplModel") {
-	REQUIRE(Util::getProductCountFromFile("examples/aplModel.xml", false) == 159184);
+	REQUIRE(
+			Util::getProductCountFromFile("examples/aplModel.xml", false)
+					== 159184);
+}
+
+TEST_CASE("gplModel without ignore", "gplModel") {
+	REQUIRE(
+			Util::getProductCountFromFile("examples/gplModel.xml", false)
+					== 960);
+}
+
+TEST_CASE("gplModel with ignore", "gplModel") {
+	REQUIRE(
+			Util::getProductCountFromFile("examples/gplModel.xml", true)
+					== 186);
+}
+
+TEST_CASE("eshopModel with ignore", "eshopModel") {
+	double nConfig = 2147483647;
+	// The correct value should be 2.2602e+49, but with catch it seems
+	// that it is not possible to compare this kind of value in a REQUIRE
+	REQUIRE(
+			Util::getProductCountFromFile("examples/eshopModel.xml", true)
+					== nConfig);
+}
+
+TEST_CASE("eshopModel without ignore", "eshopModel") {
+	double nConfig = 2147483647;
+	// The correct value should be 2.2602e+49, but with catch it seems
+	// that it is not possible to compare this kind of value in a REQUIRE
+	REQUIRE(
+			Util::getProductCountFromFile("examples/eshopModel.xml", false)
+					== nConfig);
 }
 
 /*

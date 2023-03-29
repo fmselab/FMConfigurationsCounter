@@ -62,10 +62,13 @@ dd_edge ConstraintVisitor::visitConj(xml_node<> *node) {
 }
 
 dd_edge ConstraintVisitor::visitDisj(xml_node<> *node) {
-	dd_edge baseNode = this->emptyNode;
+	dd_edge baseNode;
 	// Visit each child and then compute the OR among all of them
 	for (xml_node<> *n = node->first_node(); n; n = n->next_sibling()) {
-		baseNode += visitConstraint(n);
+		if (n == node->first_node())
+			baseNode = visitConstraint(n);
+		else
+			baseNode += visitConstraint(n);
 	}
 	return baseNode;
 }
