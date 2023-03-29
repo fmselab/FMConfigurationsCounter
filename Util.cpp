@@ -171,19 +171,19 @@ xml_node<>* Util::parseXML(const string &fileName) {
 	// Parse the file
 	xml_document<> doc;
 	doc.parse<0>(const_cast<char*>(buffer.c_str()));
-	xml_node<>* structNode = doc.first_node()->first_node("struct");
+	xml_node<> *structNode = doc.first_node()->first_node("struct");
 	return structNode;
 }
 
-void Util::printVector(vector<int> v, std::ostream& out) {
+void Util::printVector(vector<int> v, std::ostream &out) {
 	out << "\t";
-	for (int i: v) {
+	for (int i : v) {
 		out << i << " ";
 	}
 	out << endl;
 }
-dd_edge Util::addMandatory(const dd_edge &emptyNode, const int N, FeatureVisitor &v,
-		forest *mdd) {
+dd_edge Util::addMandatory(const dd_edge &emptyNode, const int N,
+		FeatureVisitor &v, forest *mdd) {
 	// Add the mandatory constraint for the root
 	dd_edge c = emptyNode;
 	vector<int> constraint = vector<int>(N, -1);
@@ -350,8 +350,9 @@ void Util::addSingleImplications(const int N, const dd_edge &emptyNode,
 	}
 }
 
-void Util::addCrossTreeConstraints(const FeatureVisitor v, const dd_edge emptyNode,
-		dd_edge &startingNode, xml_node<> *constraintNode, forest *mdd) {
+void Util::addCrossTreeConstraints(const FeatureVisitor v,
+		const dd_edge emptyNode, dd_edge &startingNode,
+		xml_node<> *constraintNode, forest *mdd) {
 	// Add Cross Tree Constraints
 	ConstraintVisitor cVisitor(v, emptyNode, mdd);
 	// Visit the sub-tree for constraints and create a set of edges for each of them
@@ -360,6 +361,7 @@ void Util::addCrossTreeConstraints(const FeatureVisitor v, const dd_edge emptyNo
 	vector<dd_edge> constraintList = cVisitor.getConstraintMddList();
 	for (dd_edge e : constraintList) {
 		startingNode *= e;
-		logcout(LOG_DEBUG) << "\tNew cardinality " << startingNode.getCardinality() << endl;
+		logcout(LOG_DEBUG) << "\tNew cardinality "
+				<< startingNode.getCardinality() << endl;
 	}
 }
