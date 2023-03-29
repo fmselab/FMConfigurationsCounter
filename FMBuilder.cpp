@@ -7,12 +7,10 @@
 #include "Util.hpp"
 #include "ConstraintVisitor.h"
 
-using namespace MEDDLY;
 using namespace std;
 using namespace rapidxml;
 
 #define IGNORE_HIDDEN_MAIN true
-
 
 int main(int argc, char **argv) {
 	if (Util::getProductCountFromFile("examples/gplModel.xml", IGNORE_HIDDEN_MAIN) != 186)
