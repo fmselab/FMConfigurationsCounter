@@ -54,6 +54,8 @@ public:
 	vector<pair<pair<int, int>, pair<int, int>>> getSingleImplications();
 	string getValueForVar(int indexVar, int indexVal);
 
+	virtual ~FeatureVisitor();
+
 	friend class ConstraintVisitor;
 };
 

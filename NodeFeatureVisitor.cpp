@@ -311,3 +311,7 @@ string FeatureVisitor::getValueForVar(int indexVar, int indexVal) {
 vector<pair<pair<int, int>, vector<pair<int, int>>*>> FeatureVisitor::getOrIndexsNonLeaf() {
 	return orIndexsNonLeaf;
 }
+
+FeatureVisitor::~FeatureVisitor() {
+
+}
