@@ -185,7 +185,7 @@ void Util::printVector(vector<int> v, std::ostream &out) {
 dd_edge Util::addMandatory(const dd_edge &emptyNode, const int N,
 		FeatureVisitor &v, forest *mdd) {
 	// Add the mandatory constraint for the root
-	dd_edge c = emptyNode;
+	dd_edge c;
 	vector<int> constraint = vector<int>(N, -1);
 	vector<int> indxs = v.getMandatoryIndex();
 	for (unsigned int i = 0; i < indxs.size(); i++) {
@@ -201,7 +201,7 @@ void Util::addOrGroupConstraints(FeatureVisitor v, const dd_edge emptyNode,
 		const int N, dd_edge &startingNode, forest *mdd) {
 	dd_edge c(mdd);
 	dd_edge cTemp(mdd);
-	vector<int> constraint = vector<int>(N, -1);
+	vector<int> constraint;
 	// Add the OR constraints
 	vector<pair<pair<int, int>, vector<int>*>> orIndxs = v.getOrIndexs();
 	for (unsigned int i = 0; i < orIndxs.size(); i++) {
@@ -271,7 +271,7 @@ void Util::addOrGroupConstraints(FeatureVisitor v, const dd_edge emptyNode,
 void Util::addMandatoryNonLeaf(const int N, const dd_edge &emptyNode,
 		FeatureVisitor &v, dd_edge &c, forest *mdd, dd_edge &startingNode) {
 	// Add the mandatory constraint for the other features
-	vector<int> constraint = vector<int>(N, -1);
+	vector<int> constraint;
 	vector<pair<pair<int, int>, pair<int, int> > > mandatoryImplications =
 			v.getMandatoryImplications();
 	for (unsigned int i = 0; i < mandatoryImplications.size(); i++) {
@@ -312,7 +312,7 @@ void Util::addMandatoryNonLeaf(const int N, const dd_edge &emptyNode,
 void Util::addSingleImplications(const int N, const dd_edge &emptyNode,
 		FeatureVisitor &v, dd_edge &c, forest *mdd, dd_edge &startingNode) {
 	// Add the mandatory constraint for the other features
-	vector<int> constraint = vector<int>(N, -1);
+	vector<int> constraint;
 	vector<pair<pair<int, int>, pair<int, int> > > singleImplications =
 			v.getSingleImplications();
 	for (unsigned int i = 0; i < singleImplications.size(); i++) {
