@@ -1,14 +1,7 @@
 #include <iostream>
-#include <fstream>
-#include <NodeFeatureVisitor.h>
-#include "rapidxml.hpp"
-#include <vector>
-#include "logger.hpp"
 #include "Util.hpp"
-#include "ConstraintVisitor.h"
 
 using namespace std;
-using namespace rapidxml;
 
 #define IGNORE_HIDDEN_MAIN true
 
