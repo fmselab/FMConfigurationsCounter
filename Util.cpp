@@ -9,17 +9,17 @@
 
 bool Util::IGNORE_HIDDEN = false;
 
+int Util::getProductCountFromFile(string fileName, bool ignore) {
+	Util::IGNORE_HIDDEN = ignore;
+	return getProductCountFromFile(fileName);
+}
+
 int Util::getProductCountFromFile(string fileName) {
 	// Open and read the file, then visit it
-	std::ifstream t(fileName);
-	t.seekg(0, std::ios::end);
-	size_t size = t.tellg();
-	std::string buffer(size, ' ');
-	t.seekg(0);
-	t.read(&buffer[0], size);
+	std::string* fileToString = Util::parseXML(fileName);
 	// Parse the file
 	xml_document<> doc;
-	doc.parse<0>(const_cast<char*>(buffer.c_str()));
+	doc.parse<0>(const_cast<char*>(fileToString->c_str()));
 	xml_node<> *structNode = doc.first_node()->first_node("struct");
 
 	FeatureVisitor v(IGNORE_HIDDEN);
@@ -103,6 +103,8 @@ int Util::getProductCountFromFile(string fileName) {
 	logcout(LOG_INFO) << "Number of valid products: "
 			<< startingNode.getCardinality() << endl;
 
+	delete fileToString;
+
 	return startingNode.getCardinality();
 }
 
@@ -160,19 +162,20 @@ dd_edge Util::getMDDFromTuple(vector<int> tupla, forest *mdd) {
 	return element;
 }
 
-xml_node<>* Util::parseXML(const string &fileName) {
+string* Util::parseXML(const string &fileName) {
 	// Open and read the file
 	std::ifstream t(fileName);
 	t.seekg(0, std::ios::end);
 	size_t size = t.tellg();
-	std::string buffer(size, ' ');
+	std::string* buffer = new string(size, ' ');
 	t.seekg(0);
-	t.read(&buffer[0], size);
-	// Parse the file
-	xml_document<> doc;
-	doc.parse<0>(const_cast<char*>(buffer.c_str()));
-	xml_node<> *structNode = doc.first_node()->first_node("struct");
-	return structNode;
+	t.read(&(*buffer)[0], size);
+	return buffer;
+//	// Parse the file
+//	xml_document<> doc;
+//	doc.parse<0>(const_cast<char*>(buffer.c_str()));
+//	xml_node<> *structNode = doc.first_node()->first_node("struct");
+//	return structNode;
 }
 
 void Util::printVector(vector<int> v, std::ostream &out) {

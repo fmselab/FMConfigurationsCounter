@@ -9,33 +9,27 @@
 #include "Util.hpp"
 
 TEST_CASE("gplTinyModel without ignore", "gplTinyModel") {
-	Util::IGNORE_HIDDEN = false;
-	REQUIRE(Util::getProductCountFromFile("examples/gplTinyModel.xml") == 6);
+	REQUIRE(Util::getProductCountFromFile("examples/gplTinyModel.xml", false) == 6);
 }
 
 TEST_CASE("gplTinyModel with ignore", "gplTinyModel") {
-	Util::IGNORE_HIDDEN = true;
-	REQUIRE(Util::getProductCountFromFile("examples/gplTinyModel.xml") == 6);
+	REQUIRE(Util::getProductCountFromFile("examples/gplTinyModel.xml", true) == 6);
 }
 
 TEST_CASE("carModel with ignore", "carModel") {
-	Util::IGNORE_HIDDEN = true;
-	REQUIRE(Util::getProductCountFromFile("examples/carModel.xml") == 7);
+	REQUIRE(Util::getProductCountFromFile("examples/carModel.xml", true) == 7);
 }
 
 TEST_CASE("carModel without ignore", "carModel") {
-	Util::IGNORE_HIDDEN = false;
-	REQUIRE(Util::getProductCountFromFile("examples/carModel.xml") == 7);
+	REQUIRE(Util::getProductCountFromFile("examples/carModel.xml", false) == 7);
 }
 
 TEST_CASE("aplModel with ignore", "aplModel") {
-	Util::IGNORE_HIDDEN = true;
-	REQUIRE(Util::getProductCountFromFile("examples/aplModel.xml") == 159120);
+	REQUIRE(Util::getProductCountFromFile("examples/aplModel.xml", true) == 159120);
 }
 
 TEST_CASE("aplModel without ignore", "aplModel") {
-	Util::IGNORE_HIDDEN = false;
-	REQUIRE(Util::getProductCountFromFile("examples/aplModel.xml") == 159184);
+	REQUIRE(Util::getProductCountFromFile("examples/aplModel.xml", false) == 159184);
 }
 
 /*
@@ -250,6 +244,5 @@ TEST_CASE("Second attempt of constructing an MDD for a FeatureModel", "2Test") {
 	startingNode.writePicture("FM", "pdf");
 	// Cardinality
 	cout << "Final cardinality: " << startingNode.getCardinality() << endl;
-	cleanup();
 }
 

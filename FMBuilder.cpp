@@ -17,9 +17,7 @@ using namespace rapidxml;
 
 
 int main(int argc, char **argv) {
-	Util::IGNORE_HIDDEN = IGNORE_HIDDEN_MAIN;
-
-	if (Util::getProductCountFromFile("examples/gplModel.xml") != 186)
+	if (Util::getProductCountFromFile("examples/gplModel.xml", IGNORE_HIDDEN_MAIN) != 186)
 		cerr << "Error for gplModel" << endl;
 
 	return 0;
