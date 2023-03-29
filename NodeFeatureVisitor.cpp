@@ -12,9 +12,24 @@ using namespace rapidxml;
 
 int FeatureVisitor::index = 0;
 
+FeatureVisitor::FeatureVisitor() {
+	this->ignoreHidden = false;
+}
+
+FeatureVisitor::FeatureVisitor(bool ignoreHidden) {
+	this->ignoreHidden = ignoreHidden;
+}
+
 void FeatureVisitor::visit(xml_node<> *node) {
 	logcout(LOG_DEBUG) << "Visiting node "
 			<< node->first_attribute("name")->value() << endl;
+
+	if (ignoreHidden && node->first_attribute("hidden")) {
+		logcout(LOG_DEBUG) << "\tIgnoring node "
+					<< node->first_attribute("name")->value() << " as it is hidden" << endl;
+		return;
+	}
+
 	// Dispatcher, depending on the node type
 	if (strcmp(node->name(), "alt") == 0)
 		visitAlt(node);

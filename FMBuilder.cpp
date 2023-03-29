@@ -13,6 +13,8 @@ using namespace MEDDLY;
 using namespace std;
 using namespace rapidxml;
 
+#define IGNORE_HIDDEN true
+
 /*
  * 				    ROOT
  * 					 |
@@ -280,33 +282,38 @@ void addOrGroupConstraints(FeatureVisitor v, const dd_edge emptyNode,
 	}
 
 	// ORs non leaf
-	vector<pair<pair<int, int>, vector<pair<int, int>>*>> orIndxNonLeaf = v.getOrIndexsNonLeaf();
+	vector<pair<pair<int, int>, vector<pair<int, int>>*>> orIndxNonLeaf =
+			v.getOrIndexsNonLeaf();
 	for (unsigned int i = 0; i < orIndxNonLeaf.size(); i++) {
-			logcout(LOG_DEBUG)
-					<< "Adding constraint for OR-Group elements with their root [Index: "
-					<< orIndxNonLeaf[i].first.first << ", Value: "
-					<< v.getValueForVar(orIndxNonLeaf[i].first.first,
-							orIndxNonLeaf[i].first.second) << "]\n";
+		logcout(LOG_DEBUG)
+				<< "Adding constraint for OR-Group elements with their root [Index: "
+				<< orIndxNonLeaf[i].first.first << ", NoneValue: "
+				<< v.getValueForVar(orIndxNonLeaf[i].first.first,
+						orIndxNonLeaf[i].first.second) << "]\n";
+		constraint = vector<int>(N, -1);
+		// PARENT AVAILABLE -> OR BETWEEN CHILDREN
+		constraint[N - orIndxNonLeaf[i].first.first - 1] =
+				orIndxNonLeaf[i].first.second;
+		c = Util::getMDDFromTuple(constraint, mdd) * emptyNode;
+		cTemp = emptyNode;
+		vector<pair<int, int>> *idx = orIndxNonLeaf[i].second;
+		for (unsigned int j = 0; j < idx->size(); j++) {
 			constraint = vector<int>(N, -1);
-			// PARENT AVAILABLE -> OR BETWEEN CHILDREN
-			constraint[N - orIndxNonLeaf[i].first.first - 1] = orIndxNonLeaf[i].first.second;
-			c = Util::getMDDFromTuple(constraint, mdd) * emptyNode;
-			cTemp = emptyNode;
-			vector<pair<int, int>> *idx = orIndxNonLeaf[i].second;
-			for (unsigned int j = 0; j < idx->size(); j++) {
-				constraint = vector<int>(N, -1);
-				constraint[N - idx->data()[j].first - 1] = idx->data()[j].second;
-				if (j == 0)
-					cTemp *= Util::getMDDFromTuple(constraint, mdd);
-				else
-					cTemp += Util::getMDDFromTuple(constraint, mdd);
-			}
-			// NOT PARENT AVAILABLE -> CHILDREN
-			c = c + cTemp;
-
-			// Intersect this edge with the starting node
-			startingNode *= c;
+			constraint[N - idx->data()[j].first - 1] = idx->data()[j].second;
+			Util::printVector(constraint, logcout(LOG_DEBUG));
+			dd_edge thisConstraint = Util::getMDDFromTuple(constraint, mdd);
+			thisConstraint = emptyNode - thisConstraint;
+			if (j == 0)
+				cTemp *= thisConstraint;
+			else
+				cTemp += thisConstraint;
 		}
+		// NOT PARENT AVAILABLE -> CHILDREN
+		c = c + cTemp;
+
+		// Intersect this edge with the starting node
+		startingNode *= c;
+	}
 }
 
 void addMandatoryNonLeaf(const int N, const dd_edge &emptyNode,
@@ -346,7 +353,7 @@ void addMandatoryNonLeaf(const int N, const dd_edge &emptyNode,
 		// Intersect this edge with the starting node
 		startingNode *= c;
 		logcout(LOG_DEBUG) << "\tNew cardinality: "
-						<< startingNode.getCardinality() << endl;
+				<< startingNode.getCardinality() << endl;
 	}
 }
 
@@ -401,6 +408,7 @@ void addCrossTreeConstraints(const FeatureVisitor v, const dd_edge emptyNode,
 	vector<dd_edge> constraintList = cVisitor.getConstraintMddList();
 	for (dd_edge e : constraintList) {
 		startingNode *= e;
+		logcout(LOG_DEBUG) << "\tNew cardinality " << startingNode.getCardinality() << endl;
 	}
 }
 
@@ -415,9 +423,9 @@ int readFmFromFile(string fileName) {
 	// Parse the file
 	xml_document<> doc;
 	doc.parse<0>(const_cast<char*>(buffer.c_str()));
-	xml_node<>* structNode = doc.first_node()->first_node("struct");
+	xml_node<> *structNode = doc.first_node()->first_node("struct");
 
-	FeatureVisitor v;
+	FeatureVisitor v(IGNORE_HIDDEN);
 	v.visit(structNode->first_node());
 	v.printVariablesInMap();
 
@@ -506,19 +514,19 @@ int main(int argc, char **argv) {
 //	fmConnectivity();
 //	cout << "####### CONNECTIVITY MULTIPLE VALUES #######" << endl;
 //	fmConnectivityWithMandatoryOnlyOne();
-//
-//
-//
-//
+
 //	if (readFmFromFile("examples/gplTinyModel.xml") != 6)
 //		cerr << "Error for gplTinyModel" << endl;
+//
 //	if (readFmFromFile("examples/carModel.xml") != 7)
 //		cerr << "Error for carModel" << endl;
-//	if (readFmFromFile("examples/aplModel.xml") != 159184)
+//
+//	int cardinality = readFmFromFile("examples/aplModel.xml");
+//	if ((cardinality != 159184 && !IGNORE_HIDDEN) || (cardinality != 159120 && IGNORE_HIDDEN))
 //			cerr << "Error for aplModel" << endl;
+//
 	if (readFmFromFile("examples/gplModel.xml") != 186)
-				cerr << "Error for gplModel" << endl;
-
+		cerr << "Error for gplModel" << endl;
 
 	return 0;
 }

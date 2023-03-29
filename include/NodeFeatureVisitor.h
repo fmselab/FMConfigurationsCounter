@@ -25,6 +25,8 @@ private:
 
 	static int index;
 
+	bool ignoreHidden;
+
 	void defineSingleVariable(xml_node<> *node);
 	void setMandatory(xml_node<> *node, int indexOfNone, int varIndex);
 	bool areChildrenAllLeaf(xml_node<> *node);
@@ -35,6 +37,8 @@ private:
 	void setSingleImplication(rapidxml::xml_node<> *node, int indexOfNone);
 
 public:
+	FeatureVisitor();
+	FeatureVisitor(bool ignoreHidden);
 	void visit(xml_node<> * node);
 	void visitAnd(xml_node<> * node);
 	void visitAlt(xml_node<> * node);
