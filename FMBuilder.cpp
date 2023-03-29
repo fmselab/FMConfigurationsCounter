@@ -1,7 +1,5 @@
 #include <iostream>
 #include <fstream>
-#include <meddly.h>
-#include <meddly_expert.h>
 #include <NodeFeatureVisitor.h>
 #include "rapidxml.hpp"
 #include <vector>

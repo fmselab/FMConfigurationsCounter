@@ -103,9 +103,11 @@ int Util::getProductCountFromFile(string fileName) {
 	logcout(LOG_INFO) << "Number of valid products: "
 			<< startingNode.getCardinality() << endl;
 
+	int cardinality = startingNode.getCardinality();
 	delete fileToString;
+	delete bounds;
 
-	return startingNode.getCardinality();
+	return cardinality;
 }
 
 void Util::printElements(std::ostream &strm, dd_edge &e) {
@@ -171,11 +173,6 @@ string* Util::parseXML(const string &fileName) {
 	t.seekg(0);
 	t.read(&(*buffer)[0], size);
 	return buffer;
-//	// Parse the file
-//	xml_document<> doc;
-//	doc.parse<0>(const_cast<char*>(buffer.c_str()));
-//	xml_node<> *structNode = doc.first_node()->first_node("struct");
-//	return structNode;
 }
 
 void Util::printVector(vector<int> v, std::ostream &out) {
