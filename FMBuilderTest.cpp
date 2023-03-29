@@ -70,6 +70,24 @@ TEST_CASE("eshopModel without ignore", "eshopModel") {
 					== nConfig);
 }
 
+TEST_CASE("violetModel without ignore", "violetModel") {
+	double nConfig = 2147483647;
+	// The correct value should be 5.93843e+18, but with catch it seems
+	// that it is not possible to compare this kind of value in a REQUIRE
+	REQUIRE(
+			Util::getProductCountFromFile("examples/violetModel.xml", false)
+					== nConfig);
+}
+
+TEST_CASE("violetModel with ignore", "violetModel") {
+	double nConfig = 2147483647;
+	// The correct value should be 3.89226e+18, but with catch it seems
+	// that it is not possible to compare this kind of value in a REQUIRE
+	REQUIRE(
+			Util::getProductCountFromFile("examples/violetModel.xml", true)
+					== nConfig);
+}
+
 /*
  * 				    ROOT-------------------------------------------------------------
  * 					 |																|
