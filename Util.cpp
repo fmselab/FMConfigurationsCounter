@@ -374,6 +374,6 @@ void Util::addCrossTreeConstraints(const FeatureVisitor v,
 	for (dd_edge e : constraintList) {
 		startingNode *= e;
 		logcout(LOG_DEBUG) << "\tNew cardinality after constraint " << (++i)
-				<< " :" << startingNode.getCardinality() << endl;
+				<< ": " << startingNode.getCardinality() << endl;
 	}
 }
