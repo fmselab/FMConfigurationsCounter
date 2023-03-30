@@ -3,9 +3,9 @@
 		<properties/>
 		<struct>
 			<alt abstract="true" mandatory="true" name="Gpl">
-				<and abstract="true" name="MainGpl">
+				<and abstract="true" mandatory="true" name="MainGpl">
 					<alt abstract="true" mandatory="true" name="Test">
-						<and abstract="true" name="StartHere">
+						<and abstract="true" mandatory="true" name="StartHere">
 							<feature mandatory="true" name="Base"/>
 							<feature hidden="true" name="Benchmark"/>
 							<feature name="Prog"/>

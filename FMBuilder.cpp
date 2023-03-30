@@ -12,6 +12,6 @@ int main(int argc, char **argv) {
 	//				   Waterloo
 
 	Util::SORT_CONSTRAINTS = true;
-	Util::getProductCountFromFile("examples/linuxModel.xml", IGNORE_HIDDEN_MAIN);
+	Util::getProductCountFromFile("examples/gplAheadModel.xml", IGNORE_HIDDEN_MAIN);
 	return 0;
 }
