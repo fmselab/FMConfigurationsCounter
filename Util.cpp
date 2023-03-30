@@ -45,6 +45,8 @@ int Util::getProductCountFromFile(string fileName) {
 	// Do not reduce the forest
 	forest::policies pmdd(false);
 	pmdd.setFullyReduced();
+	pmdd.setLowestMemory();
+	pmdd.setPessimistic();
 //	pmdd.setQuasiReduced();
 //	pmdd.setNeverDelete();
 //	pmdd.setFullStorage();
