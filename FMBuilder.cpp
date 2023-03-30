@@ -3,9 +3,14 @@
 
 using namespace std;
 
-#define IGNORE_HIDDEN_MAIN false
+#define IGNORE_HIDDEN_MAIN true
 
 int main(int argc, char **argv) {
-	Util::getProductCountFromFile("examples/violetModel.xml", IGNORE_HIDDEN_MAIN);
+	// Models missing: GPLAheadModel
+	//				   LinuxModel
+	//				   PPUModel
+	//				   Waterloo
+
+	Util::getProductCountFromFile("examples/linuxModel.xml", IGNORE_HIDDEN_MAIN);
 	return 0;
 }

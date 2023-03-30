@@ -43,10 +43,11 @@ int Util::getProductCountFromFile(string fileName) {
 		logcout(LOG_DEBUG) << "\t" << bounds[i] << endl;
 	// Do not reduce the forest
 	forest::policies pmdd(false);
-	pmdd.setQuasiReduced();
-	pmdd.setNeverDelete();
-	pmdd.setFullStorage();
-	pmdd.setPessimistic();
+	pmdd.setFullyReduced();
+//	pmdd.setQuasiReduced();
+//	pmdd.setNeverDelete();
+//	pmdd.setFullStorage();
+//	pmdd.setPessimistic();
 	// Create a forest in the above domain
 	forest *mdd = d->createForest(false, // this is not a relation
 			forest::BOOLEAN, // terminals are either true or false
