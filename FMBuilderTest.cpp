@@ -9,50 +9,59 @@
 #include "Util.hpp"
 
 TEST_CASE("gplTinyModel without ignore", "gplTinyModel") {
+	Util::SORT_CONSTRAINTS = false;
 	REQUIRE(
 			Util::getProductCountFromFile("examples/gplTinyModel.xml", false)
 					== 6);
 }
 
 TEST_CASE("gplTinyModel with ignore", "gplTinyModel") {
+	Util::SORT_CONSTRAINTS = false;
 	REQUIRE(
 			Util::getProductCountFromFile("examples/gplTinyModel.xml", true)
 					== 6);
 }
 
 TEST_CASE("carModel with ignore", "carModel") {
+	Util::SORT_CONSTRAINTS = false;
 	REQUIRE(Util::getProductCountFromFile("examples/carModel.xml", true) == 7);
 }
 
 TEST_CASE("carModel without ignore", "carModel") {
+	Util::SORT_CONSTRAINTS = false;
 	REQUIRE(Util::getProductCountFromFile("examples/carModel.xml", false) == 7);
 }
 
 TEST_CASE("aplModel with ignore", "aplModel") {
+	Util::SORT_CONSTRAINTS = false;
 	REQUIRE(
 			Util::getProductCountFromFile("examples/aplModel.xml", true)
 					== 159120);
 }
 
 TEST_CASE("aplModel without ignore", "aplModel") {
+	Util::SORT_CONSTRAINTS = false;
 	REQUIRE(
 			Util::getProductCountFromFile("examples/aplModel.xml", false)
 					== 159184);
 }
 
 TEST_CASE("gplModel without ignore", "gplModel") {
+	Util::SORT_CONSTRAINTS = false;
 	REQUIRE(
 			Util::getProductCountFromFile("examples/gplModel.xml", false)
 					== 960);
 }
 
 TEST_CASE("gplModel with ignore", "gplModel") {
+	Util::SORT_CONSTRAINTS = false;
 	REQUIRE(
 			Util::getProductCountFromFile("examples/gplModel.xml", true)
 					== 186);
 }
 
 TEST_CASE("eshopModel with ignore", "eshopModel") {
+	Util::SORT_CONSTRAINTS = false;
 	double nConfig = 2147483647;
 	// The correct value should be 2.2602e+49, but with catch it seems
 	// that it is not possible to compare this kind of value in a REQUIRE
@@ -62,6 +71,7 @@ TEST_CASE("eshopModel with ignore", "eshopModel") {
 }
 
 TEST_CASE("eshopModel without ignore", "eshopModel") {
+	Util::SORT_CONSTRAINTS = false;
 	double nConfig = 2147483647;
 	// The correct value should be 2.2602e+49, but with catch it seems
 	// that it is not possible to compare this kind of value in a REQUIRE
@@ -71,6 +81,7 @@ TEST_CASE("eshopModel without ignore", "eshopModel") {
 }
 
 TEST_CASE("violetModel without ignore", "violetModel") {
+	Util::SORT_CONSTRAINTS = false;
 	double nConfig = 2147483647;
 	// The correct value should be 5.93843e+18, but with catch it seems
 	// that it is not possible to compare this kind of value in a REQUIRE
@@ -80,6 +91,7 @@ TEST_CASE("violetModel without ignore", "violetModel") {
 }
 
 TEST_CASE("violetModel with ignore", "violetModel") {
+	Util::SORT_CONSTRAINTS = false;
 	double nConfig = 2147483647;
 	// The correct value should be 3.89226e+18, but with catch it seems
 	// that it is not possible to compare this kind of value in a REQUIRE

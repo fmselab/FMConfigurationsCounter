@@ -43,6 +43,7 @@ public:
 	static int getProductCountFromFile(string fileName, bool ignore);
 
 	static bool IGNORE_HIDDEN;
+	static bool SORT_CONSTRAINTS;
 };
 
 #endif /* INCLUDE_UTIL_HPP_ */
