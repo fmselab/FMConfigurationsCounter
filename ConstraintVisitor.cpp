@@ -22,7 +22,7 @@ void ConstraintVisitor::visit(xml_node<> *&node) {
 	int i = 0;
 	for (xml_node<> *n = node->first_node(); n; n = n->next_sibling()) {
 		if (strcmp(n->name(), "rule") == 0) {
-			// TODO: What to do and how to deal with when the constraint contains an hidden feature???
+			// What to do and how to deal with when the constraint contains an hidden feature???
 			// Now, I'm using emptynode for every variable which is not in the FeatureVisitor lists
 			// but I'm not sure it's the best (and correct) solution
 			dd_edge c = visitConstraint(n->first_node());
