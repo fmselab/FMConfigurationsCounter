@@ -362,15 +362,24 @@ void Util::addCrossTreeConstraints(const FeatureVisitor v,
 		xml_node<> *constraintNode, forest *mdd) {
 	// Add Cross Tree Constraints
 	ConstraintVisitor cVisitor(v, emptyNode, mdd);
+	int i = 0;
 	// Visit the sub-tree for constraints and create a set of edges for each of them
 	cVisitor.visit(constraintNode);
 	// Now, compute the intersection between startingNode and each of the constraint
 	vector<dd_edge> constraintList = cVisitor.getConstraintMddList();
 	// Order the vector from the lowest cardinality to the highest
-	if (SORT_CONSTRAINTS)
+	if (SORT_CONSTRAINTS) {
 		sort(constraintList.begin(), constraintList.end(), compareEdges);
+		// Reduce each constraint by multiplying it for the starting node
+		// In this way, the complexity of the following intersections is reduced
+		i = 0;
+		for(dd_edge e : constraintList) {
+			logcout(LOG_DEBUG) << "\tReducing constraint " << (++i) << endl;
+			e *= startingNode;
+		}
+	}
 	// Apply the constraints
-	int i = 0;
+	i = 0;
 	for (dd_edge e : constraintList) {
 		startingNode *= e;
 		logcout(LOG_DEBUG) << "\tNew cardinality after constraint " << (++i)
