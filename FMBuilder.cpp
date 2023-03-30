@@ -3,12 +3,11 @@
 
 using namespace std;
 
-#define IGNORE_HIDDEN_MAIN false
+#define IGNORE_HIDDEN_MAIN true
 
 int main(int argc, char **argv) {
 	// Models missing:
 	//				   LinuxModel
-	//				   PPUModel
 	//				   Waterloo
 
 	Util::SORT_CONSTRAINTS = true;

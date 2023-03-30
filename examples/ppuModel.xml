@@ -6,25 +6,25 @@
 				<and abstract="true" mandatory="true" name="PPUC">
 					<and abstract="true" mandatory="true" name="WorkPieces">
 						<or abstract="true" mandatory="true" name="Size">
-							<feature mandatory="true" name="Small"/>
-							<feature mandatory="true" name="Large"/>
+							<feature name="Small"/>
+							<feature name="Large"/>
 						</or>
 					</and>
 					<and abstract="true" mandatory="true" name="Conditions">
 						<or abstract="true" mandatory="true" name="PositioningC">
-							<feature mandatory="true" name="Discrete"/>
-							<feature mandatory="true" name="Continuous"/>
+							<feature name="Discrete"/>
+							<feature name="Continuous"/>
 						</or>
 						<alt abstract="true" mandatory="true" name="Environment">
-							<feature mandatory="true" name="Smooth"/>
-							<feature mandatory="true" name="Rough"/>
+							<feature name="Smooth"/>
+							<feature name="Rough"/>
 						</alt>
 					</and>
 					<alt abstract="true" mandatory="true" name="Platform Type">
-						<feature mandatory="true" name="muC"/>
-						<alt abstract="true" mandatory="true" name="PLC">
-							<feature mandatory="true" name="Vendor 1"/>
-							<feature mandatory="true" name="Vendor 2"/>
+						<feature name="muC"/>
+						<alt abstract="true" name="PLC">
+							<feature name="Vendor 1"/>
+							<feature name="Vendor 2"/>
 						</alt>
 					</alt>
 					<and abstract="true" name="Additional Functionalities">
@@ -34,8 +34,8 @@
 				</and>
 				<or abstract="true" mandatory="true" name="PPUM">
 					<alt abstract="true" mandatory="true" name="LiftingLowering">
-						<feature mandatory="true" name="ChangeoverArmM"/>
-						<feature mandatory="true" name="CylinderM"/>
+						<feature name="ChangeoverArmM"/>
+						<feature name="CylinderM"/>
 					</alt>
 				</or>
 				<and abstract="true" mandatory="true" name="PPUE">
@@ -48,9 +48,9 @@
 					</and>
 					<and abstract="true" mandatory="true" name="Sensors">
 						<alt abstract="true" mandatory="true" name="PositioningE">
-							<feature mandatory="true" name="Inductive"/>
-							<feature mandatory="true" name="Micro"/>
-							<feature mandatory="true" name="Potentiometer"/>
+							<feature name="Inductive"/>
+							<feature name="Micro"/>
+							<feature name="Potentiometer"/>
 						</alt>
 						<and abstract="true" name="Safety">
 							<feature mandatory="true" name="EmergencyStopButton"/>
@@ -59,12 +59,12 @@
 				</and>
 				<and abstract="true" mandatory="true" name="PPUS">
 					<alt abstract="true" mandatory="true" name="Lifting Lowering Control">
-						<feature mandatory="true" name="CylinderControl"/>
-						<feature mandatory="true" name="ChangeoverArmControl"/>
+						<feature name="CylinderControl"/>
+						<feature name="ChangeoverArmControl"/>
 					</alt>
 					<or abstract="true" mandatory="true" name="Position Control">
-						<feature mandatory="true" name="DiscreteS"/>
-						<feature mandatory="true" name="ContinuousS"/>
+						<feature name="DiscreteS"/>
+						<feature name="ContinuousS"/>
 					</or>
 					<and abstract="true" mandatory="true" name="Mode of operation">
 						<feature mandatory="true" name="Automatic"/>

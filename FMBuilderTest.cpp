@@ -32,6 +32,16 @@ TEST_CASE("carModel without ignore", "carModel") {
 	REQUIRE(Util::getProductCountFromFile("examples/carModel.xml", false) == 7);
 }
 
+TEST_CASE("ppuModel with ignore", "ppuModel") {
+	Util::SORT_CONSTRAINTS = false;
+	REQUIRE(Util::getProductCountFromFile("examples/ppuModel.xml", true) == 96000);
+}
+
+TEST_CASE("ppuModel without ignore", "ppuModel") {
+	Util::SORT_CONSTRAINTS = false;
+	REQUIRE(Util::getProductCountFromFile("examples/ppuModel.xml", false) == 96000);
+}
+
 TEST_CASE("aplModel with ignore", "aplModel") {
 	Util::SORT_CONSTRAINTS = false;
 	REQUIRE(
