@@ -50,8 +50,8 @@ int Util::getProductCountFromFile(string fileName) {
 //	pmdd.setPessimistic();
 	// Create a forest in the above domain
 	forest *mdd = d->createForest(false, // this is not a relation
-			forest::BOOLEAN, // terminals are either true or false
-			forest::MULTI_TERMINAL, // disables edge-labeling
+			forest::BOOLEAN, 			 // terminals are either true or false
+			forest::MULTI_TERMINAL, 	 // disables edge-labeling
 			pmdd);
 	assert(mdd != 0);
 	// Display forest properties
@@ -351,6 +351,11 @@ void Util::addSingleImplications(const int N, const dd_edge &emptyNode,
 	}
 }
 
+bool compareEdges(dd_edge e1, dd_edge e2)
+{
+    return (e1.getCardinality() < e2.getCardinality());
+}
+
 void Util::addCrossTreeConstraints(const FeatureVisitor v,
 		const dd_edge emptyNode, dd_edge &startingNode,
 		xml_node<> *constraintNode, forest *mdd) {
@@ -360,6 +365,9 @@ void Util::addCrossTreeConstraints(const FeatureVisitor v,
 	cVisitor.visit(constraintNode);
 	// Now, compute the intersection between startingNode and each of the constraint
 	vector<dd_edge> constraintList = cVisitor.getConstraintMddList();
+	// Order the vector from the lowest cardinality to the highest
+	sort(constraintList.begin(), constraintList.end(), compareEdges);
+	// Apply the constraints
 	for (dd_edge e : constraintList) {
 		startingNode *= e;
 		logcout(LOG_DEBUG) << "\tNew cardinality "
