@@ -100,6 +100,26 @@ TEST_CASE("violetModel with ignore", "violetModel") {
 					== nConfig);
 }
 
+TEST_CASE("gplAheadModel with ignore", "gplAheadModel") {
+	Util::SORT_CONSTRAINTS = false;
+	double nConfig = 728;
+	// The correct value should be 3.89226e+18, but with catch it seems
+	// that it is not possible to compare this kind of value in a REQUIRE
+	REQUIRE(
+			Util::getProductCountFromFile("examples/gplAheadModel.xml", true)
+					== nConfig);
+}
+
+TEST_CASE("gplAheadModel without ignore", "gplAheadModel") {
+	Util::SORT_CONSTRAINTS = false;
+	double nConfig = 100266;
+	// The correct value should be 3.89226e+18, but with catch it seems
+	// that it is not possible to compare this kind of value in a REQUIRE
+	REQUIRE(
+			Util::getProductCountFromFile("examples/gplAheadModel.xml", false)
+					== nConfig);
+}
+
 /*
  * 				    ROOT-------------------------------------------------------------
  * 					 |																|

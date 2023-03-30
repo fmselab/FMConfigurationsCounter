@@ -33,6 +33,8 @@ private:
 	static void addCrossTreeConstraints(const FeatureVisitor v,
 			const dd_edge emptyNode, dd_edge &startingNode,
 			xml_node<> *constraintNode, forest *mdd);
+	static void addAltGroupConstraints(FeatureVisitor v, const dd_edge emptyNode,
+			const int N, dd_edge &startingNode, forest *mdd);
 
 public:
 	static void printElements(std::ostream &strm, dd_edge &e);

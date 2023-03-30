@@ -26,7 +26,8 @@ void FeatureVisitor::visit(xml_node<> *node) {
 
 	if (ignoreHidden && node->first_attribute("hidden")) {
 		logcout(LOG_DEBUG) << "\tIgnoring node "
-					<< node->first_attribute("name")->value() << " as it is hidden" << endl;
+				<< node->first_attribute("name")->value() << " as it is hidden"
+				<< endl;
 		return;
 	}
 
@@ -89,7 +90,34 @@ void FeatureVisitor::visitAlt(xml_node<> *node) {
 		index++;
 	} else {
 		// The alternative variable has to be managed as a boolean one (i.e., as an and)
-		visitAnd(node);
+		// Indexes of the children
+		vector<pair<int,int>> *childrenIndex = new vector<pair<int,int>>;
+		int parentIndex = index;
+		int indexOfNoneParent = -1;
+
+		// Define the current variable, which is a boolean variable
+		defineSingleVariable(node);
+		indexOfNoneParent = getIndexOfNoneForVariable(indexVariable[parentIndex]);
+
+		// Set dependencies between the feature and its parent
+		setDependency(node);
+
+		// Is the variable mandatory. If it is not the root we should
+		// set the additional constraint VAL = NONE <=> PARENT = NONE
+		setMandatory(node, 0, index);
+
+		// Increase the index
+		index++;
+
+		// Visit all the child features
+		for (xml_node<> *n = node->first_node(); n; n = n->next_sibling()) {
+			int thisIndex = index;
+			visit(n);
+			int noneIndex = getIndexOfNoneForVariable(indexVariable[thisIndex]);
+			childrenIndex->push_back(make_pair(thisIndex, noneIndex));
+		}
+
+		altIndexesExclusion.push_back(make_pair(make_pair(parentIndex, indexOfNoneParent), childrenIndex));
 	}
 }
 
@@ -273,7 +301,8 @@ vector<pair<pair<int, int>, vector<int>*>> FeatureVisitor::getOrIndexs() {
 void FeatureVisitor::printVariablesInMap() {
 	for (map<string, vector<string>*>::const_iterator it = variables.begin();
 			it != variables.end(); ++it) {
-		logcout(LOG_DEBUG) << it->first << " - index: " << variableIndex[it->first] << endl;
+		logcout(LOG_DEBUG) << it->first << " - index: "
+				<< variableIndex[it->first] << endl;
 	}
 }
 
@@ -310,6 +339,10 @@ string FeatureVisitor::getValueForVar(int indexVar, int indexVal) {
 
 vector<pair<pair<int, int>, vector<pair<int, int>>*>> FeatureVisitor::getOrIndexsNonLeaf() {
 	return orIndexsNonLeaf;
+}
+
+vector<pair<pair<int, int>, vector<pair<int,int>>*>> FeatureVisitor::getAltIndexesExclusion() {
+	return altIndexesExclusion;
 }
 
 FeatureVisitor::~FeatureVisitor() {

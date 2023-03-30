@@ -17,7 +17,7 @@ int Util::getProductCountFromFile(string fileName, bool ignore) {
 
 int Util::getProductCountFromFile(string fileName) {
 	// Open and read the file, then visit it
-	std::string* fileToString = Util::parseXML(fileName);
+	std::string *fileToString = Util::parseXML(fileName);
 	// Parse the file
 	xml_document<> doc;
 	doc.parse<0>(const_cast<char*>(fileToString->c_str()));
@@ -91,6 +91,12 @@ int Util::getProductCountFromFile(string fileName) {
 	logcout(LOG_DEBUG) << "Cardinality after OR groups: "
 			<< startingNode.getCardinality() << endl;
 
+	// Add the constraints for alternatives converted as boolean
+	addAltGroupConstraints(v, emptyNode, N, startingNode, mdd);
+	// Cardinality
+	logcout(LOG_DEBUG) << "Cardinality after special ALT groups: "
+			<< startingNode.getCardinality() << endl;
+
 	// Add single implication constraints for each feature: a feature can be
 	// included only if the parent is included
 	addSingleImplications(N, emptyNode, v, c, mdd, startingNode);
@@ -118,29 +124,10 @@ void Util::printElements(std::ostream &strm, dd_edge &e) {
 	int nLevels = ((e.getForest())->getDomain())->getNumVariables();
 	for (enumerator iter(e); iter; ++iter) {
 		const int *minterm = iter.getAssignments();
-		strm << "[";
 		for (int i = nLevels; i > 0; i--) {
-			strm << " " << minterm[i];
+			strm << minterm[i] << ";";
 		}
-		switch ((e.getForest())->getRangeType()) {
-		case forest::BOOLEAN:
-			strm << " --> T]\n";
-			break;
-		case forest::INTEGER: {
-			int val = 0;
-			iter.getValue(val);
-			strm << " --> " << val << "]\n";
-		}
-			break;
-		case forest::REAL: {
-			int val = 0;
-			iter.getValue(val);
-			strm << " --> " << val << "]\n"; //&&%0.3f
-		}
-			break;
-		default:
-			strm << "Error: invalid range_type\n";
-		}
+		strm << "\n";
 	}
 }
 
@@ -173,7 +160,7 @@ string* Util::parseXML(const string &fileName) {
 	std::ifstream t(fileName);
 	t.seekg(0, std::ios::end);
 	size_t size = t.tellg();
-	std::string* buffer = new string(size, ' ');
+	std::string *buffer = new string(size, ' ');
 	t.seekg(0);
 	t.read(&(*buffer)[0], size);
 	return buffer;
@@ -271,6 +258,73 @@ void Util::addOrGroupConstraints(FeatureVisitor v, const dd_edge emptyNode,
 	}
 }
 
+void Util::addAltGroupConstraints(FeatureVisitor v, const dd_edge emptyNode,
+		const int N, dd_edge &startingNode, forest *mdd) {
+	// ALT-groups non leaf
+	vector<pair<pair<int, int>, vector<pair<int, int>>*>> altIndexesExclusion =
+			v.getAltIndexesExclusion();
+	for (pair<pair<int, int>, vector<pair<int, int>>*> vAlt : altIndexesExclusion) {
+		logcout(LOG_DEBUG)
+				<< "Adding constraint for ALT-Group elements with their root [Index: "
+				<< vAlt.first.first << ", None Value: "
+				<< v.getValueForVar(vAlt.first.first,
+						vAlt.first.second) << "]\n";
+		dd_edge c(mdd);
+		dd_edge cTemp(mdd);
+		dd_edge cTemp2(mdd);
+		vector<int> constraint;
+		// Every element is a single ALT Group.
+		// We need to add the constraint ONE SELECTED => ALL THE OTHER UNSELECTED
+		// It is computed as NOT (ONE SELECTED) OR (ALL THE OTHER UNSELECTED)
+		for (unsigned int i = 0; i < vAlt.second->size(); i++) {
+			// not i-th element selected (i.e., the i-th element as NONE)
+			constraint = vector<int>(N, -1);
+			constraint[N - vAlt.second->data()[i].first - 1] =
+					vAlt.second->data()[i].second;
+			c = Util::getMDDFromTuple(constraint, mdd) * emptyNode;
+			cTemp = emptyNode;
+			for (unsigned int j = 0; j < vAlt.second->size(); j++) {
+				if (i != j) {
+					// j-th element unselected
+					constraint = vector<int>(N, -1);
+					constraint[N - vAlt.second->data()[j].first - 1] =
+							vAlt.second->data()[j].second;
+					// compute the AND with the other siblings
+					cTemp *= Util::getMDDFromTuple(constraint, mdd);
+				}
+			}
+			// OR between c and cTemp
+			c = c + cTemp;
+
+			// Intersect this edge with the starting node
+			startingNode *= c;
+		}
+
+		// Now, we need to add the constraint PARENT => AT LEAST ONE SELECTED
+		// (i.e. [not parent] or [or between children])
+		// not parent
+		constraint = vector<int>(N, -1);
+		constraint[N - vAlt.first.first - 1] = vAlt.first.second;
+		c = Util::getMDDFromTuple(constraint, mdd);
+		// or between children
+		for (unsigned int i = 0; i < vAlt.second->size(); i++) {
+			// i-th element selected (i.e., the i-th element != NONE)
+			constraint = vector<int>(N, -1);
+			constraint[N - vAlt.second->data()[i].first - 1] =
+					vAlt.second->data()[i].second;
+			cTemp = emptyNode - Util::getMDDFromTuple(constraint, mdd);
+			if (i == 0)
+				cTemp2 = cTemp;
+			else
+				cTemp2 = cTemp2 + cTemp;
+		}
+		// [not parent] or [or between children]
+		c = c + cTemp2;
+		// Intersect this edge with the starting node
+		startingNode *= c;
+	}
+}
+
 void Util::addMandatoryNonLeaf(const int N, const dd_edge &emptyNode,
 		FeatureVisitor &v, dd_edge &c, forest *mdd, dd_edge &startingNode) {
 	// Add the mandatory constraint for the other features
@@ -353,9 +407,8 @@ void Util::addSingleImplications(const int N, const dd_edge &emptyNode,
 	}
 }
 
-bool compareEdges(dd_edge e1, dd_edge e2)
-{
-    return (e1.getCardinality() < e2.getCardinality());
+bool compareEdges(dd_edge e1, dd_edge e2) {
+	return (e1.getCardinality() < e2.getCardinality());
 }
 
 void Util::addCrossTreeConstraints(const FeatureVisitor v,
@@ -374,7 +427,7 @@ void Util::addCrossTreeConstraints(const FeatureVisitor v,
 		// Reduce each constraint by multiplying it for the starting node
 		// In this way, the complexity of the following intersections is reduced
 		i = 0;
-		for(dd_edge e : constraintList) {
+		for (dd_edge e : constraintList) {
 			logcout(LOG_DEBUG) << "\tReducing constraint " << (++i) << endl;
 			e *= startingNode;
 		}

@@ -18,6 +18,7 @@ private:
 	map<string, int> variableIndex;
 	map<int, string> indexVariable;
 	vector<int> mandatoryIndex;
+	vector<pair<pair<int, int>, vector<pair<int,int>>*>> altIndexesExclusion;
 	vector<pair<pair<int, int>, vector<int>*>> orIndexs;
 	vector<pair<pair<int, int>, vector<pair<int, int>>*>> orIndexsNonLeaf;
 	vector<pair<pair<int, int>, pair<int, int>>> mandatoryImplications;
@@ -52,6 +53,7 @@ public:
 	vector<pair<pair<int, int>, vector<pair<int, int>>*>> getOrIndexsNonLeaf();
 	vector<pair<pair<int, int>, pair<int, int>>> getMandatoryImplications();
 	vector<pair<pair<int, int>, pair<int, int>>> getSingleImplications();
+	vector<pair<pair<int, int>, vector<pair<int,int>>*>> getAltIndexesExclusion();
 	string getValueForVar(int indexVar, int indexVal);
 
 	virtual ~FeatureVisitor();
