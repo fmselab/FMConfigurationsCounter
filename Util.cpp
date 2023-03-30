@@ -216,7 +216,6 @@ void Util::addOrGroupConstraints(FeatureVisitor v, const dd_edge emptyNode,
 		// PARENT AVAILABLE -> OR BETWEEN CHILDREN
 		constraint[N - orIndxs[i].first.first - 1] = orIndxs[i].first.second;
 		c = Util::getMDDFromTuple(constraint, mdd) * emptyNode;
-		cTemp = emptyNode;
 		vector<int> *idx = orIndxs[i].second;
 		cout << "\t" << idx->size() << endl;
 		for (unsigned int j = 0; j < idx->size(); j++) {
@@ -224,7 +223,7 @@ void Util::addOrGroupConstraints(FeatureVisitor v, const dd_edge emptyNode,
 			constraint[N - idx->data()[j] - 1] = 1;
 			Util::printVector(constraint, logcout(LOG_DEBUG));
 			if (j == 0)
-				cTemp *= Util::getMDDFromTuple(constraint, mdd);
+				cTemp = Util::getMDDFromTuple(constraint, mdd);
 			else
 				cTemp += Util::getMDDFromTuple(constraint, mdd);
 		}
