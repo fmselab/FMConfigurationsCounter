@@ -415,7 +415,7 @@ void Util::addSingleImplications(const int N, const dd_edge &emptyNode,
 }
 
 bool compareEdges(dd_edge e1, dd_edge e2) {
-	return (e1.getEdgeCount() < e2.getEdgeCount());
+	return (e1.getEdgeCount() > e2.getEdgeCount());
 }
 
 void Util::addCrossTreeConstraints(const FeatureVisitor v,
@@ -435,10 +435,6 @@ void Util::addCrossTreeConstraints(const FeatureVisitor v,
 	// Apply the constraints
 	i = 0;
 	for (dd_edge e : constraintList) {
-		// Delete some data in order to save memory if needed
-		if (reduction_factor > 0)
-			mdd->removeAllComputeTableEntries();
-
 		startingNode *= e;
 		logcout(LOG_DEBUG) << "\tNew cardinality after constraint " << (++i)
 				<< ": " << startingNode.getCardinality() << " - Edges: "

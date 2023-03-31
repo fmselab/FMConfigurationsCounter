@@ -8,9 +8,8 @@ using namespace std;
 int main(int argc, char **argv) {
 	// Models missing:
 	//				   LinuxModel
-	//				   Waterloo
 
 	Util::SORT_CONSTRAINTS = true;
-	Util::getProductCountFromFile("examples/linuxModel.xml", IGNORE_HIDDEN_MAIN, 20);
+	Util::getProductCountFromFile("examples/linuxModel.xml", IGNORE_HIDDEN_MAIN, 10);
 	return 0;
 }
