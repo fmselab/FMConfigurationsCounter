@@ -191,6 +191,13 @@ void FeatureVisitor::setMandatoryNoParent(xml_node<> *node, int varIndex) {
 			mandatoryIndex.push_back(varIndex);
 }
 
+void FeatureVisitor::reorderVariables(xml_node<> *node) {
+	// Reorder variables based on their level (distance from the root)
+	// We choose to put first the variables with lower level
+	// TODO: To be implemented. Remember to change the indexes also in all the
+	// maps
+}
+
 int FeatureVisitor::getIndexOfNoneForVariable(const string &variableName) {
 	int indexOfNone = -1;
 	for (unsigned int i = 0; i < variables[variableName]->size(); i++) {

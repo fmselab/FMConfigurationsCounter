@@ -57,10 +57,6 @@ int Util::getProductCountFromFile(string fileName, int reduction_factor_ctc) {
 	pmdd.setFullyReduced();
 	pmdd.setLowestMemory();
 	pmdd.setPessimistic();
-//	pmdd.setQuasiReduced();
-//	pmdd.setNeverDelete();
-//	pmdd.setFullStorage();
-//	pmdd.setPessimistic();
 	// Create a forest in the above domain
 	forest *mdd = d->createForest(false, // this is not a relation
 			forest::BOOLEAN, 			 // terminals are either true or false

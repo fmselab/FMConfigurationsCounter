@@ -46,6 +46,7 @@ public:
 	void visitOr(xml_node<> * node);
 	void visitFeature(xml_node<> * node);
 	void printVariablesInMap();
+	void reorderVariables(xml_node<> *node);
 	int getNVar();
 	int* getBounds();
 	vector<int> getMandatoryIndex();
