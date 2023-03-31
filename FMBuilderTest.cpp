@@ -130,6 +130,26 @@ TEST_CASE("gplAheadModel without ignore", "gplAheadModel") {
 					== nConfig);
 }
 
+TEST_CASE("waterlooModel with ignore", "waterlooModel") {
+	Util::SORT_CONSTRAINTS = false;
+	double nConfig = -2147483648;
+	// The correct value should be 6.70835e+101, but with catch it seems
+	// that it is not possible to compare this kind of value in a REQUIRE
+	REQUIRE(
+			Util::getProductCountFromFile("examples/waterlooModel.xml", true)
+					== nConfig);
+}
+
+TEST_CASE("waterlooModel without ignore", "waterlooModel") {
+	Util::SORT_CONSTRAINTS = false;
+	double nConfig = -2147483648;
+	// The correct value should be 6.70835e+101, but with catch it seems
+	// that it is not possible to compare this kind of value in a REQUIRE
+	REQUIRE(
+			Util::getProductCountFromFile("examples/waterlooModel.xml", false)
+					== nConfig);
+}
+
 /*
  * 				    ROOT-------------------------------------------------------------
  * 					 |																|

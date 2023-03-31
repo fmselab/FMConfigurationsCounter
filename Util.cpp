@@ -19,7 +19,8 @@ int Util::getProductCountFromFile(string fileName, bool ignore) {
 	return getProductCountFromFile(fileName, 0);
 }
 
-int Util::getProductCountFromFile(string fileName, bool ignore, int reduction_factor_ctc) {
+int Util::getProductCountFromFile(string fileName, bool ignore,
+		int reduction_factor_ctc) {
 	Util::IGNORE_HIDDEN = ignore;
 	return getProductCountFromFile(fileName, reduction_factor_ctc);
 }
@@ -117,7 +118,8 @@ int Util::getProductCountFromFile(string fileName, int reduction_factor_ctc) {
 	// Add Cross Tree Constraints
 	xml_node<> *constraintNode = structNode->parent()->first_node(
 			"constraints");
-	addCrossTreeConstraints(v, emptyNode, startingNode, constraintNode, mdd, reduction_factor_ctc);
+	addCrossTreeConstraints(v, emptyNode, startingNode, constraintNode, mdd,
+			reduction_factor_ctc);
 	// Cardinality
 	logcout(LOG_INFO) << "Number of valid products: "
 			<< startingNode.getCardinality() << endl;
@@ -276,8 +278,8 @@ void Util::addAltGroupConstraints(FeatureVisitor v, const dd_edge emptyNode,
 		logcout(LOG_DEBUG)
 				<< "Adding constraint for ALT-Group elements with their root [Index: "
 				<< vAlt.first.first << ", None Value: "
-				<< v.getValueForVar(vAlt.first.first,
-						vAlt.first.second) << "]\n";
+				<< v.getValueForVar(vAlt.first.first, vAlt.first.second)
+				<< "]\n";
 		dd_edge c(mdd);
 		dd_edge cTemp(mdd);
 		dd_edge cTemp2(mdd);
@@ -417,7 +419,7 @@ void Util::addSingleImplications(const int N, const dd_edge &emptyNode,
 }
 
 bool compareEdges(dd_edge e1, dd_edge e2) {
-	return (e1.getCardinality() > e2.getCardinality());
+	return (e1.getEdgeCount() < e2.getEdgeCount());
 }
 
 void Util::addCrossTreeConstraints(const FeatureVisitor v,
@@ -443,6 +445,8 @@ void Util::addCrossTreeConstraints(const FeatureVisitor v,
 
 		startingNode *= e;
 		logcout(LOG_DEBUG) << "\tNew cardinality after constraint " << (++i)
-				<< ": " << startingNode.getCardinality() << endl;
+				<< ": " << startingNode.getCardinality() << " - Edges: "
+				<< startingNode.getEdgeCount() << " - Nodes: "
+				<< startingNode.getNodeCount() << endl;
 	}
 }
