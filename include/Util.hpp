@@ -32,7 +32,7 @@ private:
 			FeatureVisitor &v, dd_edge &c, forest *mdd, dd_edge &startingNode);
 	static void addCrossTreeConstraints(const FeatureVisitor v,
 			const dd_edge emptyNode, dd_edge &startingNode,
-			xml_node<> *constraintNode, forest *mdd);
+			xml_node<> *constraintNode, forest *mdd, int reduction_factor);
 	static void addAltGroupConstraints(FeatureVisitor v, const dd_edge emptyNode,
 			const int N, dd_edge &startingNode, forest *mdd);
 
@@ -43,6 +43,8 @@ public:
 	static void printVector(vector<int> v, ostream &out);
 	static int getProductCountFromFile(string fileName);
 	static int getProductCountFromFile(string fileName, bool ignore);
+	static int getProductCountFromFile(string fileName, bool ignore, int reduction_factor_ctc);
+	static int getProductCountFromFile(string fileName, int reduction_factor_ctc);
 
 	static bool IGNORE_HIDDEN;
 	static bool SORT_CONSTRAINTS;

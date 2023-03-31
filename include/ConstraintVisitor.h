@@ -39,6 +39,7 @@ private:
 public:
 	ConstraintVisitor(FeatureVisitor v, dd_edge emptyNode, forest* mdd);
 	virtual ~ConstraintVisitor();
+	void visit(xml_node<> * &node, int reduction_factor);
 	void visit(xml_node<> * &node);
 	vector<dd_edge> getConstraintMddList();
 };

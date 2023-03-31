@@ -10,12 +10,21 @@
 bool Util::IGNORE_HIDDEN = false;
 bool Util::SORT_CONSTRAINTS = false;
 
-int Util::getProductCountFromFile(string fileName, bool ignore) {
-	Util::IGNORE_HIDDEN = ignore;
-	return getProductCountFromFile(fileName);
+int Util::getProductCountFromFile(string fileName) {
+	return getProductCountFromFile(fileName, 0);
 }
 
-int Util::getProductCountFromFile(string fileName) {
+int Util::getProductCountFromFile(string fileName, bool ignore) {
+	Util::IGNORE_HIDDEN = ignore;
+	return getProductCountFromFile(fileName, 0);
+}
+
+int Util::getProductCountFromFile(string fileName, bool ignore, int reduction_factor_ctc) {
+	Util::IGNORE_HIDDEN = ignore;
+	return getProductCountFromFile(fileName, reduction_factor_ctc);
+}
+
+int Util::getProductCountFromFile(string fileName, int reduction_factor_ctc) {
 	// Open and read the file, then visit it
 	std::string *fileToString = Util::parseXML(fileName);
 	// Parse the file
@@ -108,7 +117,7 @@ int Util::getProductCountFromFile(string fileName) {
 	// Add Cross Tree Constraints
 	xml_node<> *constraintNode = structNode->parent()->first_node(
 			"constraints");
-	addCrossTreeConstraints(v, emptyNode, startingNode, constraintNode, mdd);
+	addCrossTreeConstraints(v, emptyNode, startingNode, constraintNode, mdd, reduction_factor_ctc);
 	// Cardinality
 	logcout(LOG_INFO) << "Number of valid products: "
 			<< startingNode.getCardinality() << endl;
@@ -408,33 +417,30 @@ void Util::addSingleImplications(const int N, const dd_edge &emptyNode,
 }
 
 bool compareEdges(dd_edge e1, dd_edge e2) {
-	return (e1.getCardinality() < e2.getCardinality());
+	return (e1.getCardinality() > e2.getCardinality());
 }
 
 void Util::addCrossTreeConstraints(const FeatureVisitor v,
 		const dd_edge emptyNode, dd_edge &startingNode,
-		xml_node<> *constraintNode, forest *mdd) {
+		xml_node<> *constraintNode, forest *mdd, int reduction_factor) {
 	// Add Cross Tree Constraints
 	ConstraintVisitor cVisitor(v, emptyNode, mdd);
 	int i = 0;
 	// Visit the sub-tree for constraints and create a set of edges for each of them
-	cVisitor.visit(constraintNode);
+	cVisitor.visit(constraintNode, reduction_factor);
 	// Now, compute the intersection between startingNode and each of the constraint
 	vector<dd_edge> constraintList = cVisitor.getConstraintMddList();
 	// Order the vector from the lowest cardinality to the highest
 	if (SORT_CONSTRAINTS) {
 		sort(constraintList.begin(), constraintList.end(), compareEdges);
-		// Reduce each constraint by multiplying it for the starting node
-		// In this way, the complexity of the following intersections is reduced
-		i = 0;
-		for (dd_edge e : constraintList) {
-			logcout(LOG_DEBUG) << "\tReducing constraint " << (++i) << endl;
-			e *= startingNode;
-		}
 	}
 	// Apply the constraints
 	i = 0;
 	for (dd_edge e : constraintList) {
+		// Delete some data in order to save memory if needed
+		if (reduction_factor > 0)
+			mdd->removeAllComputeTableEntries();
+
 		startingNode *= e;
 		logcout(LOG_DEBUG) << "\tNew cardinality after constraint " << (++i)
 				<< ": " << startingNode.getCardinality() << endl;

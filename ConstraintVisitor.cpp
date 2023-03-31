@@ -19,6 +19,10 @@ ConstraintVisitor::~ConstraintVisitor() {
 }
 
 void ConstraintVisitor::visit(xml_node<> *&node) {
+	visit(node, 0);
+}
+
+void ConstraintVisitor::visit(xml_node<> *&node, int reduction_factor) {
 	int i = 0;
 	for (xml_node<> *n = node->first_node(); n; n = n->next_sibling()) {
 		if (strcmp(n->name(), "rule") == 0) {
@@ -30,6 +34,21 @@ void ConstraintVisitor::visit(xml_node<> *&node) {
 					<< c.getCardinality() << endl;
 			constraintMddList.push_back(c);
 		}
+	}
+
+	if (reduction_factor > 0) {
+		vector<dd_edge> temp;
+		// Compact the constraints
+		for (unsigned int i = 0; i<constraintMddList.size(); i+=reduction_factor) {
+			dd_edge cumulativeNode = constraintMddList[i];
+			for (int j = 1; j<reduction_factor && i+j < constraintMddList.size(); j++) {
+				cumulativeNode *= constraintMddList[i + j];
+			}
+			temp.push_back(cumulativeNode);
+		}
+
+		logcout(LOG_DEBUG) << "Constraints reduced to " << temp.size() << endl;
+		constraintMddList = temp;
 	}
 }
 
