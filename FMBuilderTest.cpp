@@ -181,21 +181,21 @@ TEST_CASE("uClibCModel with ignore", "uClibCModel") {
 			Util::getProductCountFromFile("examples/uClibCModel.xml", true)
 					== nConfig);
 }
-//
-///*
-// * 				    ROOT-------------------------------------------------------------
-// * 					 |																|
-// * 					 |																|
-// * 			   CONNECTIVITY (MANDATORY, ONLY ONE)								 DISPLAY
-// * 			    /	 |    \
-// * 			   /	 |	   \
-// * 			  /		 |	    \
-// * 		BLUETOOTH   USB	   WIFI
-// *
-// *
-// * 		ROOT = TRUE
-// * 		CONNECTITIVITY = BLUETOOTH -> DISPLAY = TRUE
-// */
+
+/*
+ * 				    ROOT-------------------------------------------------------------
+ * 					 |																|
+ * 					 |																|
+ * 			   CONNECTIVITY (MANDATORY, ONLY ONE)								 DISPLAY
+ * 			    /	 |    \
+ * 			   /	 |	   \
+ * 			  /		 |	    \
+ * 		BLUETOOTH   USB	   WIFI
+ *
+ *
+ * 		ROOT = TRUE
+ * 		CONNECTITIVITY = BLUETOOTH -> DISPLAY = TRUE
+ */
 //TEST_CASE("First attempt of constructing an MDD for a FeatureModel", "1Test") {
 //	// Init MEDDLY
 //	initialize();
@@ -261,23 +261,23 @@ TEST_CASE("uClibCModel with ignore", "uClibCModel") {
 //	cout << "Final cardinality: " << startingNode.getCardinality() << endl;
 //}
 //
-///*
-// * 				    ROOT
-// * 					 |
-// * 					 |
-// * 			   CONNECTIVITY (OR - AT LEAST ONE)
-// * 			    /	 |    \
-// * 			   /	 |	   \
-// * 			  /		 |	    \
-// * 		BLUETOOTH   USB	   WIFI
-// *
-// *
-// * 		ROOT = TRUE
-// * 		BLUETOOTH = TRUE -> CONNECTIVITY = TRUE
-// * 		USB = TRUE -> CONNECTIVITY = TRUE
-// * 		WIFI = TRUE -> CONNECTIVITY = TRUE
-// * 		CONNECTIVITY = TRUE -> (BLUETOOTH = TRUE OR USB = TRUE OR WIFI = TRUE)
-// */
+/*
+ * 				    ROOT
+ * 					 |
+ * 					 |
+ * 			   CONNECTIVITY (OR - AT LEAST ONE)
+ * 			    /	 |    \
+ * 			   /	 |	   \
+ * 			  /		 |	    \
+ * 		BLUETOOTH   USB	   WIFI
+ *
+ *
+ * 		ROOT = TRUE
+ * 		BLUETOOTH = TRUE -> CONNECTIVITY = TRUE
+ * 		USB = TRUE -> CONNECTIVITY = TRUE
+ * 		WIFI = TRUE -> CONNECTIVITY = TRUE
+ * 		CONNECTIVITY = TRUE -> (BLUETOOTH = TRUE OR USB = TRUE OR WIFI = TRUE)
+ */
 //TEST_CASE("Second attempt of constructing an MDD for a FeatureModel", "2Test") {
 //	// Init MEDDLY
 //	initialize();
