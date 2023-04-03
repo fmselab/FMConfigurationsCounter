@@ -7,8 +7,11 @@ using namespace std;
 
 int main(int argc, char **argv) {
 	// Not Working Models:
-	//				   LinuxModel
-	//				   automotive01
+	//				   	LinuxModel
+	//				   	automotive01
+	// 					automotive02v4
+	//					berkeleyDBModel
+	//					gplAheadModel
 
 	Util::SORT_CONSTRAINTS = true;
 	Util::getProductCountFromFile("examples/gplAheadModel.xml", IGNORE_HIDDEN_MAIN, 0);
