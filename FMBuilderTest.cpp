@@ -158,6 +158,7 @@ TEST_CASE("axTLSModel with ignore", "axTLSModel") {
 
 TEST_CASE("axTLSModel without ignore", "axTLSModel") {
 	Util::SORT_CONSTRAINTS = false;
+	//8.26244e+11
 	double nConfig = 826244333568.0;
 	REQUIRE(
 			Util::getProductCountFromFile("examples/axTLSModel.xml", false)
