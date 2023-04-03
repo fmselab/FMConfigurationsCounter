@@ -14,6 +14,6 @@ int main(int argc, char **argv) {
 	//					gplAheadModel
 
 	Util::SORT_CONSTRAINTS = true;
-	Util::getProductCountFromFile("examples/gplAheadModel.xml", IGNORE_HIDDEN_MAIN, 0);
+	Util::getProductCountFromFile("examples/ppuModel.xml", IGNORE_HIDDEN_MAIN, 0);
 	return 0;
 }

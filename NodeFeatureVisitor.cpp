@@ -179,12 +179,10 @@ void FeatureVisitor::visitAlt(xml_node<> *node) {
 							make_pair(
 									make_pair(nIndex,
 											getIndexOfNoneForVariable(
-													indexVariable[nIndex]) + 1
-													+ variables[indexVariable[nIndex]]->size()),
+													indexVariable[nIndex])),
 									make_pair(currentIndex,
 											getIndexOfValue(
-													indexVariable[currentIndex]).second
-													+ 1
+													indexVariable[nIndex]).second
 													+ variables[indexVariable[currentIndex]]->size())));
 				} else {
 					// N is not an alternative. We should consider n's children
@@ -359,7 +357,7 @@ void FeatureVisitor::setMandatoryImplication(xml_node<> *node, int indexOfNone,
 		mandatoryImplications.push_back(
 				make_pair(make_pair(varIndex, indexOfNone),
 						make_pair(dependencyPair.first,
-								dependencyPair.second + 1
+								dependencyPair.second
 										+ variables[indexVariable[dependencyPair.first]]->size())));
 	}
 }
@@ -493,7 +491,7 @@ int* FeatureVisitor::getBounds() {
 
 string FeatureVisitor::getValueForVar(int indexVar, int indexVal) {
 	if (indexVal >= getBoundForVar(indexVar))
-		return "-" + variables[indexVariable[indexVar]]->data()[indexVal - getBoundForVar(indexVar) - 1];
+		return "-" + variables[indexVariable[indexVar]]->data()[indexVal - getBoundForVar(indexVar)];
 	return variables[indexVariable[indexVar]]->data()[indexVal];
 }
 
