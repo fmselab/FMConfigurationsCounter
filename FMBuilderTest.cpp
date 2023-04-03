@@ -48,150 +48,139 @@ TEST_CASE("ppuModel without ignore", "ppuModel") {
 			Util::getProductCountFromFile("examples/ppuModel.xml", false)
 					== 96000);
 }
-//
-//TEST_CASE("aplModel with ignore", "aplModel") {
-//	Util::SORT_CONSTRAINTS = false;
-//	REQUIRE(
-//			Util::getProductCountFromFile("examples/aplModel.xml", true)
-//					== 159120);
-//}
-//
-//TEST_CASE("aplModel without ignore", "aplModel") {
-//	Util::SORT_CONSTRAINTS = false;
-//	REQUIRE(
-//			Util::getProductCountFromFile("examples/aplModel.xml", false)
-//					== 159184);
-//}
-//
-//TEST_CASE("gplModel without ignore", "gplModel") {
-//	Util::SORT_CONSTRAINTS = false;
-//	REQUIRE(
-//			Util::getProductCountFromFile("examples/gplModel.xml", false)
-//					== 960);
-//}
-//
-//TEST_CASE("gplModel with ignore", "gplModel") {
-//	Util::SORT_CONSTRAINTS = false;
-//	REQUIRE(
-//			Util::getProductCountFromFile("examples/gplModel.xml", true)
-//					== 186);
-//}
-//
-//TEST_CASE("eshopModel with ignore", "eshopModel") {
-//	Util::SORT_CONSTRAINTS = false;
-//	// 2.2602e+49
-//	double nConfig = 22602043046884907138622062009629005242624813039616.0;
-//	double computedCfgs = Util::getProductCountFromFile(
-//			"examples/eshopModel.xml", true);
-//	REQUIRE(computedCfgs == nConfig);
-//}
-//
-//TEST_CASE("eshopModel without ignore", "eshopModel") {
-//	Util::SORT_CONSTRAINTS = false;
-//	// 2.2602e+49
-//	double nConfig = 22602043046884907138622062009629005242624813039616.0;
-//	double computedCfgs = Util::getProductCountFromFile(
-//			"examples/eshopModel.xml", false);
-//	REQUIRE(computedCfgs == nConfig);
-//}
-//
-//TEST_CASE("violetModel without ignore", "violetModel") {
-//	Util::SORT_CONSTRAINTS = false;
-//	// 5.93843e+18
-//	double nConfig = 5938433009513149440.0;
-//	REQUIRE(
-//			Util::getProductCountFromFile("examples/violetModel.xml", false)
-//					== nConfig);
-//}
-//
-//TEST_CASE("violetModel with ignore", "violetModel") {
-//	Util::SORT_CONSTRAINTS = false;
-//	// 3.89226e+18
-//	double nConfig = 3892263109263360000.0;
-//	double computedConfig = Util::getProductCountFromFile(
-//			"examples/violetModel.xml", true);
-//	REQUIRE(computedConfig == nConfig);
-//}
-//
-//TEST_CASE("gplAheadModel with ignore", "gplAheadModel") {
-//	Util::SORT_CONSTRAINTS = false;
-//	double nConfig = 728;
-//	// The correct value should be 3.89226e+18, but with catch it seems
-//	// that it is not possible to compare this kind of value in a REQUIRE
-//	REQUIRE(
-//			Util::getProductCountFromFile("examples/gplAheadModel.xml", true)
-//					== nConfig);
-//}
-//
-//TEST_CASE("gplAheadModel without ignore", "gplAheadModel") {
-//	Util::SORT_CONSTRAINTS = false;
-//	double nConfig = 100266;
-//	// The correct value should be 3.89226e+18, but with catch it seems
-//	// that it is not possible to compare this kind of value in a REQUIRE
-//	REQUIRE(
-//			Util::getProductCountFromFile("examples/gplAheadModel.xml", false)
-//					== nConfig);
-//}
-//
-//TEST_CASE("waterlooModel with ignore", "waterlooModel") {
-//	Util::SORT_CONSTRAINTS = false;
-//	double nConfig = -2147483648;
-//	// The correct value should be 6.70835e+101, but with catch it seems
-//	// that it is not possible to compare this kind of value in a REQUIRE
-//	REQUIRE(
-//			Util::getProductCountFromFile("examples/waterlooModel.xml", true)
-//					== nConfig);
-//}
-//
-//TEST_CASE("waterlooModel without ignore", "waterlooModel") {
-//	Util::SORT_CONSTRAINTS = false;
-//	double nConfig = -2147483648;
-//	// The correct value should be 6.70835e+101, but with catch it seems
-//	// that it is not possible to compare this kind of value in a REQUIRE
-//	REQUIRE(
-//			Util::getProductCountFromFile("examples/waterlooModel.xml", false)
-//					== nConfig);
-//}
-//
-//TEST_CASE("axTLSModel with ignore", "axTLSModel") {
-//	Util::SORT_CONSTRAINTS = false;
-//	double nConfig = -2147483648;
-//	// The correct value should be 8.26244e+11, but with catch it seems
-//	// that it is not possible to compare this kind of value in a REQUIRE
-//	REQUIRE(
-//			Util::getProductCountFromFile("examples/axTLSModel.xml", true)
-//					== nConfig);
-//}
-//
-//TEST_CASE("axTLSModel without ignore", "axTLSModel") {
-//	Util::SORT_CONSTRAINTS = false;
-//	double nConfig = -2147483648;
-//	// The correct value should be 8.26244e+11, but with catch it seems
-//	// that it is not possible to compare this kind of value in a REQUIRE
-//	REQUIRE(
-//			Util::getProductCountFromFile("examples/axTLSModel.xml", false)
-//					== nConfig);
-//}
-//
-//TEST_CASE("uClibCModel without ignore", "uClibCModel") {
-//	Util::SORT_CONSTRAINTS = false;
-//	double nConfig = -2147483648;
-//	// The correct value should be 1.66019e+40, but with catch it seems
-//	// that it is not possible to compare this kind of value in a REQUIRE
-//	REQUIRE(
-//			Util::getProductCountFromFile("examples/uClibCModel.xml", false)
-//					== nConfig);
-//}
-//
-//TEST_CASE("uClibCModel with ignore", "uClibCModel") {
-//	Util::SORT_CONSTRAINTS = false;
-//	double nConfig = -2147483648;
-//	// The correct value should be 1.66019e+40, but with catch it seems
-//	// that it is not possible to compare this kind of value in a REQUIRE
-//	REQUIRE(
-//			Util::getProductCountFromFile("examples/uClibCModel.xml", true)
-//					== nConfig);
-//}
+
+TEST_CASE("aplModel with ignore", "aplModel") {
+	Util::SORT_CONSTRAINTS = false;
+	REQUIRE(
+			Util::getProductCountFromFile("examples/aplModel.xml", true)
+					== 159120);
+}
+
+TEST_CASE("aplModel without ignore", "aplModel") {
+	Util::SORT_CONSTRAINTS = false;
+	REQUIRE(
+			Util::getProductCountFromFile("examples/aplModel.xml", false)
+					== 159184);
+}
+
+TEST_CASE("gplModel without ignore", "gplModel") {
+	Util::SORT_CONSTRAINTS = false;
+	REQUIRE(
+			Util::getProductCountFromFile("examples/gplModel.xml", false)
+					== 960);
+}
+
+TEST_CASE("gplModel with ignore", "gplModel") {
+	Util::SORT_CONSTRAINTS = false;
+	REQUIRE(
+			Util::getProductCountFromFile("examples/gplModel.xml", true)
+					== 186);
+}
+
+TEST_CASE("eshopModel with ignore", "eshopModel") {
+	Util::SORT_CONSTRAINTS = false;
+	// 2.2602e+49
+	double nConfig = 22602043046884907138622062009629005242624813039616.0;
+	double computedCfgs = Util::getProductCountFromFile(
+			"examples/eshopModel.xml", true);
+	REQUIRE(computedCfgs == nConfig);
+}
+
+TEST_CASE("eshopModel without ignore", "eshopModel") {
+	Util::SORT_CONSTRAINTS = false;
+	// 2.2602e+49
+	double nConfig = 22602043046884907138622062009629005242624813039616.0;
+	double computedCfgs = Util::getProductCountFromFile(
+			"examples/eshopModel.xml", false);
+	REQUIRE(computedCfgs == nConfig);
+}
+
+TEST_CASE("violetModel without ignore", "violetModel") {
+	Util::SORT_CONSTRAINTS = false;
+	// 5.93843e+18
+	double nConfig = 5938433009513149440.0;
+	REQUIRE(
+			Util::getProductCountFromFile("examples/violetModel.xml", false)
+					== nConfig);
+}
+
+TEST_CASE("violetModel with ignore", "violetModel") {
+	Util::SORT_CONSTRAINTS = false;
+	// 3.89226e+18
+	double nConfig = 3892263109263360000.0;
+	double computedConfig = Util::getProductCountFromFile(
+			"examples/violetModel.xml", true);
+	REQUIRE(computedConfig == nConfig);
+}
+
+TEST_CASE("gplAheadModel with ignore", "gplAheadModel") {
+	Util::SORT_CONSTRAINTS = false;
+	double nConfig = 728;
+	REQUIRE(
+			Util::getProductCountFromFile("examples/gplAheadModel.xml", true)
+					== nConfig);
+}
+
+TEST_CASE("gplAheadModel without ignore", "gplAheadModel") {
+	Util::SORT_CONSTRAINTS = false;
+	double nConfig = 100266;
+	REQUIRE(
+			Util::getProductCountFromFile("examples/gplAheadModel.xml", false)
+					== nConfig);
+}
+
+TEST_CASE("waterlooModel with ignore", "waterlooModel") {
+	Util::SORT_CONSTRAINTS = false;
+	// 6.70835e+101
+	double nConfig = 670835392217916052367826961285705439055529026755794918488321216695556598191228298976523484421022547968.0;
+	REQUIRE(
+			Util::getProductCountFromFile("examples/waterlooModel.xml", true)
+					== nConfig);
+}
+
+TEST_CASE("waterlooModel without ignore", "waterlooModel") {
+	Util::SORT_CONSTRAINTS = false;
+	// 6.70835e+101
+	double nConfig = 670835392217916052367826961285705439055529026755794918488321216695556598191228298976523484421022547968.0;
+	REQUIRE(
+			Util::getProductCountFromFile("examples/waterlooModel.xml", false)
+					== nConfig);
+}
+
+TEST_CASE("axTLSModel with ignore", "axTLSModel") {
+	Util::SORT_CONSTRAINTS = false;
+	//8.26244e+11
+	double nConfig = 826244333568.0;
+	REQUIRE(
+			Util::getProductCountFromFile("examples/axTLSModel.xml", true)
+					== nConfig);
+}
+
+TEST_CASE("axTLSModel without ignore", "axTLSModel") {
+	Util::SORT_CONSTRAINTS = false;
+	double nConfig = 826244333568.0;
+	REQUIRE(
+			Util::getProductCountFromFile("examples/axTLSModel.xml", false)
+					== nConfig);
+}
+
+TEST_CASE("uClibCModel without ignore", "uClibCModel") {
+	Util::SORT_CONSTRAINTS = false;
+	// 1.66019e+40
+	double nConfig = 16601881363009995393029846406265571377152.0;
+	REQUIRE(
+			Util::getProductCountFromFile("examples/uClibCModel.xml", false)
+					== nConfig);
+}
+
+TEST_CASE("uClibCModel with ignore", "uClibCModel") {
+	Util::SORT_CONSTRAINTS = false;
+	// 1.66019e+40
+	double nConfig = 16601881363009995393029846406265571377152.0;
+	REQUIRE(
+			Util::getProductCountFromFile("examples/uClibCModel.xml", true)
+					== nConfig);
+}
 //
 ///*
 // * 				    ROOT-------------------------------------------------------------

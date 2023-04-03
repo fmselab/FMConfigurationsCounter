@@ -126,7 +126,6 @@ double Util::getProductCountFromFile(string fileName, int reduction_factor_ctc) 
 
 	mdd->removeAllComputeTableEntries();
 	mdd->removeStaleComputeTableEntries();
-	cleanup();
 
 	delete fileToString;
 	delete bounds;
