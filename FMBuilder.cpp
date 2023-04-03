@@ -3,7 +3,7 @@
 
 using namespace std;
 
-#define IGNORE_HIDDEN_MAIN false
+#define IGNORE_HIDDEN_MAIN true
 
 int main(int argc, char **argv) {
 	// Not Working Models:
@@ -11,6 +11,6 @@ int main(int argc, char **argv) {
 	//				   automotive01
 
 	Util::SORT_CONSTRAINTS = true;
-	Util::getProductCountFromFile("examples/automotive01.xml", IGNORE_HIDDEN_MAIN, 22);
+	Util::getProductCountFromFile("examples/gplAheadModel.xml", IGNORE_HIDDEN_MAIN, 0);
 	return 0;
 }

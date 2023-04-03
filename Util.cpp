@@ -10,22 +10,22 @@
 bool Util::IGNORE_HIDDEN = false;
 bool Util::SORT_CONSTRAINTS = false;
 
-int Util::getProductCountFromFile(string fileName) {
+double Util::getProductCountFromFile(string fileName) {
 	return getProductCountFromFile(fileName, 0);
 }
 
-int Util::getProductCountFromFile(string fileName, bool ignore) {
+double Util::getProductCountFromFile(string fileName, bool ignore) {
 	Util::IGNORE_HIDDEN = ignore;
 	return getProductCountFromFile(fileName, 0);
 }
 
-int Util::getProductCountFromFile(string fileName, bool ignore,
+double Util::getProductCountFromFile(string fileName, bool ignore,
 		int reduction_factor_ctc) {
 	Util::IGNORE_HIDDEN = ignore;
 	return getProductCountFromFile(fileName, reduction_factor_ctc);
 }
 
-int Util::getProductCountFromFile(string fileName, int reduction_factor_ctc) {
+double Util::getProductCountFromFile(string fileName, int reduction_factor_ctc) {
 	// Open and read the file, then visit it
 	std::string *fileToString = Util::parseXML(fileName);
 	// Parse the file
@@ -39,6 +39,7 @@ int Util::getProductCountFromFile(string fileName, int reduction_factor_ctc) {
 
 	// Init MEDDLY
 	initialize();
+
 	// Create a domain
 	domain *d = createDomain();
 	assert(d != 0);
@@ -114,13 +115,19 @@ int Util::getProductCountFromFile(string fileName, int reduction_factor_ctc) {
 	// Add Cross Tree Constraints
 	xml_node<> *constraintNode = structNode->parent()->first_node(
 			"constraints");
+	// Add Cross Tree Constraints
 	addCrossTreeConstraints(v, emptyNode, startingNode, constraintNode, mdd,
 			reduction_factor_ctc);
 	// Cardinality
 	logcout(LOG_INFO) << "Number of valid products: "
 			<< startingNode.getCardinality() << endl;
 
-	int cardinality = startingNode.getCardinality();
+	double cardinality = startingNode.getCardinality();
+
+	mdd->removeAllComputeTableEntries();
+	mdd->removeStaleComputeTableEntries();
+	cleanup();
+
 	delete fileToString;
 	delete bounds;
 
@@ -354,13 +361,30 @@ void Util::addMandatoryNonLeaf(const int N, const dd_edge &emptyNode,
 		mdd->createEdge(true, tempC1);
 		constraint = vector<int>(N, -1);
 		// A
-		constraint[N - mandatoryImplications[i].first.first - 1] =
-				mandatoryImplications[i].first.second;
-		tempC = Util::getMDDFromTuple(constraint, mdd) * emptyNode;
+		if (mandatoryImplications[i].first.second < 0) {
+			constraint[N - mandatoryImplications[i].first.first - 1] =
+					-mandatoryImplications[i].first.second;
+			tempC = Util::getMDDFromTuple(constraint, mdd) * emptyNode;
+			tempC = emptyNode - tempC;
+		} else {
+			constraint[N - mandatoryImplications[i].first.first - 1] =
+							mandatoryImplications[i].first.second;
+			tempC = Util::getMDDFromTuple(constraint, mdd) * emptyNode;
+		}
+
 		// B
 		constraint = vector<int>(N, -1);
-		constraint[N - mandatoryImplications[i].second.first - 1] =
-				mandatoryImplications[i].second.second;
+		if (mandatoryImplications[i].second.second < 0) {
+			constraint[N - mandatoryImplications[i].second.first - 1] =
+					-mandatoryImplications[i].second.second;
+			tempC1 = Util::getMDDFromTuple(constraint, mdd) * emptyNode;
+			tempC1 = emptyNode - tempC;
+		} else {
+			constraint[N - mandatoryImplications[i].second.first - 1] =
+							mandatoryImplications[i].second.second;
+			tempC1 = Util::getMDDFromTuple(constraint, mdd) * emptyNode;
+		}
+
 		tempC1 = Util::getMDDFromTuple(constraint, mdd) * emptyNode;
 		// C = A <=> B
 		apply(EQUAL, tempC, tempC1, c);
@@ -412,6 +436,42 @@ void Util::addSingleImplications(const int N, const dd_edge &emptyNode,
 		logcout(LOG_DEBUG) << "\tNew cardinality: "
 				<< startingNode.getCardinality() << endl;
 	}
+
+	// Add the mandatory constraint for the other features non leaf
+	singleImplications = v.getSingleImplicationsNonLeaf();
+	for (unsigned int i = 0; i < singleImplications.size(); i++) {
+		logcout(LOG_DEBUG) << "Adding constraint for dependency not[Index: "
+				<< singleImplications[i].second.first << ", Value: "
+				<< v.getValueForVar(singleImplications[i].second.first,
+						singleImplications[i].second.second) << "] => [Index: "
+				<< singleImplications[i].first.first << ", Value: "
+				<< v.getValueForVar(singleImplications[i].first.first,
+						singleImplications[i].first.second) << "]\n";
+		c = emptyNode;
+		dd_edge tempC(mdd);
+		dd_edge tempC1(mdd);
+		mdd->createEdge(true, tempC);
+		mdd->createEdge(true, tempC1);
+		constraint = vector<int>(N, -1);
+		// A
+		constraint[N - singleImplications[i].second.first - 1] =
+				singleImplications[i].second.second;
+		tempC = Util::getMDDFromTuple(constraint, mdd) * emptyNode;
+		// B
+		constraint = vector<int>(N, -1);
+		constraint[N - singleImplications[i].first.first - 1] =
+				singleImplications[i].first.second;
+		tempC1 = Util::getMDDFromTuple(constraint, mdd) * emptyNode;
+		// C = A => B = notA or B
+		// tempC = emptyNode - tempC;
+		c = tempC + tempC1;
+		logcout(LOG_DEBUG) << "\tConstraint cardinality: " << c.getCardinality()
+				<< endl;
+		// Intersect this edge with the starting node
+		startingNode *= c;
+		logcout(LOG_DEBUG) << "\tNew cardinality: "
+				<< startingNode.getCardinality() << endl;
+	}
 }
 
 bool compareEdges(dd_edge e1, dd_edge e2) {
@@ -421,7 +481,6 @@ bool compareEdges(dd_edge e1, dd_edge e2) {
 void Util::addCrossTreeConstraints(const FeatureVisitor v,
 		const dd_edge emptyNode, dd_edge &startingNode,
 		xml_node<> *constraintNode, forest *mdd, int reduction_factor) {
-	// Add Cross Tree Constraints
 	ConstraintVisitor cVisitor(v, emptyNode, mdd);
 	int i = 0;
 	// Visit the sub-tree for constraints and create a set of edges for each of them

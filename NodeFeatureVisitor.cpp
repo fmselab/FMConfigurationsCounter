@@ -61,21 +61,93 @@ bool FeatureVisitor::isLeaf(xml_node<> *node) {
 	return false;
 }
 
+int FeatureVisitor::getNumChildren(xml_node<> *node) {
+	int i = 0;
+	for (xml_node<> *n = node->first_node(); n; n = n->next_sibling()) {
+		i++;
+	}
+	return i;
+}
+
 void FeatureVisitor::visitAlt(xml_node<> *node) {
-	bool areAllLeaf = true;
+//	bool areAllLeaf = true;
+//
+//	// Check whether children are all leafs
+//	areAllLeaf = areChildrenAllLeaf(node);
+//
+//	if (areAllLeaf) {
+//		// All the children are leaf -> The alternative variable is an enumerative one
+//		string varName = node->first_attribute("name")->value();
+//		int indexOfNone = -1;
+//		vector<string> *values = new vector<string>;
+//
+//		// Get the possible values
+//		for (xml_node<> *n = node->first_node(); n; n = n->next_sibling())
+//			values->push_back(n->first_attribute("name")->value());
+//
+//		// Add to the possible values also the unselected one
+//		indexOfNone = values->size();
+//		values->push_back("NONE");
+//
+//		// Create the variable
+//		variables[varName] = values;
+//		variableIndex[varName] = index;
+//		indexVariable[index] = varName;
+//
+//		// VAL = NONE <=> PARENT = NONE
+//		// Handle the mandatory part of the value. It is mandatory only if
+//		// the parent has been selected
+//		setMandatory(node, indexOfNone, index);
+//		setDependency(node);
+//
+//		// Increase the index
+//		index++;
+//	} else {
+//		// The alternative variable has to be managed as a boolean one (i.e., as an and)
+//		// Indexes of the children
+//		vector<pair<int, int>> *childrenIndex = new vector<pair<int, int>>;
+//		int parentIndex = index;
+//		int indexOfNoneParent = -1;
+//
+//		// Define the current variable, which is a boolean variable
+//		defineSingleVariable(node);
+//		indexOfNoneParent = getIndexOfNoneForVariable(
+//				indexVariable[parentIndex]);
+//
+//		// Set dependencies between the feature and its parent
+//		setDependency(node);
+//
+//		// Is the variable mandatory. If it is not the root we should
+//		// set the additional constraint VAL = NONE <=> PARENT = NONE
+//		setMandatory(node, 0, index);
+//
+//		// Increase the index
+//		index++;
+//
+//		// Visit all the child features
+//		for (xml_node<> *n = node->first_node(); n; n = n->next_sibling()) {
+//			int thisIndex = index;
+//			visit(n);
+//			int noneIndex = getIndexOfNoneForVariable(indexVariable[thisIndex]);
+//			childrenIndex->push_back(make_pair(thisIndex, noneIndex));
+//		}
+//
+//		altIndexesExclusion.push_back(
+//				make_pair(make_pair(parentIndex, indexOfNoneParent),
+//						childrenIndex));
+//	}
 
-	// Check whether children are all leafs
-	areAllLeaf = areChildrenAllLeaf(node);
-
-	if (areAllLeaf) {
-		// All the children are leaf -> The alternative variable is an enumerative one
+	if (getNumChildren(node) > 1) {
+		// The alternative variable is an enumerative one
 		string varName = node->first_attribute("name")->value();
 		int indexOfNone = -1;
+		int currentIndex = index;
 		vector<string> *values = new vector<string>;
 
 		// Get the possible values
-		for (xml_node<> *n = node->first_node(); n; n = n->next_sibling())
+		for (xml_node<> *n = node->first_node(); n; n = n->next_sibling()) {
 			values->push_back(n->first_attribute("name")->value());
+		}
 
 		// Add to the possible values also the unselected one
 		indexOfNone = values->size();
@@ -83,17 +155,40 @@ void FeatureVisitor::visitAlt(xml_node<> *node) {
 
 		// Create the variable
 		variables[varName] = values;
-		variableIndex[varName] = index;
-		indexVariable[index] = varName;
+		variableIndex[varName] = currentIndex;
+		indexVariable[currentIndex] = varName;
 
 		// VAL = NONE <=> PARENT = NONE
 		// Handle the mandatory part of the value. It is mandatory only if
 		// the parent has been selected
-		setMandatory(node, indexOfNone, index);
+		setMandatory(node, indexOfNone, currentIndex);
 		setDependency(node);
 
 		// Increase the index
 		index++;
+
+		// Check if one of the children is not a leaf. In that case, visit it
+		for (xml_node<> *n = node->first_node(); n; n = n->next_sibling()) {
+			if (!isLeaf(n)) {
+				if (strcmp(n->name(), "alt") == 0) {
+					// N is an alternative. It must be visited itself
+					int nIndex = index;
+					visit(n);
+					// Add the constraint that if n is selected, then n's parent should have value equals to n
+					mandatoryImplications.push_back(
+							make_pair(
+									make_pair(nIndex,
+											-getIndexOfNoneForVariable(
+													indexVariable[nIndex])),
+									make_pair(currentIndex, -getIndexOfValue(indexVariable[currentIndex]).second)));
+				} else {
+					// N is not an alternative. We should consider n's children
+					for (xml_node<> *n1 = n->first_node(); n1;
+							n1 = n1->next_sibling())
+						visit(n1);
+				}
+			}
+		}
 	} else {
 		// The alternative variable has to be managed as a boolean one (i.e., as an and)
 		// Indexes of the children
@@ -200,23 +295,39 @@ void FeatureVisitor::setMandatoryNoParent(xml_node<> *node, int varIndex) {
 			mandatoryIndex.push_back(varIndex);
 }
 
-void FeatureVisitor::reorderVariables(xml_node<> *node) {
-	// Reorder variables based on their level (distance from the root)
-	// We choose to put first the variables with lower level
-	// TODO: To be implemented. Remember to change the indexes also in all the
-	// maps
-}
-
 int FeatureVisitor::getIndexOfNoneForVariable(const string &variableName) {
 	int indexOfNone = -1;
-	for (unsigned int i = 0; i < variables[variableName]->size(); i++) {
-		if (variables[variableName]->data()[i] == "false")
-			indexOfNone = i;
+	if (variables.count(variableName) > 0)
+		for (unsigned int i = 0; i < variables[variableName]->size(); i++) {
+			if (variables[variableName]->data()[i] == "false")
+				indexOfNone = i;
 
-		if (variables[variableName]->data()[i] == "NONE")
-			indexOfNone = i;
-	}
+			if (variables[variableName]->data()[i] == "NONE")
+				indexOfNone = i;
+		}
+	else
+		indexOfNone = -1;
 	return indexOfNone;
+}
+
+pair<int, int> FeatureVisitor::getIndexOfValue(const string &variableName) {
+	int varInd = -1;
+	int valueIndex = -1;
+	for (std::map<string, vector<string>*>::iterator it = variables.begin();
+			it != variables.end(); ++it) {
+		if (std::find(it->second->begin(), it->second->end(), variableName)
+				!= it->second->end()) {
+			// Get the variable index
+			varInd = variableIndex[it->first];
+
+			// Get the index of the needed value
+			auto itElement = std::find(it->second->begin(), it->second->end(),
+					variableName);
+			valueIndex = itElement - it->second->begin();
+		}
+	}
+
+	return make_pair(varInd, valueIndex);
 }
 
 void FeatureVisitor::setMandatoryImplication(xml_node<> *node, int indexOfNone,
@@ -247,9 +358,19 @@ void FeatureVisitor::setSingleImplication(xml_node<> *node, int indexOfNone) {
 		parentName = node->parent()->first_attribute("name")->value();
 	}
 	int indexOfNoneParent = getIndexOfNoneForVariable(parentName);
-	singleImplications.push_back(
-			make_pair(make_pair(index, indexOfNone),
-					make_pair(variableIndex[parentName], indexOfNoneParent)));
+	// If the parent is not an Alternative
+	if (indexOfNoneParent != -1)
+		singleImplications.push_back(
+				make_pair(make_pair(index, indexOfNone),
+						make_pair(variableIndex[parentName],
+								indexOfNoneParent)));
+	else {
+		pair<int, int> dependencyPair = getIndexOfValue(parentName);
+		// If the parent has been merged in an alternative
+		singleImplicationsNonLeaf.push_back(
+				make_pair(make_pair(index, indexOfNone), dependencyPair));
+
+	}
 }
 
 void FeatureVisitor::setMandatory(xml_node<> *node, int indexOfNone,
@@ -335,6 +456,10 @@ vector<pair<pair<int, int>, pair<int, int>>> FeatureVisitor::getSingleImplicatio
 	return singleImplications;
 }
 
+vector<pair<pair<int, int>, pair<int, int>>> FeatureVisitor::getSingleImplicationsNonLeaf() {
+	return singleImplicationsNonLeaf;
+}
+
 int* FeatureVisitor::getBounds() {
 	// Bounds for each variable.
 	// It uses the indexVariable map to retrieve the name of the i-th variable and, with it, get the size of the
@@ -350,6 +475,8 @@ int* FeatureVisitor::getBounds() {
 }
 
 string FeatureVisitor::getValueForVar(int indexVar, int indexVal) {
+	if (indexVal < 0)
+		return "-" + variables[indexVariable[indexVar]]->data()[-indexVal];
 	return variables[indexVariable[indexVar]]->data()[indexVal];
 }
 

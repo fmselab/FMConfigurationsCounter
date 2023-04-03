@@ -7,7 +7,7 @@
 
 #include "ConstraintVisitor.h"
 
-ConstraintVisitor::ConstraintVisitor(FeatureVisitor v, dd_edge emptyNode,
+ConstraintVisitor::ConstraintVisitor(FeatureVisitor v, const dd_edge& emptyNode,
 		forest *mdd) {
 	this->visitor = v;
 	this->emptyNode = emptyNode;
@@ -15,6 +15,9 @@ ConstraintVisitor::ConstraintVisitor(FeatureVisitor v, dd_edge emptyNode,
 }
 
 ConstraintVisitor::~ConstraintVisitor() {
+	for (dd_edge e : constraintMddList)
+		e.clear();
+
 	constraintMddList.clear();
 }
 
@@ -124,7 +127,7 @@ dd_edge ConstraintVisitor::visitVar(xml_node<> *node) {
 	const int N = mdd->getDomain()->getNumVariables();
 	// It is possible to find the feature, so we need to get its index
 	// In this case, it is boolean feature
-	if (visitor.variableIndex.count(variableName) > 0) {
+	if (visitor.variableIndex.count(variableName) > 0 && visitor.variables.count(variableName) > 0) {
 		vector<string> *values = visitor.variables[variableName];
 		int variableIndex = visitor.variableIndex[variableName];
 		if (values->size() > 2
