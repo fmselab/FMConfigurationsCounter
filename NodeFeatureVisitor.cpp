@@ -55,6 +55,12 @@ bool FeatureVisitor::areChildrenAllLeaf(xml_node<> *node) {
 	return areAllLeaf;
 }
 
+bool FeatureVisitor::isLeaf(xml_node<> *node) {
+	if (strcmp(node->name(), "feature") == 0)
+		return true;
+	return false;
+}
+
 void FeatureVisitor::visitAlt(xml_node<> *node) {
 	bool areAllLeaf = true;
 
@@ -91,13 +97,14 @@ void FeatureVisitor::visitAlt(xml_node<> *node) {
 	} else {
 		// The alternative variable has to be managed as a boolean one (i.e., as an and)
 		// Indexes of the children
-		vector<pair<int,int>> *childrenIndex = new vector<pair<int,int>>;
+		vector<pair<int, int>> *childrenIndex = new vector<pair<int, int>>;
 		int parentIndex = index;
 		int indexOfNoneParent = -1;
 
 		// Define the current variable, which is a boolean variable
 		defineSingleVariable(node);
-		indexOfNoneParent = getIndexOfNoneForVariable(indexVariable[parentIndex]);
+		indexOfNoneParent = getIndexOfNoneForVariable(
+				indexVariable[parentIndex]);
 
 		// Set dependencies between the feature and its parent
 		setDependency(node);
@@ -117,7 +124,9 @@ void FeatureVisitor::visitAlt(xml_node<> *node) {
 			childrenIndex->push_back(make_pair(thisIndex, noneIndex));
 		}
 
-		altIndexesExclusion.push_back(make_pair(make_pair(parentIndex, indexOfNoneParent), childrenIndex));
+		altIndexesExclusion.push_back(
+				make_pair(make_pair(parentIndex, indexOfNoneParent),
+						childrenIndex));
 	}
 }
 
@@ -348,7 +357,7 @@ vector<pair<pair<int, int>, vector<pair<int, int>>*>> FeatureVisitor::getOrIndex
 	return orIndexsNonLeaf;
 }
 
-vector<pair<pair<int, int>, vector<pair<int,int>>*>> FeatureVisitor::getAltIndexesExclusion() {
+vector<pair<pair<int, int>, vector<pair<int, int>>*>> FeatureVisitor::getAltIndexesExclusion() {
 	return altIndexesExclusion;
 }
 

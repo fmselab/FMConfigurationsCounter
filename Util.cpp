@@ -415,7 +415,7 @@ void Util::addSingleImplications(const int N, const dd_edge &emptyNode,
 }
 
 bool compareEdges(dd_edge e1, dd_edge e2) {
-	return (e1.getEdgeCount() > e2.getEdgeCount());
+	return (e1.getEdgeCount() < e2.getEdgeCount());
 }
 
 void Util::addCrossTreeConstraints(const FeatureVisitor v,
@@ -440,5 +440,6 @@ void Util::addCrossTreeConstraints(const FeatureVisitor v,
 				<< ": " << startingNode.getCardinality() << " - Edges: "
 				<< startingNode.getEdgeCount() << " - Nodes: "
 				<< startingNode.getNodeCount() << endl;
+		e.clear();
 	}
 }

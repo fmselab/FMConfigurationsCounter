@@ -39,9 +39,14 @@ void ConstraintVisitor::visit(xml_node<> *&node, int reduction_factor) {
 	if (reduction_factor > 0) {
 		vector<dd_edge> temp;
 		// Compact the constraints
-		for (unsigned int i = 0; i<constraintMddList.size(); i+=reduction_factor) {
+		for (unsigned int i = 0; i < constraintMddList.size(); i +=
+				reduction_factor) {
 			dd_edge cumulativeNode = constraintMddList[i];
-			for (int j = 1; j<reduction_factor && i+j < constraintMddList.size(); j++) {
+			logcout(LOG_DEBUG) << "\tReducing constraints from " << (i + 1)
+					<< endl;
+			for (int j = 1;
+					j < reduction_factor && i + j < constraintMddList.size();
+					j++) {
 				cumulativeNode *= constraintMddList[i + j];
 			}
 			temp.push_back(cumulativeNode);
@@ -60,6 +65,8 @@ dd_edge ConstraintVisitor::visitConstraint(xml_node<> *node) {
 		return visitVar(node);
 	else if (strcmp(node->name(), "imp") == 0)
 		return visitImplies(node);
+	else if (strcmp(node->name(), "eq") == 0)
+		return visitEq(node);
 	else if (strcmp(node->name(), "disj") == 0)
 		return visitDisj(node);
 	else if (strcmp(node->name(), "conj") == 0)
@@ -99,6 +106,15 @@ dd_edge ConstraintVisitor::visitImplies(xml_node<> *node) {
 	dd_edge rightEdge = visitConstraint(right);
 	leftEdge = this->emptyNode - leftEdge;
 	return leftEdge + rightEdge;
+}
+
+dd_edge ConstraintVisitor::visitEq(xml_node<> *node) {
+	xml_node<> *left = node->first_node();
+	xml_node<> *right = left->next_sibling();
+	dd_edge leftEdge = visitConstraint(left);
+	dd_edge rightEdge = visitConstraint(right);
+	apply(EQUAL, leftEdge, rightEdge, leftEdge);
+	return leftEdge;
 }
 
 dd_edge ConstraintVisitor::visitVar(xml_node<> *node) {

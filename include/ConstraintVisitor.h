@@ -35,6 +35,7 @@ private:
 	dd_edge visitImplies(xml_node<> * node);
 	dd_edge visitVar(xml_node<> * node);
 	dd_edge visitNot(xml_node<> * node);
+	dd_edge visitEq(xml_node<> * node);
 
 public:
 	ConstraintVisitor(FeatureVisitor v, dd_edge emptyNode, forest* mdd);

@@ -31,6 +31,7 @@ private:
 	void defineSingleVariable(xml_node<> *node);
 	void setMandatory(xml_node<> *node, int indexOfNone, int varIndex);
 	bool areChildrenAllLeaf(xml_node<> *node);
+	bool isLeaf(xml_node<> *node);
 	void setMandatoryNoParent(rapidxml::xml_node<> *node, int varIndex);
 	void setMandatoryImplication(rapidxml::xml_node<> *node, int indexOfNone, int varIndex);
 	int getIndexOfNoneForVariable(const std::string &variableName);

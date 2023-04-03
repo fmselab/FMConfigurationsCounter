@@ -3,13 +3,14 @@
 
 using namespace std;
 
-#define IGNORE_HIDDEN_MAIN true
+#define IGNORE_HIDDEN_MAIN false
 
 int main(int argc, char **argv) {
-	// Models missing:
+	// Not Working Models:
 	//				   LinuxModel
+	//				   automotive01
 
 	Util::SORT_CONSTRAINTS = true;
-	Util::getProductCountFromFile("examples/linuxModel.xml", IGNORE_HIDDEN_MAIN, 10);
+	Util::getProductCountFromFile("examples/automotive01.xml", IGNORE_HIDDEN_MAIN, 22);
 	return 0;
 }
