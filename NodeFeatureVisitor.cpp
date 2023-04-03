@@ -178,9 +178,14 @@ void FeatureVisitor::visitAlt(xml_node<> *node) {
 					mandatoryImplications.push_back(
 							make_pair(
 									make_pair(nIndex,
-											-getIndexOfNoneForVariable(
-													indexVariable[nIndex])),
-									make_pair(currentIndex, -getIndexOfValue(indexVariable[currentIndex]).second)));
+											getIndexOfNoneForVariable(
+													indexVariable[nIndex]) + 1
+													+ variables[indexVariable[nIndex]]->size()),
+									make_pair(currentIndex,
+											getIndexOfValue(
+													indexVariable[currentIndex]).second
+													+ 1
+													+ variables[indexVariable[currentIndex]]->size())));
 				} else {
 					// N is not an alternative. We should consider n's children
 					for (xml_node<> *n1 = n->first_node(); n1;
@@ -342,9 +347,21 @@ void FeatureVisitor::setMandatoryImplication(xml_node<> *node, int indexOfNone,
 		parentName = node->parent()->first_attribute("name")->value();
 	}
 	int indexOfNoneParent = getIndexOfNoneForVariable(parentName);
-	mandatoryImplications.push_back(
-			make_pair(make_pair(varIndex, indexOfNone),
-					make_pair(variableIndex[parentName], indexOfNoneParent)));
+	// If the parent is not an Alternative
+	if (indexOfNoneParent != -1) {
+		mandatoryImplications.push_back(
+				make_pair(make_pair(varIndex, indexOfNone),
+						make_pair(variableIndex[parentName],
+								indexOfNoneParent)));
+	} else {
+		pair<int, int> dependencyPair = getIndexOfValue(parentName);
+		// If the parent has been merged in an alternative
+		mandatoryImplications.push_back(
+				make_pair(make_pair(varIndex, indexOfNone),
+						make_pair(dependencyPair.first,
+								dependencyPair.second + 1
+										+ variables[indexVariable[dependencyPair.first]]->size())));
+	}
 }
 
 void FeatureVisitor::setSingleImplication(xml_node<> *node, int indexOfNone) {
@@ -475,8 +492,8 @@ int* FeatureVisitor::getBounds() {
 }
 
 string FeatureVisitor::getValueForVar(int indexVar, int indexVal) {
-	if (indexVal < 0)
-		return "-" + variables[indexVariable[indexVar]]->data()[-indexVal];
+	if (indexVal >= getBoundForVar(indexVar))
+		return "-" + variables[indexVariable[indexVar]]->data()[indexVal - getBoundForVar(indexVar) - 1];
 	return variables[indexVariable[indexVar]]->data()[indexVal];
 }
 
@@ -490,4 +507,8 @@ vector<pair<pair<int, int>, vector<pair<int, int>>*>> FeatureVisitor::getAltInde
 
 FeatureVisitor::~FeatureVisitor() {
 
+}
+
+int FeatureVisitor::getBoundForVar(int index) {
+	return variables[indexVariable[index]]->size();
 }

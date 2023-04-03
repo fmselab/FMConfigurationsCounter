@@ -360,9 +360,9 @@ void Util::addMandatoryNonLeaf(const int N, const dd_edge &emptyNode,
 		mdd->createEdge(true, tempC1);
 		constraint = vector<int>(N, -1);
 		// A
-		if (mandatoryImplications[i].first.second < 0) {
+		if (mandatoryImplications[i].first.second >= v.getBoundForVar(mandatoryImplications[i].first.first)) {
 			constraint[N - mandatoryImplications[i].first.first - 1] =
-					-mandatoryImplications[i].first.second;
+					mandatoryImplications[i].first.second - v.getBoundForVar(mandatoryImplications[i].first.first) - 1;
 			tempC = Util::getMDDFromTuple(constraint, mdd) * emptyNode;
 			tempC = emptyNode - tempC;
 		} else {
@@ -373,9 +373,9 @@ void Util::addMandatoryNonLeaf(const int N, const dd_edge &emptyNode,
 
 		// B
 		constraint = vector<int>(N, -1);
-		if (mandatoryImplications[i].second.second < 0) {
+		if (mandatoryImplications[i].second.second >= v.getBoundForVar(mandatoryImplications[i].second.first)) {
 			constraint[N - mandatoryImplications[i].second.first - 1] =
-					-mandatoryImplications[i].second.second;
+					mandatoryImplications[i].second.second - v.getBoundForVar(mandatoryImplications[i].second.first) - 1;
 			tempC1 = Util::getMDDFromTuple(constraint, mdd) * emptyNode;
 			tempC1 = emptyNode - tempC;
 		} else {

@@ -53,6 +53,7 @@ public:
 	void printVariablesInMap();
 	int getNVar();
 	int* getBounds();
+	int getBoundForVar(int index);
 	vector<int> getMandatoryIndex();
 	vector<pair<pair<int, int>, vector<int>*>> getOrIndexs();
 	vector<pair<pair<int, int>, vector<pair<int, int>>*>> getOrIndexsNonLeaf();
