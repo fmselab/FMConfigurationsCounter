@@ -48,7 +48,7 @@ public:
 	static double getProductCountFromFile(string fileName, int reduction_factor_ctc);
 
 	static bool IGNORE_HIDDEN;
-	static bool SORT_CONSTRAINTS;
+	static bool SORT_CONSTRAINTS_WHEN_APPLYING;
 	static bool SHUFFLE_CONSTRAINTS;
 };
 

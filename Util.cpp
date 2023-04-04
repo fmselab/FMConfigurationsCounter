@@ -8,7 +8,7 @@
 #include "Util.hpp"
 
 bool Util::IGNORE_HIDDEN = false;
-bool Util::SORT_CONSTRAINTS = false;
+bool Util::SORT_CONSTRAINTS_WHEN_APPLYING = false;
 bool Util::SHUFFLE_CONSTRAINTS = false;
 
 double Util::getProductCountFromFile(string fileName) {
@@ -486,7 +486,7 @@ void Util::addCrossTreeConstraints(const FeatureVisitor v,
 	// Now, compute the intersection between startingNode and each of the constraint
 	vector<dd_edge> constraintList = cVisitor.getConstraintMddList();
 	// Order the vector from the lowest cardinality to the highest
-	if (SORT_CONSTRAINTS) {
+	if (SORT_CONSTRAINTS_WHEN_APPLYING) {
 		sort(constraintList.begin(), constraintList.end(), compareEdges);
 	}
 	// Apply the constraints

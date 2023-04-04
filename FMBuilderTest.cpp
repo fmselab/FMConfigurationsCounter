@@ -10,7 +10,7 @@
 #include "Util.hpp"
 
 TEST_CASE("gplTinyModel without ignore", "[gplTinyModel1]") {
-	Util::SORT_CONSTRAINTS = false;
+	Util::SORT_CONSTRAINTS_WHEN_APPLYING = false;
 	REQUIRE(
 			Util::getProductCountFromFile("examples/gplTinyModel.xml", false)
 					== 6);
@@ -18,7 +18,7 @@ TEST_CASE("gplTinyModel without ignore", "[gplTinyModel1]") {
 }
 
 TEST_CASE("gplTinyModel with ignore", "[gplTinyModel2]") {
-	Util::SORT_CONSTRAINTS = false;
+	Util::SORT_CONSTRAINTS_WHEN_APPLYING = false;
 	REQUIRE(
 			Util::getProductCountFromFile("examples/gplTinyModel.xml", true)
 					== 6);
@@ -26,59 +26,59 @@ TEST_CASE("gplTinyModel with ignore", "[gplTinyModel2]") {
 }
 
 TEST_CASE("carModel with ignore", "[carModel1]") {
-	Util::SORT_CONSTRAINTS = false;
+	Util::SORT_CONSTRAINTS_WHEN_APPLYING = false;
 	REQUIRE(Util::getProductCountFromFile("examples/carModel.xml", true) == 7);
 }
 
 TEST_CASE("carModel without ignore", "[carModel2]") {
-	Util::SORT_CONSTRAINTS = false;
+	Util::SORT_CONSTRAINTS_WHEN_APPLYING = false;
 	REQUIRE(Util::getProductCountFromFile("examples/carModel.xml", false) == 7);
 }
 
 TEST_CASE("ppuModel with ignore", "[ppuModel1]") {
-	Util::SORT_CONSTRAINTS = false;
+	Util::SORT_CONSTRAINTS_WHEN_APPLYING = false;
 	REQUIRE(
 			Util::getProductCountFromFile("examples/ppuModel.xml", true)
 					== 96000);
 }
 
 TEST_CASE("ppuModel without ignore", "[ppuModel2]") {
-	Util::SORT_CONSTRAINTS = false;
+	Util::SORT_CONSTRAINTS_WHEN_APPLYING = false;
 	REQUIRE(
 			Util::getProductCountFromFile("examples/ppuModel.xml", false)
 					== 96000);
 }
 
 TEST_CASE("aplModel with ignore", "[aplModel1]") {
-	Util::SORT_CONSTRAINTS = false;
+	Util::SORT_CONSTRAINTS_WHEN_APPLYING = false;
 	REQUIRE(
 			Util::getProductCountFromFile("examples/aplModel.xml", true)
 					== 159120);
 }
 
 TEST_CASE("aplModel without ignore", "[aplModel2]") {
-	Util::SORT_CONSTRAINTS = false;
+	Util::SORT_CONSTRAINTS_WHEN_APPLYING = false;
 	REQUIRE(
 			Util::getProductCountFromFile("examples/aplModel.xml", false)
 					== 159184);
 }
 
 TEST_CASE("gplModel without ignore", "[gplModel1]") {
-	Util::SORT_CONSTRAINTS = false;
+	Util::SORT_CONSTRAINTS_WHEN_APPLYING = false;
 	REQUIRE(
 			Util::getProductCountFromFile("examples/gplModel.xml", false)
 					== 960);
 }
 
 TEST_CASE("gplModel with ignore", "[gplModel2]") {
-	Util::SORT_CONSTRAINTS = false;
+	Util::SORT_CONSTRAINTS_WHEN_APPLYING = false;
 	REQUIRE(
 			Util::getProductCountFromFile("examples/gplModel.xml", true)
 					== 186);
 }
 
 TEST_CASE("eshopModel with ignore", "[eshopModel1]") {
-	Util::SORT_CONSTRAINTS = false;
+	Util::SORT_CONSTRAINTS_WHEN_APPLYING = false;
 	// 2.2602e+49
 	double nConfig = 22602043046884907138622062009629005242624813039616.0;
 	double computedCfgs = Util::getProductCountFromFile(
@@ -87,7 +87,7 @@ TEST_CASE("eshopModel with ignore", "[eshopModel1]") {
 }
 
 TEST_CASE("eshopModel without ignore", "[eshopModel2]") {
-	Util::SORT_CONSTRAINTS = false;
+	Util::SORT_CONSTRAINTS_WHEN_APPLYING = false;
 	// 2.2602e+49
 	double nConfig = 22602043046884907138622062009629005242624813039616.0;
 	double computedCfgs = Util::getProductCountFromFile(
@@ -96,7 +96,7 @@ TEST_CASE("eshopModel without ignore", "[eshopModel2]") {
 }
 
 TEST_CASE("violetModel without ignore", "[violetModel1]") {
-	Util::SORT_CONSTRAINTS = false;
+	Util::SORT_CONSTRAINTS_WHEN_APPLYING = false;
 	// 5.93843e+18
 	double nConfig = 5938433009513149440.0;
 	REQUIRE(
@@ -105,7 +105,7 @@ TEST_CASE("violetModel without ignore", "[violetModel1]") {
 }
 
 TEST_CASE("violetModel with ignore", "[violetModel2]") {
-	Util::SORT_CONSTRAINTS = false;
+	Util::SORT_CONSTRAINTS_WHEN_APPLYING = false;
 	// 3.89226e+18
 	double nConfig = 3892263109263360000.0;
 	double computedConfig = Util::getProductCountFromFile(
@@ -114,7 +114,7 @@ TEST_CASE("violetModel with ignore", "[violetModel2]") {
 }
 
 TEST_CASE("gplAheadModel with ignore", "[gplAheadModel1]") {
-	Util::SORT_CONSTRAINTS = false;
+	Util::SORT_CONSTRAINTS_WHEN_APPLYING = false;
 	double nConfig = 728;
 	REQUIRE(
 			Util::getProductCountFromFile("examples/gplAheadModel.xml", true)
@@ -122,7 +122,7 @@ TEST_CASE("gplAheadModel with ignore", "[gplAheadModel1]") {
 }
 
 TEST_CASE("gplAheadModel without ignore", "[gplAheadModel2]") {
-	Util::SORT_CONSTRAINTS = false;
+	Util::SORT_CONSTRAINTS_WHEN_APPLYING = false;
 	double nConfig = 100266;
 	REQUIRE(
 			Util::getProductCountFromFile("examples/gplAheadModel.xml", false)
@@ -130,7 +130,7 @@ TEST_CASE("gplAheadModel without ignore", "[gplAheadModel2]") {
 }
 
 TEST_CASE("waterlooModel with ignore", "[waterlooModel1]") {
-	Util::SORT_CONSTRAINTS = false;
+	Util::SORT_CONSTRAINTS_WHEN_APPLYING = false;
 	// 6.70835e+101
 	double nConfig = 670835392217916052367826961285705439055529026755794918488321216695556598191228298976523484421022547968.0;
 	REQUIRE(
@@ -139,7 +139,7 @@ TEST_CASE("waterlooModel with ignore", "[waterlooModel1]") {
 }
 
 TEST_CASE("waterlooModel without ignore", "[waterlooModel2]") {
-	Util::SORT_CONSTRAINTS = false;
+	Util::SORT_CONSTRAINTS_WHEN_APPLYING = false;
 	// 6.70835e+101
 	double nConfig = 670835392217916052367826961285705439055529026755794918488321216695556598191228298976523484421022547968.0;
 	REQUIRE(
@@ -148,7 +148,7 @@ TEST_CASE("waterlooModel without ignore", "[waterlooModel2]") {
 }
 
 TEST_CASE("axTLSModel with ignore", "[axTLSModel1]") {
-	Util::SORT_CONSTRAINTS = false;
+	Util::SORT_CONSTRAINTS_WHEN_APPLYING = false;
 	//8.26244e+11
 	double nConfig = 826244333568.0;
 	REQUIRE(
@@ -157,7 +157,7 @@ TEST_CASE("axTLSModel with ignore", "[axTLSModel1]") {
 }
 
 TEST_CASE("axTLSModel without ignore", "[axTLSModel2]") {
-	Util::SORT_CONSTRAINTS = false;
+	Util::SORT_CONSTRAINTS_WHEN_APPLYING = false;
 	//8.26244e+11
 	double nConfig = 826244333568.0;
 	REQUIRE(
@@ -166,7 +166,7 @@ TEST_CASE("axTLSModel without ignore", "[axTLSModel2]") {
 }
 
 TEST_CASE("uClibCModel without ignore", "[uClibCModel1]") {
-	Util::SORT_CONSTRAINTS = false;
+	Util::SORT_CONSTRAINTS_WHEN_APPLYING = false;
 	// 1.66019e+40
 	double nConfig = 16601881363009995393029846406265571377152.0;
 	REQUIRE(
@@ -175,7 +175,7 @@ TEST_CASE("uClibCModel without ignore", "[uClibCModel1]") {
 }
 
 TEST_CASE("uClibCModel with ignore", "[uClibCModel2]") {
-	Util::SORT_CONSTRAINTS = false;
+	Util::SORT_CONSTRAINTS_WHEN_APPLYING = false;
 	// 1.66019e+40
 	double nConfig = 16601881363009995393029846406265571377152.0;
 	REQUIRE(
@@ -184,7 +184,7 @@ TEST_CASE("uClibCModel with ignore", "[uClibCModel2]") {
 }
 
 TEST_CASE("berkeleyDBModel1 without ignore", "[berkeleyDBModel1]") {
-	Util::SORT_CONSTRAINTS = false;
+	Util::SORT_CONSTRAINTS_WHEN_APPLYING = false;
 	// 4.02597e+09
 	double nConfig = 4025968128.0;
 	REQUIRE(
@@ -193,7 +193,7 @@ TEST_CASE("berkeleyDBModel1 without ignore", "[berkeleyDBModel1]") {
 }
 
 TEST_CASE("berkeleyDBModel1 with ignore", "[berkeleyDBModel2]") {
-	Util::SORT_CONSTRAINTS = false;
+	Util::SORT_CONSTRAINTS_WHEN_APPLYING = false;
 	// 4.02597e+09
 	double nConfig = 4025968128.0;
 	REQUIRE(
@@ -202,7 +202,7 @@ TEST_CASE("berkeleyDBModel1 with ignore", "[berkeleyDBModel2]") {
 }
 
 TEST_CASE("Embtoolkit without ignore", "[embToolkit1]") {
-	Util::SORT_CONSTRAINTS = false;
+	Util::SORT_CONSTRAINTS_WHEN_APPLYING = false;
 	// 5.13456e+96
 	double nConfig = 5134555717728406502218134350650551212671101329005046085996988582713204660115755558759929862946816.0;
 	REQUIRE(
@@ -211,7 +211,7 @@ TEST_CASE("Embtoolkit without ignore", "[embToolkit1]") {
 }
 
 TEST_CASE("Embtoolkit with ignore", "[embToolkit2]") {
-	Util::SORT_CONSTRAINTS = false;
+	Util::SORT_CONSTRAINTS_WHEN_APPLYING = false;
 	// 5.13456e+96
 	double nConfig = 5134555717728406502218134350650551212671101329005046085996988582713204660115755558759929862946816.0;
 	REQUIRE(
