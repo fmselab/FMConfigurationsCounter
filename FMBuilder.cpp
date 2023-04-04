@@ -10,8 +10,10 @@ int main(int argc, char **argv) {
 	//				   	LinuxModel
 	//				   	automotive01
 	// 					automotive02v4
+	//					BusyBox
 
-	Util::SORT_CONSTRAINTS = false;
-	Util::getProductCountFromFile("examples/automotive02v4Model.xml", IGNORE_HIDDEN_MAIN, 10);
+	Util::SORT_CONSTRAINTS_WHEN_APPLYING = true;
+	Util::SHUFFLE_CONSTRAINTS = true;
+	Util::getProductCountFromFile("examples/LinuxModel.xml", IGNORE_HIDDEN_MAIN, 10);
 	return 0;
 }
