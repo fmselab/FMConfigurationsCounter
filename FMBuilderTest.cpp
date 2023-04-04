@@ -183,6 +183,24 @@ TEST_CASE("uClibCModel with ignore", "[uClibCModel2]") {
 					== nConfig);
 }
 
+TEST_CASE("berkeleyDBModel1 without ignore", "[berkeleyDBModel1]") {
+	Util::SORT_CONSTRAINTS = false;
+	// 4.02597e+09
+	double nConfig = 4025968128.0;
+	REQUIRE(
+			Util::getProductCountFromFile("examples/berkeleyDBModel.xml", false)
+					== nConfig);
+}
+
+TEST_CASE("berkeleyDBModel1 with ignore", "[berkeleyDBModel2]") {
+	Util::SORT_CONSTRAINTS = false;
+	// 4.02597e+09
+	double nConfig = 4025968128.0;
+	REQUIRE(
+			Util::getProductCountFromFile("examples/berkeleyDBModel.xml", true)
+					== nConfig);
+}
+
 /*
  * 				    ROOT-------------------------------------------------------------
  * 					 |																|

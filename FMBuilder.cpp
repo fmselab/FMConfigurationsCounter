@@ -10,9 +10,8 @@ int main(int argc, char **argv) {
 	//				   	LinuxModel
 	//				   	automotive01
 	// 					automotive02v4
-	//					berkeleyDBModel
 
 	Util::SORT_CONSTRAINTS = false;
-	Util::getProductCountFromFile("examples/berkeleyDBModel.xml", IGNORE_HIDDEN_MAIN, 0);
+	Util::getProductCountFromFile("examples/automotive02v4Model.xml", IGNORE_HIDDEN_MAIN, 10);
 	return 0;
 }
