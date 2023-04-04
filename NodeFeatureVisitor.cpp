@@ -106,7 +106,7 @@ void FeatureVisitor::reorderVariables(xml_node<> *node) {
 		occurrences.push_back(make_pair(varName, nOccurrences));
 	}
 
-	// Sort the occurrences vector based on the occurrency number
+	// Sort the occurrences vector based on the occurrence number
 	std::sort(occurrences.begin(), occurrences.end(), comparePairs);
 
 	// Reorder all the lists and maps
