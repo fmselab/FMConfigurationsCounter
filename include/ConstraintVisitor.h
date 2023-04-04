@@ -17,6 +17,7 @@
 #include "Util.hpp"
 #include <algorithm>
 #include "logger.hpp"
+#include <random>
 
 using namespace std;
 using namespace rapidxml;

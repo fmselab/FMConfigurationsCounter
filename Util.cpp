@@ -9,6 +9,7 @@
 
 bool Util::IGNORE_HIDDEN = false;
 bool Util::SORT_CONSTRAINTS = false;
+bool Util::SHUFFLE_CONSTRAINTS = false;
 
 double Util::getProductCountFromFile(string fileName) {
 	return getProductCountFromFile(fileName, 0);

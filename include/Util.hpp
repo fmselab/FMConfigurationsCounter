@@ -49,6 +49,7 @@ public:
 
 	static bool IGNORE_HIDDEN;
 	static bool SORT_CONSTRAINTS;
+	static bool SHUFFLE_CONSTRAINTS;
 };
 
 #endif /* INCLUDE_UTIL_HPP_ */
