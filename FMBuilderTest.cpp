@@ -201,6 +201,24 @@ TEST_CASE("berkeleyDBModel1 with ignore", "[berkeleyDBModel2]") {
 					== nConfig);
 }
 
+TEST_CASE("Embtoolkit without ignore", "[embToolkit1]") {
+	Util::SORT_CONSTRAINTS = false;
+	// 5.13456e+96
+	double nConfig = 5134555717728406502218134350650551212671101329005046085996988582713204660115755558759929862946816.0;
+	REQUIRE(
+			Util::getProductCountFromFile("examples/Embtoolkit.xml", false, 15)
+					== nConfig);
+}
+
+TEST_CASE("Embtoolkit with ignore", "[embToolkit2]") {
+	Util::SORT_CONSTRAINTS = false;
+	// 5.13456e+96
+	double nConfig = 5134555717728406502218134350650551212671101329005046085996988582713204660115755558759929862946816.0;
+	REQUIRE(
+			Util::getProductCountFromFile("examples/Embtoolkit.xml", true, 15)
+					== nConfig);
+}
+
 /*
  * 				    ROOT-------------------------------------------------------------
  * 					 |																|
