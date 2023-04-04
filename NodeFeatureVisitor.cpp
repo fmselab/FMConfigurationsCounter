@@ -96,6 +96,7 @@ void FeatureVisitor::reorderVariables(xml_node<> *node) {
 	// Then, all the lists and index are sorted in order to have first (i.e., in the bottom of the MDD)
 	// the mostly occurring variables. In this way, possible additional edges, are focused in the bottom
 	// of the MDD and, thus, the MDD size is kept under control
+	// FIXME: Not working for now
 	vector<pair<string, int>> occurrences;
 	for (std::map<string, vector<string>*>::iterator it = variables.begin();
 			it != variables.end(); ++it) {
@@ -112,9 +113,12 @@ void FeatureVisitor::reorderVariables(xml_node<> *node) {
 	// Reorder all the lists and maps
 	int newIndex = 0;
 	vector<int> mandatoryIndexNew;
+	// Old index, new index
+	map<int, int> indexMapping;
 
 	for (pair<string, int> a : occurrences) {
 		int oldIndex = variableIndex[a.first];
+		indexMapping[oldIndex] = newIndex;
 		// ---mandatoryIndex
 		for (int indx : mandatoryIndex) {
 			if (indx == oldIndex)
@@ -122,65 +126,47 @@ void FeatureVisitor::reorderVariables(xml_node<> *node) {
 		}
 		// ---variableIndex
 		variableIndex[a.first] = newIndex;
-
-
-
-
-		// FIXME ---altIndexesExclusion
-		for (pair<pair<int, int>, vector<pair<int, int>>*> item : altIndexesExclusion) {
-			if (item.first.first == oldIndex)
-				item.first.first = newIndex;
-			for (pair<int, int> itemVector : *item.second) {
-				if (itemVector.first == oldIndex)
-					itemVector.first = newIndex;
-			}
-		}
-		// FIXME ---orIndexsNonLeaf
-		for (pair<pair<int, int>, vector<pair<int, int>>*> item : orIndexsNonLeaf) {
-			if (item.first.first == oldIndex)
-				item.first.first = newIndex;
-			for (pair<int, int> itemVector : *item.second) {
-				if (itemVector.first == oldIndex)
-					itemVector.first = newIndex;
-			}
-		}
-		// FIXME ---mandatoryImplications
-		for (pair<pair<int, int>, pair<int, int>> item : mandatoryImplications) {
-			if (item.first.first == oldIndex)
-				item.first.first = newIndex;
-			if (item.second.first == oldIndex)
-				item.second.first = newIndex;
-		}
-		// FIXME ---singleImplications
-		for (pair<pair<int, int>, pair<int, int>> item : singleImplications) {
-			if (item.first.first == oldIndex)
-				item.first.first = newIndex;
-			if (item.second.first == oldIndex)
-				item.second.first = newIndex;
-		}
-		// FIXME ---singleImplicationsNonLeaf
-		for (pair<pair<int, int>, pair<int, int>> item : singleImplicationsNonLeaf) {
-			if (item.first.first == oldIndex)
-				item.first.first = newIndex;
-			if (item.second.first == oldIndex)
-				item.second.first = newIndex;
-		}
-		// FIXME ---orIndexs
-		for (pair<pair<int, int>, vector<int>*> item : orIndexs) {
-			if (item.first.first == oldIndex)
-				item.first.first = newIndex;
-			for (int itemVector : *item.second) {
-				if (itemVector == oldIndex)
-					itemVector = newIndex;
-			}
-		}
-
-
-
 		// ---indexVariable
 		indexVariable[newIndex] = a.first;
 
 		newIndex++;
+	}
+
+	// ---altIndexesExclusion
+	for (pair<pair<int, int>, vector<pair<int, int>>*> item : altIndexesExclusion) {
+		item.first.first = indexMapping[item.first.first];
+		for (pair<int, int> itemVector : *item.second) {
+			itemVector.first = indexMapping[itemVector.first];
+		}
+	}
+	// ---orIndexsNonLeaf
+	for (pair<pair<int, int>, vector<pair<int, int>>*> item : orIndexsNonLeaf) {
+		item.first.first = indexMapping[item.first.first];
+		for (pair<int, int> itemVector : *item.second) {
+			itemVector.first = indexMapping[itemVector.first];
+		}
+	}
+	// ---mandatoryImplications
+	for (pair<pair<int, int>, pair<int, int>> item : mandatoryImplications) {
+		item.first.first = indexMapping[item.first.first];
+		item.second.first = indexMapping[item.second.first];
+	}
+	// ---singleImplications
+	for (pair<pair<int, int>, pair<int, int>> item : singleImplications) {
+		item.first.first = indexMapping[item.first.first];
+		item.second.first = indexMapping[item.second.first];
+	}
+	// ---singleImplicationsNonLeaf
+	for (pair<pair<int, int>, pair<int, int>> item : singleImplicationsNonLeaf) {
+		item.first.first = indexMapping[item.first.first];
+		item.second.first = indexMapping[item.second.first];
+	}
+	// ---orIndexs
+	for (pair<pair<int, int>, vector<int>*> item : orIndexs) {
+		item.first.first = indexMapping[item.first.first];
+		for (int itemVector : *item.second) {
+			itemVector = indexMapping[itemVector];
+		}
 	}
 
 	// Copy new data
