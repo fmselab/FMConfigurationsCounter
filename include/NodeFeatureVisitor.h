@@ -62,6 +62,7 @@ public:
 	vector<pair<pair<int, int>, pair<int, int>>> getSingleImplicationsNonLeaf();
 	vector<pair<pair<int, int>, vector<pair<int,int>>*>> getAltIndexesExclusion();
 	string getValueForVar(int indexVar, int indexVal);
+	void reorderVariables(xml_node<> * node);
 
 	virtual ~FeatureVisitor();
 

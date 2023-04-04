@@ -69,6 +69,124 @@ int FeatureVisitor::getNumChildren(xml_node<> *node) {
 	return i;
 }
 
+int countOccurrences(xml_node<> *node, string word) {
+	int nO = 0;
+
+	// If the node is a VAR, check its name, otherwise fetch all the children
+	if (strcmp(node->name(), "var") == 0) {
+		if (strcmp(node->value(), word.c_str()) == 0) {
+			return 1;
+		}
+		return 0;
+	} else {
+		for (xml_node<> *n = node->first_node(); n; n = n->next_sibling()) {
+			nO += countOccurrences(n, word);
+		}
+	}
+
+	return nO;
+}
+
+bool comparePairs(pair<string, int> p1, pair<string, int> p2) {
+	return p1.second < p2.second;
+}
+
+void FeatureVisitor::reorderVariables(xml_node<> *node) {
+	// For each variable, it count how many occurrences are there in the file.
+	// Then, all the lists and index are sorted in order to have first (i.e., in the bottom of the MDD)
+	// the mostly occurring variables. In this way, possible additional edges, are focused in the bottom
+	// of the MDD and, thus, the MDD size is kept under control
+	vector<pair<string, int>> occurrences;
+	for (std::map<string, vector<string>*>::iterator it = variables.begin();
+			it != variables.end(); ++it) {
+		string varName = it->first;
+		xml_node<> *n1 = node;
+
+		int nOccurrences = countOccurrences(n1, varName);
+		occurrences.push_back(make_pair(varName, nOccurrences));
+	}
+
+	// Sort the occurrences vector based on the occurrency number
+	std::sort(occurrences.begin(), occurrences.end(), comparePairs);
+
+	// Reorder all the lists and maps
+	int newIndex = 0;
+	vector<int> mandatoryIndexNew;
+
+	for (pair<string, int> a : occurrences) {
+		int oldIndex = variableIndex[a.first];
+		// ---mandatoryIndex
+		for (int indx : mandatoryIndex) {
+			if (indx == oldIndex)
+				mandatoryIndexNew.push_back(newIndex);
+		}
+		// ---variableIndex
+		variableIndex[a.first] = newIndex;
+
+
+
+
+		// FIXME ---altIndexesExclusion
+		for (pair<pair<int, int>, vector<pair<int, int>>*> item : altIndexesExclusion) {
+			if (item.first.first == oldIndex)
+				item.first.first = newIndex;
+			for (pair<int, int> itemVector : *item.second) {
+				if (itemVector.first == oldIndex)
+					itemVector.first = newIndex;
+			}
+		}
+		// FIXME ---orIndexsNonLeaf
+		for (pair<pair<int, int>, vector<pair<int, int>>*> item : orIndexsNonLeaf) {
+			if (item.first.first == oldIndex)
+				item.first.first = newIndex;
+			for (pair<int, int> itemVector : *item.second) {
+				if (itemVector.first == oldIndex)
+					itemVector.first = newIndex;
+			}
+		}
+		// FIXME ---mandatoryImplications
+		for (pair<pair<int, int>, pair<int, int>> item : mandatoryImplications) {
+			if (item.first.first == oldIndex)
+				item.first.first = newIndex;
+			if (item.second.first == oldIndex)
+				item.second.first = newIndex;
+		}
+		// FIXME ---singleImplications
+		for (pair<pair<int, int>, pair<int, int>> item : singleImplications) {
+			if (item.first.first == oldIndex)
+				item.first.first = newIndex;
+			if (item.second.first == oldIndex)
+				item.second.first = newIndex;
+		}
+		// FIXME ---singleImplicationsNonLeaf
+		for (pair<pair<int, int>, pair<int, int>> item : singleImplicationsNonLeaf) {
+			if (item.first.first == oldIndex)
+				item.first.first = newIndex;
+			if (item.second.first == oldIndex)
+				item.second.first = newIndex;
+		}
+		// FIXME ---orIndexs
+		for (pair<pair<int, int>, vector<int>*> item : orIndexs) {
+			if (item.first.first == oldIndex)
+				item.first.first = newIndex;
+			for (int itemVector : *item.second) {
+				if (itemVector == oldIndex)
+					itemVector = newIndex;
+			}
+		}
+
+
+
+		// ---indexVariable
+		indexVariable[newIndex] = a.first;
+
+		newIndex++;
+	}
+
+	// Copy new data
+	mandatoryIndex = mandatoryIndexNew;
+}
+
 void FeatureVisitor::visitAlt(xml_node<> *node) {
 	if (getNumChildren(node) > 1) {
 		// The alternative variable is an enumerative one
@@ -424,7 +542,9 @@ int* FeatureVisitor::getBounds() {
 
 string FeatureVisitor::getValueForVar(int indexVar, int indexVal) {
 	if (indexVal >= getBoundForVar(indexVar))
-		return "-" + variables[indexVariable[indexVar]]->data()[indexVal - getBoundForVar(indexVar)];
+		return "-"
+				+ variables[indexVariable[indexVar]]->data()[indexVal
+						- getBoundForVar(indexVar)];
 	return variables[indexVariable[indexVar]]->data()[indexVal];
 }
 

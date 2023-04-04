@@ -36,6 +36,8 @@ double Util::getProductCountFromFile(string fileName, int reduction_factor_ctc) 
 
 	FeatureVisitor v(IGNORE_HIDDEN);
 	v.visit(structNode->first_node());
+	if (Util::SORT_CONSTRAINTS_WHEN_APPLYING)
+		v.reorderVariables(doc.first_node()->first_node("constraints"));
 	v.printVariablesInMap();
 
 	// Init MEDDLY
