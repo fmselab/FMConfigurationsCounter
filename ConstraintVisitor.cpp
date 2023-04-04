@@ -41,8 +41,7 @@ void ConstraintVisitor::visit(xml_node<> *&node, int reduction_factor) {
 
 	if (reduction_factor > 0) {
 		if(Util::SHUFFLE_CONSTRAINTS) {
-			auto rng = std::default_random_engine {};
-			std::shuffle(std::begin(constraintMddList), std::end(constraintMddList), rng);
+			std::shuffle(std::begin(constraintMddList), std::end(constraintMddList), std::random_device());
 		}
 
 		vector<dd_edge> temp;
