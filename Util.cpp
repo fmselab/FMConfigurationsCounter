@@ -362,7 +362,7 @@ void Util::addMandatoryNonLeaf(const int N, const dd_edge &emptyNode,
 		// A
 		if (mandatoryImplications[i].first.second >= v.getBoundForVar(mandatoryImplications[i].first.first)) {
 			constraint[N - mandatoryImplications[i].first.first - 1] =
-					mandatoryImplications[i].first.second - v.getBoundForVar(mandatoryImplications[i].first.first) - 1;
+					mandatoryImplications[i].first.second - v.getBoundForVar(mandatoryImplications[i].first.first);
 			tempC = Util::getMDDFromTuple(constraint, mdd) * emptyNode;
 			tempC = emptyNode - tempC;
 		} else {
@@ -375,16 +375,15 @@ void Util::addMandatoryNonLeaf(const int N, const dd_edge &emptyNode,
 		constraint = vector<int>(N, -1);
 		if (mandatoryImplications[i].second.second >= v.getBoundForVar(mandatoryImplications[i].second.first)) {
 			constraint[N - mandatoryImplications[i].second.first - 1] =
-					mandatoryImplications[i].second.second - v.getBoundForVar(mandatoryImplications[i].second.first) - 1;
+					mandatoryImplications[i].second.second - v.getBoundForVar(mandatoryImplications[i].second.first);
 			tempC1 = Util::getMDDFromTuple(constraint, mdd) * emptyNode;
-			tempC1 = emptyNode - tempC;
+			tempC1 = emptyNode - tempC1;
 		} else {
 			constraint[N - mandatoryImplications[i].second.first - 1] =
 							mandatoryImplications[i].second.second;
 			tempC1 = Util::getMDDFromTuple(constraint, mdd) * emptyNode;
 		}
 
-		tempC1 = Util::getMDDFromTuple(constraint, mdd) * emptyNode;
 		// C = A <=> B
 		apply(EQUAL, tempC, tempC1, c);
 		logcout(LOG_DEBUG) << "\tConstraint cardinality: " << c.getCardinality()
@@ -462,7 +461,6 @@ void Util::addSingleImplications(const int N, const dd_edge &emptyNode,
 				singleImplications[i].first.second;
 		tempC1 = Util::getMDDFromTuple(constraint, mdd) * emptyNode;
 		// C = A => B = notA or B
-		// tempC = emptyNode - tempC;
 		c = tempC + tempC1;
 		logcout(LOG_DEBUG) << "\tConstraint cardinality: " << c.getCardinality()
 				<< endl;

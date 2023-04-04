@@ -11,10 +11,8 @@ int main(int argc, char **argv) {
 	//				   	automotive01
 	// 					automotive02v4
 	//					berkeleyDBModel
-	//					gplAheadModel
-	//					waterlooModel
 
 	Util::SORT_CONSTRAINTS = false;
-	Util::getProductCountFromFile("examples/gplAheadModel.xml", IGNORE_HIDDEN_MAIN, 0);
+	Util::getProductCountFromFile("examples/berkeleyDBModel.xml", IGNORE_HIDDEN_MAIN, 0);
 	return 0;
 }
