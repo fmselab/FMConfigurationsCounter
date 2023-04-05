@@ -96,7 +96,6 @@ void FeatureVisitor::reorderVariables(xml_node<> *node) {
 	// Then, all the lists and index are sorted in order to have first (i.e., in the bottom of the MDD)
 	// the mostly occurring variables. In this way, possible additional edges, are focused in the bottom
 	// of the MDD and, thus, the MDD size is kept under control
-	// FIXME: Not working for now
 	vector<pair<string, int>> occurrences;
 	for (std::map<string, vector<string>*>::iterator it = variables.begin();
 			it != variables.end(); ++it) {
@@ -133,38 +132,38 @@ void FeatureVisitor::reorderVariables(xml_node<> *node) {
 	}
 
 	// ---altIndexesExclusion
-	for (pair<pair<int, int>, vector<pair<int, int>>*> item : altIndexesExclusion) {
+	for (pair<pair<int, int>, vector<pair<int, int>>*>& item : altIndexesExclusion) {
 		item.first.first = indexMapping[item.first.first];
-		for (pair<int, int> itemVector : *item.second) {
+		for (pair<int, int>& itemVector : *item.second) {
 			itemVector.first = indexMapping[itemVector.first];
 		}
 	}
 	// ---orIndexsNonLeaf
-	for (pair<pair<int, int>, vector<pair<int, int>>*> item : orIndexsNonLeaf) {
+	for (pair<pair<int, int>, vector<pair<int, int>>*>& item : orIndexsNonLeaf) {
 		item.first.first = indexMapping[item.first.first];
-		for (pair<int, int> itemVector : *item.second) {
+		for (pair<int, int>& itemVector : *item.second) {
 			itemVector.first = indexMapping[itemVector.first];
 		}
 	}
 	// ---mandatoryImplications
-	for (pair<pair<int, int>, pair<int, int>> item : mandatoryImplications) {
+	for (pair<pair<int, int>, pair<int, int>>& item : mandatoryImplications) {
 		item.first.first = indexMapping[item.first.first];
 		item.second.first = indexMapping[item.second.first];
 	}
 	// ---singleImplications
-	for (pair<pair<int, int>, pair<int, int>> item : singleImplications) {
+	for (pair<pair<int, int>, pair<int, int>>& item : singleImplications) {
 		item.first.first = indexMapping[item.first.first];
 		item.second.first = indexMapping[item.second.first];
 	}
 	// ---singleImplicationsNonLeaf
-	for (pair<pair<int, int>, pair<int, int>> item : singleImplicationsNonLeaf) {
+	for (pair<pair<int, int>, pair<int, int>>& item : singleImplicationsNonLeaf) {
 		item.first.first = indexMapping[item.first.first];
 		item.second.first = indexMapping[item.second.first];
 	}
 	// ---orIndexs
-	for (pair<pair<int, int>, vector<int>*> item : orIndexs) {
+	for (pair<pair<int, int>, vector<int>*>& item : orIndexs) {
 		item.first.first = indexMapping[item.first.first];
-		for (int itemVector : *item.second) {
+		for (int& itemVector : *item.second) {
 			itemVector = indexMapping[itemVector];
 		}
 	}
