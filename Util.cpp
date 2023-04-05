@@ -190,6 +190,7 @@ void Util::printVector(vector<int> v, std::ostream &out) {
 	}
 	out << endl;
 }
+
 dd_edge Util::addMandatory(const dd_edge &emptyNode, const int N,
 		FeatureVisitor &v, forest *mdd) {
 	// Add the mandatory constraint for the root
@@ -494,7 +495,7 @@ void Util::addCrossTreeConstraints(const FeatureVisitor v,
 	}
 	// Apply the constraints
 	i = 0;
-	for (dd_edge e : constraintList) {
+	for (dd_edge& e : constraintList) {
 		startingNode *= e;
 		logcout(LOG_DEBUG) << "\tNew cardinality after constraint " << (++i)
 				<< ": " << startingNode.getCardinality() << " - Edges: "
