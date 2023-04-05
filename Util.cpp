@@ -36,8 +36,8 @@ double Util::getProductCountFromFile(string fileName, int reduction_factor_ctc) 
 
 	FeatureVisitor v(IGNORE_HIDDEN);
 	v.visit(structNode->first_node());
-	if (Util::SORT_CONSTRAINTS_WHEN_APPLYING)
-		v.reorderVariables(doc.first_node()->first_node("constraints"));
+//	if (Util::SORT_CONSTRAINTS_WHEN_APPLYING)
+//		v.reorderVariables(doc.first_node()->first_node("constraints"));
 	v.printVariablesInMap();
 
 	// Init MEDDLY
@@ -59,7 +59,7 @@ double Util::getProductCountFromFile(string fileName, int reduction_factor_ctc) 
 	// Do not reduce the forest
 	forest::policies pmdd(false);
 	pmdd.setFullyReduced();
-	pmdd.setLowestMemory();
+	pmdd.setLowestCost();
 	pmdd.setPessimistic();
 	// Create a forest in the above domain
 	forest *mdd = d->createForest(false, // this is not a relation
@@ -79,6 +79,7 @@ double Util::getProductCountFromFile(string fileName, int reduction_factor_ctc) 
 	// Cardinality
 	logcout(LOG_DEBUG) << "Initial cardinality: "
 			<< startingNode.getCardinality() << endl;
+
 	// Add the mandatory constraint for the root
 	dd_edge c = addMandatory(emptyNode, N, v, mdd);
 	// Intersect this edge with the starting node
