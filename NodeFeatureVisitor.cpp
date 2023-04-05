@@ -229,8 +229,7 @@ void FeatureVisitor::visitAlt(xml_node<> *node) {
 			}
 		}
 	} else {
-		// The alternative variable has to be managed as a boolean one (i.e., as an and)
-		// Indexes of the children
+		// The alternative variable is not a real alternative
 		vector<pair<int, int>> *childrenIndex = new vector<pair<int, int>>;
 		int parentIndex = index;
 		int indexOfNoneParent = -1;
@@ -457,6 +456,19 @@ void FeatureVisitor::visitAnd(xml_node<> *node) {
 }
 
 void FeatureVisitor::visitFeature(xml_node<> *node) {
+	if (node->first_attribute("mandatory") && node->parent()
+			&& ((node->parent()->first_attribute("mandatory") &&
+			strcmp(node->parent()->first_attribute("mandatory")->value(), "true") == 0) || getNumChildren(node->parent()) == 1) &&
+			getNumChildren(node) == 0 &&
+			strcmp(node->parent()->name(), "alt") != 0) {
+		// In this case, the feature is a leaf, is mandatory and its parent is mandatory
+		// as well. For this reason, it is possible to avoid representing it and to
+		// save a variable. The only operation needed is to substitute in every constraint
+		// the variable with its parent's name
+		substitutions[node->first_attribute("name")->value()] = node->parent()->first_attribute("name")->value();
+		return;
+	}
+
 	// The single feature is Boolean.
 	defineSingleVariable(node);
 

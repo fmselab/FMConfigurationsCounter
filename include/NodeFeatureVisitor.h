@@ -25,6 +25,7 @@ private:
 	vector<pair<pair<int, int>, pair<int, int>>> mandatoryImplications;
 	vector<pair<pair<int, int>, pair<int, int>>> singleImplications;
 	vector<pair<pair<int, int>, pair<int, int>>> singleImplicationsNonLeaf;
+	map<string, string> substitutions;
 
 	bool ignoreHidden;
 

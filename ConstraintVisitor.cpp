@@ -127,6 +127,10 @@ dd_edge ConstraintVisitor::visitEq(xml_node<> *node) {
 dd_edge ConstraintVisitor::visitVar(xml_node<> *node) {
 	// Name of the feature
 	string variableName = node->value();
+	// Has the variable name to be substituted?
+	if (visitor.substitutions.count(variableName)) {
+		variableName = visitor.substitutions[variableName];
+	}
 	// Number of variables
 	const int N = mdd->getDomain()->getNumVariables();
 	// It is possible to find the feature, so we need to get its index
