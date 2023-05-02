@@ -219,6 +219,24 @@ TEST_CASE("Embtoolkit with ignore", "[embToolkit2]") {
 					== nConfig);
 }
 
+TEST_CASE("FinancialServices01 without ignore", "[FinancialServices011]") {
+	Util::SORT_CONSTRAINTS_WHEN_APPLYING = false;
+	// 9.74512e+13
+	double nConfig = 97451212554676.0;
+	REQUIRE(
+			Util::getProductCountFromFile("examples/FinancialServices01.xml", false, 0)
+					== nConfig);
+}
+
+TEST_CASE("FinancialServices01 with ignore", "[FinancialServices012]") {
+	Util::SORT_CONSTRAINTS_WHEN_APPLYING = false;
+	// 9.74512e+13
+	double nConfig = 97451212554676.0;
+	REQUIRE(
+			Util::getProductCountFromFile("examples/FinancialServices01.xml", true, 0)
+					== nConfig);
+}
+
 /*
  * 				    ROOT-------------------------------------------------------------
  * 					 |																|
