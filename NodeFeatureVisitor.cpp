@@ -40,6 +40,8 @@ void FeatureVisitor::visit(xml_node<> *node) {
 		visitOr(node);
 	else if (strcmp(node->name(), "feature") == 0)
 		visitFeature(node);
+	else if (strcmp(node->name(), "description") == 0)
+		return;
 	else
 		throw std::invalid_argument("Invalid node type");
 }
@@ -132,38 +134,38 @@ void FeatureVisitor::reorderVariables(xml_node<> *node) {
 	}
 
 	// ---altIndexesExclusion
-	for (pair<pair<int, int>, vector<pair<int, int>>*>& item : altIndexesExclusion) {
+	for (pair<pair<int, int>, vector<pair<int, int>>*> &item : altIndexesExclusion) {
 		item.first.first = indexMapping[item.first.first];
-		for (pair<int, int>& itemVector : *item.second) {
+		for (pair<int, int> &itemVector : *item.second) {
 			itemVector.first = indexMapping[itemVector.first];
 		}
 	}
 	// ---orIndexsNonLeaf
-	for (pair<pair<int, int>, vector<pair<int, int>>*>& item : orIndexsNonLeaf) {
+	for (pair<pair<int, int>, vector<pair<int, int>>*> &item : orIndexsNonLeaf) {
 		item.first.first = indexMapping[item.first.first];
-		for (pair<int, int>& itemVector : *item.second) {
+		for (pair<int, int> &itemVector : *item.second) {
 			itemVector.first = indexMapping[itemVector.first];
 		}
 	}
 	// ---mandatoryImplications
-	for (pair<pair<int, int>, pair<int, int>>& item : mandatoryImplications) {
+	for (pair<pair<int, int>, pair<int, int>> &item : mandatoryImplications) {
 		item.first.first = indexMapping[item.first.first];
 		item.second.first = indexMapping[item.second.first];
 	}
 	// ---singleImplications
-	for (pair<pair<int, int>, pair<int, int>>& item : singleImplications) {
+	for (pair<pair<int, int>, pair<int, int>> &item : singleImplications) {
 		item.first.first = indexMapping[item.first.first];
 		item.second.first = indexMapping[item.second.first];
 	}
 	// ---singleImplicationsNonLeaf
-	for (pair<pair<int, int>, pair<int, int>>& item : singleImplicationsNonLeaf) {
+	for (pair<pair<int, int>, pair<int, int>> &item : singleImplicationsNonLeaf) {
 		item.first.first = indexMapping[item.first.first];
 		item.second.first = indexMapping[item.second.first];
 	}
 	// ---orIndexs
-	for (pair<pair<int, int>, vector<int>*>& item : orIndexs) {
+	for (pair<pair<int, int>, vector<int>*> &item : orIndexs) {
 		item.first.first = indexMapping[item.first.first];
-		for (int& itemVector : *item.second) {
+		for (int &itemVector : *item.second) {
 			itemVector = indexMapping[itemVector];
 		}
 	}
@@ -182,7 +184,9 @@ void FeatureVisitor::visitAlt(xml_node<> *node) {
 
 		// Get the possible values
 		for (xml_node<> *n = node->first_node(); n; n = n->next_sibling()) {
-			values->push_back(n->first_attribute("name")->value());
+			if (strcmp(n->name(), "description") != 0) {
+				values->push_back(n->first_attribute("name")->value());
+			}
 		}
 
 		// Add to the possible values also the unselected one
@@ -205,26 +209,28 @@ void FeatureVisitor::visitAlt(xml_node<> *node) {
 
 		// Check if one of the children is not a leaf. In that case, visit it
 		for (xml_node<> *n = node->first_node(); n; n = n->next_sibling()) {
-			if (!isLeaf(n)) {
-				if (strcmp(n->name(), "alt") == 0) {
-					// N is an alternative. It must be visited itself
-					int nIndex = index;
-					visit(n);
-					// Add the constraint that if n is selected, then n's parent should have value equals to n
-					mandatoryImplications.push_back(
-							make_pair(
-									make_pair(nIndex,
-											getIndexOfNoneForVariable(
-													indexVariable[nIndex])),
-									make_pair(currentIndex,
-											getIndexOfValue(
-													indexVariable[nIndex]).second
-													+ variables[indexVariable[currentIndex]]->size())));
-				} else {
-					// N is not an alternative. We should consider n's children
-					for (xml_node<> *n1 = n->first_node(); n1;
-							n1 = n1->next_sibling())
-						visit(n1);
+			if (strcmp(n->name(), "description") != 0) {
+				if (!isLeaf(n)) {
+					if (strcmp(n->name(), "alt") == 0) {
+						// N is an alternative. It must be visited itself
+						int nIndex = index;
+						visit(n);
+						// Add the constraint that if n is selected, then n's parent should have value equals to n
+						mandatoryImplications.push_back(
+								make_pair(
+										make_pair(nIndex,
+												getIndexOfNoneForVariable(
+														indexVariable[nIndex])),
+										make_pair(currentIndex,
+												getIndexOfValue(
+														indexVariable[nIndex]).second
+														+ variables[indexVariable[currentIndex]]->size())));
+					} else {
+						// N is not an alternative. We should consider n's children
+						for (xml_node<> *n1 = n->first_node(); n1;
+								n1 = n1->next_sibling())
+							visit(n1);
+					}
 				}
 			}
 		}
@@ -300,10 +306,13 @@ void FeatureVisitor::visitOr(xml_node<> *node) {
 
 		// Then all the children are visited and their index is stored
 		for (xml_node<> *n = node->first_node(); n; n = n->next_sibling()) {
-			varIndex = index;
-			visit(n);
-			indexOfNone = getIndexOfNoneForVariable(indexVariable[varIndex]);
-			orIndex->push_back(make_pair(varIndex, indexOfNone));
+			if (strcmp(n->name(), "description") != 0) {
+				varIndex = index;
+				visit(n);
+				indexOfNone = getIndexOfNoneForVariable(
+						indexVariable[varIndex]);
+				orIndex->push_back(make_pair(varIndex, indexOfNone));
+			}
 		}
 
 		indexOfNone = getIndexOfNoneForVariable(
@@ -451,21 +460,26 @@ void FeatureVisitor::visitAnd(xml_node<> *node) {
 
 	// Visit all the child features
 	for (xml_node<> *n = node->first_node(); n; n = n->next_sibling()) {
-		visit(n);
+		if (strcmp(n->name(), "description") != 0) {
+			visit(n);
+		}
 	}
 }
 
 void FeatureVisitor::visitFeature(xml_node<> *node) {
 	if (node->first_attribute("mandatory") && node->parent()
-			&& ((node->parent()->first_attribute("mandatory") &&
-			strcmp(node->parent()->first_attribute("mandatory")->value(), "true") == 0) || getNumChildren(node->parent()) == 1) &&
-			getNumChildren(node) == 0 &&
-			strcmp(node->parent()->name(), "alt") != 0) {
+			&& ((node->parent()->first_attribute("mandatory")
+					&& strcmp(
+							node->parent()->first_attribute("mandatory")->value(),
+							"true") == 0) || getNumChildren(node->parent()) == 1)
+			&& getNumChildren(node) == 0
+			&& strcmp(node->parent()->name(), "alt") != 0) {
 		// In this case, the feature is a leaf, is mandatory and its parent is mandatory
 		// as well. For this reason, it is possible to avoid representing it and to
 		// save a variable. The only operation needed is to substitute in every constraint
 		// the variable with its parent's name
-		substitutions[node->first_attribute("name")->value()] = node->parent()->first_attribute("name")->value();
+		substitutions[node->first_attribute("name")->value()] =
+				node->parent()->first_attribute("name")->value();
 		return;
 	}
 
@@ -511,15 +525,15 @@ int FeatureVisitor::getNVar() {
 	return variables.size();
 }
 
-vector<pair<pair<int, int>, pair<int, int>>> FeatureVisitor::getMandatoryImplications() {
+vector<pair<pair<int, int>, pair<int, int>> > FeatureVisitor::getMandatoryImplications() {
 	return mandatoryImplications;
 }
 
-vector<pair<pair<int, int>, pair<int, int>>> FeatureVisitor::getSingleImplications() {
+vector<pair<pair<int, int>, pair<int, int>> > FeatureVisitor::getSingleImplications() {
 	return singleImplications;
 }
 
-vector<pair<pair<int, int>, pair<int, int>>> FeatureVisitor::getSingleImplicationsNonLeaf() {
+vector<pair<pair<int, int>, pair<int, int>> > FeatureVisitor::getSingleImplicationsNonLeaf() {
 	return singleImplicationsNonLeaf;
 }
 
