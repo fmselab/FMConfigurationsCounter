@@ -229,7 +229,8 @@ void FeatureVisitor::visitAlt(xml_node<> *node) {
 						// N is not an alternative. We should consider n's children
 						for (xml_node<> *n1 = n->first_node(); n1;
 								n1 = n1->next_sibling())
-							visit(n1);
+							if (strcmp(n1->name(), "description") != 0)
+								visit(n1);
 					}
 				}
 			}
@@ -354,6 +355,7 @@ int FeatureVisitor::getIndexOfNoneForVariable(const string &variableName) {
 		}
 	else
 		indexOfNone = -1;
+
 	return indexOfNone;
 }
 
