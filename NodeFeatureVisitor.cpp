@@ -469,20 +469,16 @@ void FeatureVisitor::visitAnd(xml_node<> *node) {
 }
 
 void FeatureVisitor::visitFeature(xml_node<> *node) {
-	if (node->first_attribute("mandatory") && node->parent()
-			&& ((node->parent()->first_attribute("mandatory")
-					&& strcmp(
-							node->parent()->first_attribute("mandatory")->value(),
-							"true") == 0) || getNumChildren(node->parent()) == 1)
-			&& getNumChildren(node) == 0
-			&& strcmp(node->parent()->name(), "alt") != 0) {
-		// In this case, the feature is a leaf, is mandatory and its parent is mandatory
-		// as well. For this reason, it is possible to avoid representing it and to
-		// save a variable. The only operation needed is to substitute in every constraint
-		// the variable with its parent's name
-		substitutions[node->first_attribute("name")->value()] =
-				node->parent()->first_attribute("name")->value();
-		return;
+	if (node->first_attribute("mandatory") && node->parent()) {
+		if (getNumChildren(node) == 0
+				&& strcmp(node->parent()->name(), "alt") != 0) {
+			// In this case the feature is mandatory and a leaf, so we can avoid representing it.
+			// The only operation needed is to substitute in every constraint the variable with its
+			// parent name
+			substitutions[node->first_attribute("name")->value()] =
+					node->parent()->first_attribute("name")->value();
+			return;
+		}
 	}
 
 	// The single feature is Boolean.
