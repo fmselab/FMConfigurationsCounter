@@ -26,6 +26,7 @@ private:
 	vector<pair<pair<int, int>, pair<int, int>>> singleImplications;
 	vector<pair<pair<int, int>, pair<int, int>>> singleImplicationsNonLeaf;
 	map<string, string> substitutions;
+	map<string, pair<string, vector<string>>> andLeafs;
 
 	bool ignoreHidden;
 
@@ -34,6 +35,7 @@ private:
 	bool areChildrenAllLeaf(xml_node<> *node);
 	bool isLeaf(xml_node<> *node);
 	int getNumChildren(xml_node<> *node);
+	int getNumChildren(xml_node<> *node, bool ignoreHiddenFeatures);
 	void setMandatoryNoParent(rapidxml::xml_node<> *node, int varIndex);
 	void setMandatoryImplication(rapidxml::xml_node<> *node, int indexOfNone, int varIndex);
 	int getIndexOfNoneForVariable(const std::string &variableName);
@@ -43,6 +45,8 @@ private:
 
 public:
 	static int index;
+	static bool COMPRESS_AND_VARS;
+	static int COMPRESS_AND_THRESHOD;
 
 	FeatureVisitor();
 	FeatureVisitor(bool ignoreHidden);

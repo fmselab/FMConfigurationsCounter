@@ -7,7 +7,7 @@
 
 #include "ConstraintVisitor.h"
 
-ConstraintVisitor::ConstraintVisitor(FeatureVisitor v, const dd_edge& emptyNode,
+ConstraintVisitor::ConstraintVisitor(FeatureVisitor v, const dd_edge &emptyNode,
 		forest *mdd) {
 	this->visitor = v;
 	this->emptyNode = emptyNode;
@@ -40,8 +40,9 @@ void ConstraintVisitor::visit(xml_node<> *&node, int reduction_factor) {
 	}
 
 	if (reduction_factor > 0) {
-		if(Util::SHUFFLE_CONSTRAINTS) {
-			std::shuffle(std::begin(constraintMddList), std::end(constraintMddList), std::random_device());
+		if (Util::SHUFFLE_CONSTRAINTS) {
+			std::shuffle(std::begin(constraintMddList),
+					std::end(constraintMddList), std::random_device());
 		}
 
 		vector<dd_edge> temp;
@@ -135,7 +136,8 @@ dd_edge ConstraintVisitor::visitVar(xml_node<> *node) {
 	const int N = mdd->getDomain()->getNumVariables();
 	// It is possible to find the feature, so we need to get its index
 	// In this case, it is boolean feature
-	if (visitor.variableIndex.count(variableName) > 0 && visitor.variables.count(variableName) > 0) {
+	if (visitor.variableIndex.count(variableName) > 0
+			&& visitor.variables.count(variableName) > 0) {
 		vector<string> *values = visitor.variables[variableName];
 		int variableIndex = visitor.variableIndex[variableName];
 		if (values->size() > 2
@@ -175,6 +177,31 @@ dd_edge ConstraintVisitor::visitVar(xml_node<> *node) {
 				dd_edge tempC = Util::getMDDFromTuple(constraint, mdd)
 						* emptyNode;
 				return tempC;
+			}
+		}
+
+		// Here the variable has not been found, since it has been compressed into a single AND variable
+		for (std::map<string, pair<string, vector<string>>>::iterator it =
+				visitor.andLeafs.begin(); it != visitor.andLeafs.end(); ++it) {
+			if (it->first == variableName) {
+				int variableIndex = visitor.variableIndex[it->second.first];
+				vector<string> *varValues = visitor.variables[it->second.first];
+				vector<int> constraint(N, -1);
+				dd_edge tempC = emptyNode;
+
+				for (unsigned int i = 0; i < it->second.second.size(); i++) {
+					// Get the index of the needed value
+					auto itElement = std::find(varValues->begin(),
+							varValues->end(), it->second.second.at(i));
+					int valueIndex = itElement - varValues->begin();
+					constraint[N - variableIndex - 1] = valueIndex;
+					if (i == 0)
+						tempC = Util::getMDDFromTuple(constraint, mdd);
+					else
+						tempC += Util::getMDDFromTuple(constraint, mdd);
+				}
+
+				return tempC * emptyNode;
 			}
 		}
 	}
