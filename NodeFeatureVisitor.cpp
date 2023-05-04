@@ -33,6 +33,9 @@ int FeatureVisitor::index = 0;
  * will be translated in a single variable F1={NONE, 0, 1, 2, 3, 4, 5, 6, 7}
  * where NONE indicates that F1 is not selected, 0=000 indicates that F1 is selected but F2, F3 and F4 are not,
  * 1=001 indicates that F2 is selected, but F3 and F4 not, and so on.
+ *
+ * If a sub-feature is mandatory, the implemented algorithm automatically discards those configurations in which
+ * the feature is not selected.
  */
 bool FeatureVisitor::COMPRESS_AND_VARS = true;
 
@@ -73,6 +76,18 @@ bool FeatureVisitor::isVisitable(xml_node<> *node) {
 	return strcmp(node->name(), "description") != 0;
 }
 
+/**
+ * Dispatcher implementing the visitor pattern, depending on the node type.
+ *
+ * It works both for nodes that are visitable or not. If the node is not visitable,
+ * the method ends with no effect.
+ * Moreover, base on the ignoreHidden internal field, it works both for hidden and
+ * not hidden features.
+ *
+ * Output information is printed on the logger at LOG_DEBUG level.
+ *
+ * @param node the node to be visited
+ */
 void FeatureVisitor::visit(xml_node<> *node) {
 	if (!isVisitable(node))
 		return;
@@ -87,7 +102,7 @@ void FeatureVisitor::visit(xml_node<> *node) {
 		return;
 	}
 
-	// Dispatcher, depending on the node type
+	// Dispatch the visit based on the node type
 	if (strcmp(node->name(), "alt") == 0)
 		visitAlt(node);
 	else if (strcmp(node->name(), "and") == 0)
@@ -100,8 +115,13 @@ void FeatureVisitor::visit(xml_node<> *node) {
 		throw std::invalid_argument("Invalid node type");
 }
 
+/**
+ * Given a node, it visits all the children and checks whether they are all leaf
+ *
+ * @param node the node to be visited
+ * @return true if all the children are leaf, false otherwise
+ */
 bool FeatureVisitor::areChildrenAllLeaf(xml_node<> *node) {
-	// Visit all the child features
 	for (xml_node<> *n = node->first_node(); n; n = n->next_sibling())
 		if (!isLeaf(n))
 			return false;
@@ -109,16 +129,35 @@ bool FeatureVisitor::areChildrenAllLeaf(xml_node<> *node) {
 	return true;
 }
 
+/**
+ * Given a node, it checks whether the node is a leaf (i.e., a feature)
+ *
+ * @param node the node to be visited
+ * @return true if the node is a leaf, false otherwise
+ */
 bool FeatureVisitor::isLeaf(xml_node<> *node) {
-	if (strcmp(node->name(), "feature") == 0)
-		return true;
-	return false;
+	return strcmp(node->name(), "feature") == 0;
 }
 
+/**
+ * Given a node, it returns the number of children.
+ * NOTE THAT Hidden features are not ignored
+ *
+ * @param node the node to be visited
+ * @return the number of children for the given node
+ */
 int FeatureVisitor::getNumChildren(xml_node<> *node) {
 	return getNumChildren(node, false);
 }
 
+/**
+ * Given a node, it returns the number of children, by considering or not considering
+ * hidden features.
+ *
+ * @param node the node to be visited
+ * @param ignoreHiddenFeatures the boolean variable indicating if hidden features have to be ignored or not
+ * @return the number of children for the given node
+ */
 int FeatureVisitor::getNumChildren(xml_node<> *node,
 		bool ignoreHiddenFeatures) {
 	int i = 0;
