@@ -56,7 +56,7 @@ public:
 	void visitAlt(xml_node<> * node);
 	void visitOr(xml_node<> * node);
 	void visitFeature(xml_node<> * node);
-	void printVariablesInMap();
+	void printDefinedVariables();
 	int getNVar();
 	int* getBounds();
 	int getBoundForVar(int index);

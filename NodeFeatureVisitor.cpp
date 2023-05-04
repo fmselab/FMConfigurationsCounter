@@ -686,6 +686,14 @@ void FeatureVisitor::visitFeature(xml_node<> *node) {
 	index++;
 }
 
+/**
+ * This method is used to set the dependency between the node passed as parameter
+ * and its parent.
+ *
+ * The basic idea is that the node passed as parameter cannot be selected if its parent is not.
+ *
+ * @param node the pointer to the node which depends on its parent
+ */
 void FeatureVisitor::setDependency(xml_node<> *node) {
 	int indexOfNone = getIndexOfNoneForVariable(indexVariable[index]);
 	if (node->parent() && strcmp(node->parent()->name(), "struct") != 0) {
@@ -693,6 +701,13 @@ void FeatureVisitor::setDependency(xml_node<> *node) {
 	}
 }
 
+/**
+ * Returns the list of indexes which are mandatory and do not depends on other features.
+ *
+ * In practice, it should contain only the root
+ *
+ * @return the vector of mandatory indexes
+ */
 vector<int> FeatureVisitor::getMandatoryIndex() {
 	return mandatoryIndex;
 }
@@ -701,7 +716,15 @@ vector<pair<pair<int, int>, vector<int>*>> FeatureVisitor::getOrIndexs() {
 	return orIndexs;
 }
 
-void FeatureVisitor::printVariablesInMap() {
+/**
+ * Prints on the logger (at LOG_DEBUG level) all the variables defined for the
+ * feature model by the FMProductsCounter.
+ *
+ * The output format is the following:
+ *
+ * [variable name] - index [index of the variable] - size [number of possible values for the variable]
+ */
+void FeatureVisitor::printDefinedVariables() {
 	for (map<string, vector<string>*>::const_iterator it = variables.begin();
 			it != variables.end(); ++it) {
 		logcout(LOG_DEBUG) << it->first << " - index: "
@@ -710,8 +733,12 @@ void FeatureVisitor::printVariablesInMap() {
 	}
 }
 
+/**
+ * Number of variables.
+ *
+ * @return the number of variables defined in the feature model
+ */
 int FeatureVisitor::getNVar() {
-	// Number of variables defined in the feature model
 	return variables.size();
 }
 
@@ -727,20 +754,33 @@ vector<pair<pair<int, int>, pair<int, int>> > FeatureVisitor::getSingleImplicati
 	return singleImplicationsNonLeaf;
 }
 
+/**
+ * It returns the bounds (i.e., number of elements) for all the variables
+ *
+ * It uses the indexVariable map to retrieve the name of the i-th variable and,
+ * with it, get the size of the possible values
+ *
+ * @retrurn the bounds (i.e., number of elements) for all the variables
+ */
 int* FeatureVisitor::getBounds() {
-	// Bounds for each variable.
-	// It uses the indexVariable map to retrieve the name of the i-th variable and, with it, get the size of the
-	// possible values
 	const int n = getNVar();
 	int *bounds = new int[n];
 
 	for (int i = 0; i < n; i++) {
-		bounds[i] = variables[indexVariable[i]]->size();
+		bounds[i] = getBoundForVar(i);
 	}
 
 	return bounds;
 }
 
+/**
+ * Given the index of a variable and the index of a value for the variable
+ * it returns the corresponding string value
+ *
+ * @param indexVar the index of the variable
+ * @param indexVal the index of the value
+ * @retrurn the corresponding string value
+ */
 string FeatureVisitor::getValueForVar(int indexVar, int indexVal) {
 	if (indexVal >= getBoundForVar(indexVar))
 		return "-"
@@ -757,10 +797,19 @@ vector<pair<pair<int, int>, vector<pair<int, int>>*>> FeatureVisitor::getAltInde
 	return altIndexesExclusion;
 }
 
+/**
+ * Destructor
+ */
 FeatureVisitor::~FeatureVisitor() {
 
 }
 
+/**
+ * Given the index of a variable, it returns the number of possible values
+ *
+ * @param index the index of the variable
+ * @retrurn the number of possible values for the given variable
+ */
 int FeatureVisitor::getBoundForVar(int index) {
 	return variables[indexVariable[index]]->size();
 }
