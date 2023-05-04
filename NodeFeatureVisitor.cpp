@@ -13,7 +13,7 @@ using namespace rapidxml;
 
 int FeatureVisitor::index = 0;
 bool FeatureVisitor::COMPRESS_AND_VARS = true;
-int FeatureVisitor::COMPRESS_AND_THRESHOD = 10;
+int FeatureVisitor::COMPRESS_AND_THRESHOLD = 10;
 
 FeatureVisitor::FeatureVisitor() {
 	this->ignoreHidden = false;
@@ -23,7 +23,14 @@ FeatureVisitor::FeatureVisitor(bool ignoreHidden) {
 	this->ignoreHidden = ignoreHidden;
 }
 
+bool FeatureVisitor::isVisitable(xml_node<> *node) {
+	return strcmp(node->name(), "description") != 0;
+}
+
 void FeatureVisitor::visit(xml_node<> *node) {
+	if (!isVisitable(node))
+		return;
+
 	logcout(LOG_DEBUG) << "Visiting node "
 			<< node->first_attribute("name")->value() << endl;
 
@@ -43,21 +50,17 @@ void FeatureVisitor::visit(xml_node<> *node) {
 		visitOr(node);
 	else if (strcmp(node->name(), "feature") == 0)
 		visitFeature(node);
-	else if (strcmp(node->name(), "description") == 0)
-		return;
 	else
 		throw std::invalid_argument("Invalid node type");
 }
 
 bool FeatureVisitor::areChildrenAllLeaf(xml_node<> *node) {
-	bool areAllLeaf = true;
-
 	// Visit all the child features
 	for (xml_node<> *n = node->first_node(); n; n = n->next_sibling())
-		if (strcmp(n->name(), "feature") != 0) {
-			areAllLeaf = false;
-		}
-	return areAllLeaf;
+		if (!isLeaf(n))
+			return false;
+
+	return true;
 }
 
 bool FeatureVisitor::isLeaf(xml_node<> *node) {
@@ -70,15 +73,15 @@ int FeatureVisitor::getNumChildren(xml_node<> *node) {
 	return getNumChildren(node, false);
 }
 
-int FeatureVisitor::getNumChildren(xml_node<> *node, bool ignoreHiddenFeatures) {
+int FeatureVisitor::getNumChildren(xml_node<> *node,
+		bool ignoreHiddenFeatures) {
 	int i = 0;
 	for (xml_node<> *n = node->first_node(); n; n = n->next_sibling()) {
 		if (!ignoreHiddenFeatures)
 			i++;
-		else
-			if (!n->first_attribute("hidden")) {
-				i++;
-			}
+		else if (!n->first_attribute("hidden")) {
+			i++;
+		}
 	}
 	return i;
 }
@@ -196,7 +199,7 @@ void FeatureVisitor::visitAlt(xml_node<> *node) {
 
 		// Get the possible values
 		for (xml_node<> *n = node->first_node(); n; n = n->next_sibling()) {
-			if (strcmp(n->name(), "description") != 0) {
+			if (isVisitable(n)) {
 				values->push_back(n->first_attribute("name")->value());
 			}
 		}
@@ -221,7 +224,7 @@ void FeatureVisitor::visitAlt(xml_node<> *node) {
 
 		// Check if one of the children is not a leaf. In that case, visit it
 		for (xml_node<> *n = node->first_node(); n; n = n->next_sibling()) {
-			if (strcmp(n->name(), "description") != 0) {
+			if (isVisitable(n)) {
 				if (!isLeaf(n)) {
 					if (strcmp(n->name(), "alt") == 0) {
 						// N is an alternative. It must be visited itself
@@ -241,8 +244,7 @@ void FeatureVisitor::visitAlt(xml_node<> *node) {
 						// N is not an alternative. We should consider n's children
 						for (xml_node<> *n1 = n->first_node(); n1;
 								n1 = n1->next_sibling())
-							if (strcmp(n1->name(), "description") != 0)
-								visit(n1);
+							visit(n1);
 					}
 				}
 			}
@@ -319,7 +321,7 @@ void FeatureVisitor::visitOr(xml_node<> *node) {
 
 		// Then all the children are visited and their index is stored
 		for (xml_node<> *n = node->first_node(); n; n = n->next_sibling()) {
-			if (strcmp(n->name(), "description") != 0) {
+			if (isVisitable(n)) {
 				varIndex = index;
 				visit(n);
 				indexOfNone = getIndexOfNoneForVariable(
@@ -411,12 +413,18 @@ void FeatureVisitor::setMandatoryImplication(xml_node<> *node, int indexOfNone,
 								indexOfNoneParent)));
 	} else {
 		pair<int, int> dependencyPair = getIndexOfValue(parentName);
-		// If the parent has been merged in an alternative
-		mandatoryImplications.push_back(
-				make_pair(make_pair(varIndex, indexOfNone),
-						make_pair(dependencyPair.first,
-								dependencyPair.second
-										+ variables[indexVariable[dependencyPair.first]]->size())));
+
+		if (dependencyPair.first != -1 && dependencyPair.second != -1) {
+			// If the parent has been merged in an alternative
+			mandatoryImplications.push_back(
+					make_pair(make_pair(varIndex, indexOfNone),
+							make_pair(dependencyPair.first,
+									dependencyPair.second
+											+ variables[indexVariable[dependencyPair.first]]->size())));
+		} else {
+			// If the parent has been merged into an AND
+			// TODO
+		}
 	}
 }
 
@@ -459,16 +467,108 @@ void FeatureVisitor::setMandatory(xml_node<> *node, int indexOfNone,
 }
 
 void FeatureVisitor::visitAnd(xml_node<> *node) {
+//	if (FeatureVisitor::COMPRESS_AND_VARS
+//			&& getNumChildren(node, this->ignoreHidden)
+//					<= FeatureVisitor::COMPRESS_AND_THRESHOLD) {
+//		int nChildren = getNumChildren(node, this->ignoreHidden);
+//		vector<string> *values = new vector<string>;
+//		vector<int> mandatories;
+//		int i = 0;
+//
+//		for (xml_node<> *n = node->first_node(); n; n = n->next_sibling()) {
+//			if (strcmp(n->name(), "description") != 0
+//					&& (!this->ignoreHidden || !(n->first_attribute("hidden")))) {
+//				if (n->first_attribute("mandatory")
+//						and strcmp(n->first_attribute("mandatory")->value(),
+//								"true") == 0) {
+//					// This index is mandatory
+//					mandatories.push_back(i);
+//				}
+//				i++;
+//			}
+//		}
+//
+//		values->push_back("NONE");
+//
+//		// Now define all the possible values
+//		for (double iD = 0; iD < pow(2, nChildren); iD++) {
+//			bool discard = false;
+//
+//			// If we have at least one mandatory feature, the 0 value cannot be assumed
+//			if (mandatories.size() == 0 || iD > 0) {
+//				for (unsigned int j = 0; j < mandatories.size(); j++) {
+//					// If the mandatory bits are not set
+//					if (!(((int) iD) & (1 << mandatories.at(j)))) {
+//						discard = true;
+//						break;
+//					}
+//				}
+//
+//				if (!discard)
+//					values->push_back(to_string(iD));
+//			}
+//		}
+//
+//		// Create a variable
+//		variables[node->first_attribute("name")->value()] = values;
+//		variableIndex[node->first_attribute("name")->value()] = index;
+//		indexVariable[index] = node->first_attribute("name")->value();
+//
+//		// Set dependencies between the feature and its parent
+//		setDependency(node);
+//
+//		// Is the variable mandatory. If it is not the root we should
+//		// set the additional constraint VAL = NONE <=> PARENT = NONE
+//		setMandatory(node, 0, index);
+//
+//		// Increase the index
+//		index++;
+//
+//		// Now, for each child, define which values make it true
+//		i = 0;
+//		for (xml_node<> *n = node->first_node(); n; n = n->next_sibling()) {
+//			if (strcmp(n->name(), "description") != 0
+//					&& (!this->ignoreHidden || !(n->first_attribute("hidden")))) {
+//				string childName = n->first_attribute("name")->value();
+//				string parentName = node->first_attribute("name")->value();
+//
+//				vector<string> parTruthValues;
+//				for (unsigned int j = 0; j < values->size(); j++) {
+//					// Do not consider NONE (since parent is not selected) and 0 (since no child feature
+//					// is selected)
+//					if (values->at(j) != "NONE" && std::stod(values->at(j)) > 0)
+//						// If the corresponding bit is set
+//						if ((std::stoi(values->at(j)) & (1 << i)))
+//							parTruthValues.push_back(values->at(j));
+//				}
+//
+//				andLeafs[childName] = make_pair(parentName, parTruthValues);
+//				i++;
+//
+//				// If the node is not a feature, then visit its siblings
+//				if (strcmp(n->name(), "feature") != 0) {
+//					for (xml_node<> *n1 = n->first_node(); n1;
+//							n1 = n1->next_sibling())
+//						if (strcmp(n1->name(), "description") != 0)
+//							visit(n1);
+//				}
+//			}
+//		}
+//	}
+
 	// All children are leaf. We can create a variable with multiple values and
 	// then substitute accordingly the constraints
-	if (areChildrenAllLeaf(node) && FeatureVisitor::COMPRESS_AND_VARS && getNumChildren(node, this->ignoreHidden) <= FeatureVisitor::COMPRESS_AND_THRESHOD) {
+	if (areChildrenAllLeaf(node) && FeatureVisitor::COMPRESS_AND_VARS
+			&& getNumChildren(node, this->ignoreHidden)
+					<= FeatureVisitor::COMPRESS_AND_THRESHOLD) {
 		int nChildren = getNumChildren(node, this->ignoreHidden);
 		vector<string> *values = new vector<string>;
 		vector<int> mandatories;
 		int i = 0;
 
 		for (xml_node<> *n = node->first_node(); n; n = n->next_sibling()) {
-			if (strcmp(n->name(), "description") != 0 && (!this->ignoreHidden || !(n->first_attribute("hidden")))) {
+			if (isVisitable(n)
+					&& (!this->ignoreHidden || !(n->first_attribute("hidden")))) {
 				if (n->first_attribute("mandatory")
 						and strcmp(n->first_attribute("mandatory")->value(),
 								"true") == 0) {
@@ -489,7 +589,7 @@ void FeatureVisitor::visitAnd(xml_node<> *node) {
 			if (mandatories.size() == 0 || iD > 0) {
 				for (unsigned int j = 0; j < mandatories.size(); j++) {
 					// If the mandatory bits are not set
-					if (!(((int)iD) & (1 << mandatories.at(j)))) {
+					if (!(((int) iD) & (1 << mandatories.at(j)))) {
 						discard = true;
 						break;
 					}
@@ -516,14 +616,15 @@ void FeatureVisitor::visitAnd(xml_node<> *node) {
 		index++;
 
 		// Now, for each child, define which values make it true
-		i=0;
+		i = 0;
 		for (xml_node<> *n = node->first_node(); n; n = n->next_sibling()) {
-			if (strcmp(n->name(), "description") != 0 && (!this->ignoreHidden || !(n->first_attribute("hidden")))) {
+			if (isVisitable(n)
+					&& (!this->ignoreHidden || !(n->first_attribute("hidden")))) {
 				string childName = n->first_attribute("name")->value();
 				string parentName = node->first_attribute("name")->value();
 
 				vector<string> parTruthValues;
-				for (unsigned int j=0; j<values->size(); j++) {
+				for (unsigned int j = 0; j < values->size(); j++) {
 					// Do not consider NONE (since parent is not selected) and 0 (since no child feature
 					// is selected)
 					if (values->at(j) != "NONE" && std::stod(values->at(j)) > 0)
@@ -553,9 +654,7 @@ void FeatureVisitor::visitAnd(xml_node<> *node) {
 
 		// Visit all the child features
 		for (xml_node<> *n = node->first_node(); n; n = n->next_sibling()) {
-			if (strcmp(n->name(), "description") != 0) {
-				visit(n);
-			}
+			visit(n);
 		}
 	}
 }
@@ -606,7 +705,8 @@ void FeatureVisitor::printVariablesInMap() {
 	for (map<string, vector<string>*>::const_iterator it = variables.begin();
 			it != variables.end(); ++it) {
 		logcout(LOG_DEBUG) << it->first << " - index: "
-				<< variableIndex[it->first] << " - size: " << it->second->size() << endl;
+				<< variableIndex[it->first] << " - size: " << it->second->size()
+				<< endl;
 	}
 }
 

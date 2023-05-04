@@ -42,11 +42,12 @@ private:
 	void setDependency(xml_node<> *node);
 	void setSingleImplication(rapidxml::xml_node<> *node, int indexOfNone);
 	pair<int, int> getIndexOfValue(const string &variableName);
+	bool isVisitable(rapidxml::xml_node<> *node);
 
 public:
 	static int index;
 	static bool COMPRESS_AND_VARS;
-	static int COMPRESS_AND_THRESHOD;
+	static int COMPRESS_AND_THRESHOLD;
 
 	FeatureVisitor();
 	FeatureVisitor(bool ignoreHidden);
