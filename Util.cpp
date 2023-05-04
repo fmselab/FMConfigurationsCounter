@@ -11,21 +11,56 @@ bool Util::IGNORE_HIDDEN = false;
 bool Util::SORT_CONSTRAINTS_WHEN_APPLYING = false;
 bool Util::SHUFFLE_CONSTRAINTS = false;
 
+/**
+ * Given the file name, it returns the count of the products
+ *
+ * It uses by default a constraint reduction factor of 0 and
+ * does not ignore hidden features
+ *
+ * @param fileName the name of the file
+ * @return the number of valid products
+ */
 double Util::getProductCountFromFile(string fileName) {
 	return getProductCountFromFile(fileName, 0);
 }
 
+/**
+ * Given the file name, it returns the count of the products
+ *
+ * It uses by default a constraint reduction factor of 0
+ *
+ * @param fileName the name of the file
+ * @param ignore a boolean parameter setting whether the hidden features have to be ignored or not
+ * @return the number of valid products
+ */
 double Util::getProductCountFromFile(string fileName, bool ignore) {
 	Util::IGNORE_HIDDEN = ignore;
 	return getProductCountFromFile(fileName, 0);
 }
 
+/**
+ * Given the file name, it returns the count of the products
+ *
+ * @param fileName the name of the file
+ * @param ignore a boolean parameter setting whether the hidden features have to be ignored or not
+ * @param reduction_factor_ctc the constraint reduction factor (i.e., the size of the groups merging
+ * 		together the constraints before being applied to the MDD)
+ * @return the number of valid products
+ */
 double Util::getProductCountFromFile(string fileName, bool ignore,
 		int reduction_factor_ctc) {
 	Util::IGNORE_HIDDEN = ignore;
 	return getProductCountFromFile(fileName, reduction_factor_ctc);
 }
 
+/**
+ * Given the file name, it returns the count of the products
+ *
+ * @param fileName the name of the file
+ * @param reduction_factor_ctc the constraint reduction factor (i.e., the size of the groups merging
+ * 		together the constraints before being applied to the MDD)
+ * @return the number of valid products
+ */
 double Util::getProductCountFromFile(string fileName, int reduction_factor_ctc) {
 	// Open and read the file, then visit it
 	std::string *fileToString = Util::parseXML(fileName);
@@ -36,8 +71,6 @@ double Util::getProductCountFromFile(string fileName, int reduction_factor_ctc) 
 
 	FeatureVisitor v(IGNORE_HIDDEN);
 	v.visit(structNode->first_node());
-//	if (Util::SORT_CONSTRAINTS_WHEN_APPLYING)
-//		v.reorderVariables(doc.first_node()->first_node("constraints"));
 	v.printDefinedVariables();
 
 	// Init MEDDLY
@@ -137,6 +170,12 @@ double Util::getProductCountFromFile(string fileName, int reduction_factor_ctc) 
 	return cardinality;
 }
 
+/**
+ * Prints the valid elements, by extracting them from an MDD
+ *
+ * @param strm the output stream to be used
+ * @param e the base edge of the MDD
+ */
 void Util::printElements(std::ostream &strm, dd_edge &e) {
 	int nLevels = ((e.getForest())->getDomain())->getNumVariables();
 	for (enumerator iter(e); iter; ++iter) {
@@ -148,6 +187,13 @@ void Util::printElements(std::ostream &strm, dd_edge &e) {
 	}
 }
 
+/**
+ * It translates a tuple (i.e., a specific assignment) to the corresponfing MDD
+ *
+ * @param tupla the tuple
+ * @param mdd the forest containing the destination MDD
+ * @return the starting edge of the new MDD representing the tuple of interest
+ */
 dd_edge Util::getMDDFromTuple(vector<int> tupla, forest *mdd) {
 	const int N = tupla.size();
 
@@ -172,6 +218,12 @@ dd_edge Util::getMDDFromTuple(vector<int> tupla, forest *mdd) {
 	return element;
 }
 
+/**
+ * It parses an XML file and returns its string representation
+ *
+ * @param fileName the file name
+ * @return a string pointer to the string content of the file
+ */
 string* Util::parseXML(const string &fileName) {
 	// Open and read the file
 	std::ifstream t(fileName);
@@ -183,6 +235,12 @@ string* Util::parseXML(const string &fileName) {
 	return buffer;
 }
 
+/**
+ * Utility method to print an integer vector on the desired output stream
+ *
+ * @param v the vector to be prented
+ * @param out the output to be used
+ */
 void Util::printVector(vector<int> v, std::ostream &out) {
 	out << "\t";
 	for (int i : v) {

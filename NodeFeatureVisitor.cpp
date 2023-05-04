@@ -211,95 +211,6 @@ bool comparePairs(pair<string, int> p1, pair<string, int> p2) {
 }
 
 /**
- * For each variable, it counts how many occurrences are there in the file.
- * Then, all the lists and indexes are sorted in order to have first (i.e., in the bottom of the MDD)
- * the mostly occurring variables.
- *
- * In this way, possible additional edges, are focused in the bottom of the MDD and, thus, the MDD size
- * is kept under control.
- *
- * @param node the staring node
- */
-void FeatureVisitor::reorderVariables(xml_node<> *node) {
-	//
-	vector<pair<string, int>> occurrences;
-	for (std::map<string, vector<string>*>::iterator it = variables.begin();
-			it != variables.end(); ++it) {
-		string varName = it->first;
-		xml_node<> *n1 = node;
-
-		int nOccurrences = countOccurrences(n1, varName);
-		occurrences.push_back(make_pair(varName, nOccurrences));
-	}
-
-	// Sort the occurrences vector based on the occurrence number
-	std::sort(occurrences.begin(), occurrences.end(), comparePairs);
-
-	// Reorder all the lists and maps
-	int newIndex = 0;
-	vector<int> mandatoryIndexNew;
-	// Old index, new index
-	map<int, int> indexMapping;
-
-	for (pair<string, int> a : occurrences) {
-		int oldIndex = variableIndex[a.first];
-		indexMapping[oldIndex] = newIndex;
-		// ---mandatoryIndex
-		for (int indx : mandatoryIndex) {
-			if (indx == oldIndex)
-				mandatoryIndexNew.push_back(newIndex);
-		}
-		// ---variableIndex
-		variableIndex[a.first] = newIndex;
-		// ---indexVariable
-		indexVariable[newIndex] = a.first;
-
-		newIndex++;
-	}
-
-	// ---altIndexesExclusion
-	for (pair<pair<int, int>, vector<pair<int, int>>*> &item : altIndexesExclusion) {
-		item.first.first = indexMapping[item.first.first];
-		for (pair<int, int> &itemVector : *item.second) {
-			itemVector.first = indexMapping[itemVector.first];
-		}
-	}
-	// ---orIndexsNonLeaf
-	for (pair<pair<int, int>, vector<pair<int, int>>*> &item : orIndexsNonLeaf) {
-		item.first.first = indexMapping[item.first.first];
-		for (pair<int, int> &itemVector : *item.second) {
-			itemVector.first = indexMapping[itemVector.first];
-		}
-	}
-	// ---mandatoryImplications
-	for (pair<pair<int, int>, pair<int, int>> &item : mandatoryImplications) {
-		item.first.first = indexMapping[item.first.first];
-		item.second.first = indexMapping[item.second.first];
-	}
-	// ---singleImplications
-	for (pair<pair<int, int>, pair<int, int>> &item : singleImplications) {
-		item.first.first = indexMapping[item.first.first];
-		item.second.first = indexMapping[item.second.first];
-	}
-	// ---singleImplicationsNonLeaf
-	for (pair<pair<int, int>, pair<int, int>> &item : singleImplicationsNonLeaf) {
-		item.first.first = indexMapping[item.first.first];
-		item.second.first = indexMapping[item.second.first];
-	}
-	// ---orIndexs
-	for (pair<pair<int, int>, vector<int>*> &item : orIndexs) {
-		item.first.first = indexMapping[item.first.first];
-		for (int &itemVector : *item.second) {
-			itemVector = indexMapping[itemVector];
-		}
-	}
-	// TODO: What to do with andLeafs???
-
-	// Copy new data
-	mandatoryIndex = mandatoryIndexNew;
-}
-
-/**
  * Visitor for an ALT group.
  *
  * There are two possible cases:
@@ -594,9 +505,15 @@ void FeatureVisitor::setSingleImplication(xml_node<> *node, int indexOfNone) {
 								indexOfNoneParent)));
 	else {
 		pair<int, int> dependencyPair = getIndexOfValue(parentName);
-		// If the parent has been merged in an alternative
-		singleImplicationsNonLeaf.push_back(
-				make_pair(make_pair(index, indexOfNone), dependencyPair));
+
+		if (dependencyPair.first != -1 && dependencyPair.second != -1) {
+			// If the parent has been merged in an alternative
+			singleImplicationsNonLeaf.push_back(
+					make_pair(make_pair(index, indexOfNone), dependencyPair));
+		} else {
+			// If the parent has been merged into an AND
+			// TODO
+		}
 
 	}
 }
@@ -954,6 +871,13 @@ vector<pair<pair<int, int>, vector<pair<int, int>>*>> FeatureVisitor::getOrIndex
 	return orIndexsNonLeaf;
 }
 
+/**
+ * This method returns the indexes that are mutually exclusive due to their presence in an ALT Group
+ *
+ * @return a vector<pair<pair<int, int>, vector<pair<int, int>>*>> with each element with the format:
+ * 		<<int x, int y>, vector<int z, int w>>, where x and z are the indexes of the variables, and y
+ * 		and w are their values
+ */
 vector<pair<pair<int, int>, vector<pair<int, int>>*>> FeatureVisitor::getAltIndexesExclusion() {
 	return altIndexesExclusion;
 }
