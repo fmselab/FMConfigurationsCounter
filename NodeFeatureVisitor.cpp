@@ -510,6 +510,16 @@ int FeatureVisitor::getIndexOfNoneForVariable(const string &variableName) {
 	return indexOfNone;
 }
 
+/**
+ * Given the name of a variable, it returns its index and value. It is used for ALT Groups,
+ * where a the children features of the feature model are translated into a single enumerative MDD variable.
+ *
+ * For this reason, the method receives the name of the variable in the feature model and returns
+ * a pair <x,y> where x is the index of the corresponding MDD variable and y is the index of its value
+ *
+ * @param variableName the name of the vartiable we are looking for
+ * @return a pair <x,y> where x is the index of the corresponding MDD variable and y is the index of its value
+ */
 pair<int, int> FeatureVisitor::getIndexOfValue(const string &variableName) {
 	int varInd = -1;
 	int valueIndex = -1;
@@ -796,6 +806,20 @@ void FeatureVisitor::visitAnd(xml_node<> *node) {
 	}
 }
 
+/**
+ * Visitor for a feature.
+ *
+ * The method checks whether the feature is a leaf and is mandatory. In that case, the feature is not translated into
+ * a real MDD variable, but we only keep track of it, since its name in the constraints will require to be substituted
+ * with the name of the parent feature.
+ *
+ * In all the other cases, a regular boolean variable will be created, together with the information needed to create
+ * the mandatory constraints (i.e., if the parent is selected, then also that feature must be selected) and those
+ * related to the dependency between features (i.e., if this feature is selected, it is required that the parent is
+ * selected as well).
+ *
+ * @param node the node to be visited
+ */
 void FeatureVisitor::visitFeature(xml_node<> *node) {
 	if (node->first_attribute("mandatory") && node->parent()) {
 		if (getNumChildren(node) == 0
