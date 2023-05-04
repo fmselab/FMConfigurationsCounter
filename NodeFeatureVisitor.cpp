@@ -299,6 +299,19 @@ void FeatureVisitor::reorderVariables(xml_node<> *node) {
 	mandatoryIndex = mandatoryIndexNew;
 }
 
+/**
+ * Visitor for an ALT group.
+ *
+ * There are two possible cases:
+ *
+ * - The group has more than 1 child. In this case the ALT Group is translated into a single enumerative variable, and
+ *   some constraint is added in order to assure that, if the considered sub-feature f is not a leaf, the subtree
+ *   having f as root can be selected only if the parent feature of f has value = f.
+ *
+ * - The group has only one child. In this case the ALT Group is not really a group, but must be treated as a single feature
+ *
+ * @param node the node to be visited
+ */
 void FeatureVisitor::visitAlt(xml_node<> *node) {
 	if (getNumChildren(node) > 1) {
 		// The alternative variable is an enumerative one
@@ -395,12 +408,8 @@ void FeatureVisitor::visitAlt(xml_node<> *node) {
 }
 
 void FeatureVisitor::visitOr(xml_node<> *node) {
-	bool areAllLeaf;
-
 	// Check whether children are all leafs
-	areAllLeaf = areChildrenAllLeaf(node);
-
-	if (areAllLeaf) {
+	if (areChildrenAllLeaf(node)) {
 		// If all the n children are leafs, it is enough to create n variables (one for each child)
 		// and add a constraint stating that one of them must be selected, plus an additional
 		// boolean variable for the parent feature
@@ -450,6 +459,11 @@ void FeatureVisitor::visitOr(xml_node<> *node) {
 	}
 }
 
+/**
+ * This method creates a single Boolean variable for the given node
+ *
+ * @param node the node to be converted into a MDD boolean variable
+ */
 void FeatureVisitor::defineSingleVariable(xml_node<> *node) {
 	// Define the current variable, which is a boolean variable
 	vector<string> *values = new vector<string>;
