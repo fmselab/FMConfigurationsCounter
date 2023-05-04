@@ -11,18 +11,64 @@
 using namespace std;
 using namespace rapidxml;
 
+/**
+ * Index used by the FeatureVisitor component to identify the current variable
+ */
 int FeatureVisitor::index = 0;
+
+/**
+ * Configuration parameter to set whether the COMPRESS_AND optimization has to be used.
+ * If COMPRESS_AND_VARS is true, AND groups are merged in a single MDD variable that
+ * represents which of the child are selected by using a binary representation.
+ *
+ * For instance,
+ *
+ * 				--------
+ * 				|  F1  |
+ * 				--------
+ * 				/   |   \
+ * 			   /	|    \
+ * 			  F2   F3    F4
+ *
+ * will be translated in a single variable F1={NONE, 0, 1, 2, 3, 4, 5, 6, 7}
+ * where NONE indicates that F1 is not selected, 0=000 indicates that F1 is selected but F2, F3 and F4 are not,
+ * 1=001 indicates that F2 is selected, but F3 and F4 not, and so on.
+ */
 bool FeatureVisitor::COMPRESS_AND_VARS = true;
+
+/**
+ * Threshold to set a threshold (i.e., the number of children) for the COMPRESS_AND optimization.
+ * Experiments have shown that using the optimization is feasible for a low number of child (~10), while
+ * for higher values it may become useless since it saves nodes in depth but creates more node in width.
+ */
 int FeatureVisitor::COMPRESS_AND_THRESHOLD = 10;
 
+/**
+ * Constructor for a FeatureVisitor object.
+ *
+ * By default, hidden features are not ignored.
+ * Use parameterized constructor to set differently.
+ */
 FeatureVisitor::FeatureVisitor() {
 	this->ignoreHidden = false;
 }
 
+/**
+ * Constructor for a FeatureVisitor object.
+ *
+ * @param ignoreHidden a boolean stating whether hidden features have to be ignored or not
+ */
 FeatureVisitor::FeatureVisitor(bool ignoreHidden) {
 	this->ignoreHidden = ignoreHidden;
 }
 
+/**
+ * It determines whether the node given as parameter is visitable or not (i.e., it contains
+ * meaningful information for counting products)
+ *
+ * @param node the node to be checked
+ * @return true is the node contains meaningful information, false otherwise
+ */
 bool FeatureVisitor::isVisitable(xml_node<> *node) {
 	return strcmp(node->name(), "description") != 0;
 }
