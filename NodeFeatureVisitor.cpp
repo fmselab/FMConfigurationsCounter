@@ -474,6 +474,13 @@ void FeatureVisitor::defineSingleVariable(xml_node<> *node) {
 	indexVariable[index] = node->first_attribute("name")->value();
 }
 
+/**
+ * This method defines whether the node given as parameter is mandatory or not (without checking its parent -> it should
+ * be used only for the root feature).
+ *
+ * @param node the node to be checked
+ * @param varIndex the index of the varible corresponding to the node to be checked
+ */
 void FeatureVisitor::setMandatoryNoParent(xml_node<> *node, int varIndex) {
 	// Is the variable mandatory?
 	if (node->first_attribute("mandatory"))
@@ -481,6 +488,12 @@ void FeatureVisitor::setMandatoryNoParent(xml_node<> *node, int varIndex) {
 			mandatoryIndex.push_back(varIndex);
 }
 
+/**
+ * Given the name of the variable, it returns the index of the none element (which is used to set the feature as non selected)
+ *
+ * @param variableName the name of the variable of interest
+ * @return the integer corresponding to the index of the none element
+ */
 int FeatureVisitor::getIndexOfNoneForVariable(const string &variableName) {
 	int indexOfNone = -1;
 	if (variables.count(variableName) > 0)
