@@ -171,6 +171,15 @@ int FeatureVisitor::getNumChildren(xml_node<> *node,
 	return i;
 }
 
+/**
+ * Given a starting node, it recursively counts how many times a given word is used.
+ *
+ * This method is used for sorting variables based on the number of occurrencies for each.
+ *
+ * @param node the starting node
+ * @param word the word we are looking for
+ * @return the number of occurrencies for the given word (which is typically a name of a variable)
+ */
 int countOccurrences(xml_node<> *node, string word) {
 	int nO = 0;
 
@@ -189,15 +198,30 @@ int countOccurrences(xml_node<> *node, string word) {
 	return nO;
 }
 
+/**
+ * Given two pairs in the form of <variableName, numberOfOccurrencies> each, it is used
+ * as a comparator
+ *
+ * @param p1 the first pair
+ * @param p2 the second pair
+ * @return TRUE if the number of occurrencies for p1 is lower than that of p2, FALSE otherwise
+ */
 bool comparePairs(pair<string, int> p1, pair<string, int> p2) {
 	return p1.second < p2.second;
 }
 
+/**
+ * For each variable, it counts how many occurrences are there in the file.
+ * Then, all the lists and indexes are sorted in order to have first (i.e., in the bottom of the MDD)
+ * the mostly occurring variables.
+ *
+ * In this way, possible additional edges, are focused in the bottom of the MDD and, thus, the MDD size
+ * is kept under control.
+ *
+ * @param node the staring node
+ */
 void FeatureVisitor::reorderVariables(xml_node<> *node) {
-	// For each variable, it count how many occurrences are there in the file.
-	// Then, all the lists and index are sorted in order to have first (i.e., in the bottom of the MDD)
-	// the mostly occurring variables. In this way, possible additional edges, are focused in the bottom
-	// of the MDD and, thus, the MDD size is kept under control
+	//
 	vector<pair<string, int>> occurrences;
 	for (std::map<string, vector<string>*>::iterator it = variables.begin();
 			it != variables.end(); ++it) {
@@ -269,6 +293,7 @@ void FeatureVisitor::reorderVariables(xml_node<> *node) {
 			itemVector = indexMapping[itemVector];
 		}
 	}
+	// TODO: What to do with andLeafs???
 
 	// Copy new data
 	mandatoryIndex = mandatoryIndexNew;
