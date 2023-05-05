@@ -2,7 +2,7 @@
  * Util.cpp
  *
  *  Created on: 28 mar 2023
- *      Author: parallels
+ *      Author: Andrea Bombarda
  */
 
 #include "Util.hpp"
