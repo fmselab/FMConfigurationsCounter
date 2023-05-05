@@ -2,7 +2,7 @@
  * FMBuilderTest.cpp
  *
  *  Created on: 29 mar 2023
- *      Author: bombarda
+ *      Author: Andrea Bombarda
  */
 #define CATCH_CONFIG_MAIN
 #include <catch2/catch.hpp>

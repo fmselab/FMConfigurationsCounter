@@ -1,7 +1,7 @@
 /* * NodeVisitor.cpp
  *
  *  Created on: Mar 24, 2023
- *      Author: bombarda
+ *      Author: Andrea Bombarda
  */
 #include <NodeFeatureVisitor.h>
 #include <iostream>
