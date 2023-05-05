@@ -2,11 +2,18 @@
  * ConstraintVisitor.cpp
  *
  *  Created on: 27 mar 2023
- *      Author: parallels
+ *      Author: Andrea Bombarda
  */
 
 #include "ConstraintVisitor.h"
 
+/**
+ * Costructor
+ *
+ * @param v the FeatureVisitor object, used for retreaving information about variables
+ * @param emptyNode the empty node, containing the status of the MDD at the beginning
+ * @param mdd the forest
+ */
 ConstraintVisitor::ConstraintVisitor(FeatureVisitor v, const dd_edge &emptyNode,
 		forest *mdd) {
 	this->visitor = v;
@@ -14,6 +21,11 @@ ConstraintVisitor::ConstraintVisitor(FeatureVisitor v, const dd_edge &emptyNode,
 	this->mdd = mdd;
 }
 
+/**
+ * Destructor
+ *
+ * It clears the list of MDDs previously created
+ */
 ConstraintVisitor::~ConstraintVisitor() {
 	for (dd_edge e : constraintMddList)
 		e.clear();
@@ -21,10 +33,23 @@ ConstraintVisitor::~ConstraintVisitor() {
 	constraintMddList.clear();
 }
 
+/**
+ * Main access point to the ConstraintVisitor when no reduction is used.
+ *
+ * @param node the node to be visited
+ */
 void ConstraintVisitor::visit(xml_node<> *&node) {
 	visit(node, 0);
 }
 
+/**
+ * Main access point to the ConstraintVisitor when a reduction needs to be used.
+ *
+ * Output information is printed on the logger at LOG_DEBUG level.
+ *
+ * @param node the node to be visited
+ * @param reduction_factor the reduction factor to be used
+ */
 void ConstraintVisitor::visit(xml_node<> *&node, int reduction_factor) {
 	int i = 0;
 	for (xml_node<> *n = node->first_node(); n; n = n->next_sibling()) {
@@ -46,6 +71,7 @@ void ConstraintVisitor::visit(xml_node<> *&node, int reduction_factor) {
 		}
 
 		vector<dd_edge> temp;
+
 		// Compact the constraints
 		for (unsigned int i = 0; i < constraintMddList.size(); i +=
 				reduction_factor) {
@@ -65,6 +91,11 @@ void ConstraintVisitor::visit(xml_node<> *&node, int reduction_factor) {
 	}
 }
 
+/**
+ * Dispatcher implementing the visitor pattern, depending on the node type, for constraints.
+ *
+ * @param node the node to be visited
+ */
 dd_edge ConstraintVisitor::visitConstraint(xml_node<> *node) {
 	// Dispatcher, depending on the node type
 	if (strcmp(node->name(), "not") == 0)
@@ -86,6 +117,14 @@ dd_edge ConstraintVisitor::visitConstraint(xml_node<> *node) {
 	}
 }
 
+/**
+ * This method visits an AND in constraints.
+ *
+ * Given an AND-Node, it visit all the children and returns the INTERSECTION of the MDDs
+ *
+ * @param node the node to be visited
+ * @return an MDD edge, i.e., the root of the MDD corresponding to the AND
+ */
 dd_edge ConstraintVisitor::visitConj(xml_node<> *node) {
 	dd_edge baseNode = this->emptyNode;
 	// Visit each child and then compute the AND among all of them
@@ -95,6 +134,14 @@ dd_edge ConstraintVisitor::visitConj(xml_node<> *node) {
 	return baseNode;
 }
 
+/**
+ * This method visits an OR in constraints.
+ *
+ * Given an OR-Node, it visit all the children and returns the UNION of the MDDs
+ *
+ * @param node the node to be visited
+ * @return an MDD edge, i.e., the root of the MDD corresponding to the OR
+ */
 dd_edge ConstraintVisitor::visitDisj(xml_node<> *node) {
 	dd_edge baseNode;
 	// Visit each child and then compute the OR among all of them
@@ -107,6 +154,14 @@ dd_edge ConstraintVisitor::visitDisj(xml_node<> *node) {
 	return baseNode;
 }
 
+/**
+ * This method visits an IMPLIES in constraints.
+ *
+ * Given an IMPLIES-Node, it visit the left and right parts
+ *
+ * @param node the node to be visited
+ * @return an MDD edge, i.e., the root of the MDD corresponding to the IMPLIES
+ */
 dd_edge ConstraintVisitor::visitImplies(xml_node<> *node) {
 	xml_node<> *left = node->first_node();
 	xml_node<> *right = left->next_sibling();
@@ -116,6 +171,14 @@ dd_edge ConstraintVisitor::visitImplies(xml_node<> *node) {
 	return leftEdge + rightEdge;
 }
 
+/**
+ * This method visits an EQUAL in constraints.
+ *
+ * Given an EQUAL-Node, it visit the left and right parts
+ *
+ * @param node the node to be visited
+ * @return an MDD edge, i.e., the root of the MDD corresponding to the EQUAL
+ */
 dd_edge ConstraintVisitor::visitEq(xml_node<> *node) {
 	xml_node<> *left = node->first_node();
 	xml_node<> *right = left->next_sibling();
@@ -208,6 +271,15 @@ dd_edge ConstraintVisitor::visitVar(xml_node<> *node) {
 	return emptyNode;
 }
 
+/**
+ * This method visits a NOT in constraints.
+ *
+ * Given a NOT-Node, it visit the positive part and then complements the results by subtracting it to
+ * the base node
+ *
+ * @param node the node to be visited
+ * @return an MDD edge, i.e., the root of the MDD corresponding to the NOT
+ */
 dd_edge ConstraintVisitor::visitNot(xml_node<> *node) {
 	dd_edge baseNode = this->emptyNode;
 	// Visit the sub-constraint
@@ -217,6 +289,11 @@ dd_edge ConstraintVisitor::visitNot(xml_node<> *node) {
 	return baseNode;
 }
 
+/**
+ * Returns the list of constraints converted into MDD
+ *
+ * @return a vector<dd_edge> containing the list of constraints converted into MDDs
+ */
 vector<dd_edge> ConstraintVisitor::getConstraintMddList() {
 	return constraintMddList;
 }
