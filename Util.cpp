@@ -460,7 +460,6 @@ void Util::addMandatoryNonLeaf(const int N, const dd_edge &emptyNode,
 
 void Util::addSingleImplications(const int N, const dd_edge &emptyNode,
 		FeatureVisitor &v, dd_edge &c, forest *mdd, dd_edge &startingNode) {
-	// Add the mandatory constraint for the other features
 	vector<int> constraint;
 	vector<pair<pair<int, int>, pair<int, int> > > singleImplications =
 			v.getSingleImplications();
@@ -534,10 +533,34 @@ void Util::addSingleImplications(const int N, const dd_edge &emptyNode,
 	}
 }
 
+/**
+ * Comparator used for comparing edges in an MDD
+ *
+ * @param e1 the first edge
+ * @param e2 the second edge
+ * @return TRUE if the number of edges of the MDD starting with e1 is lower than that of e2,
+ *         FALSE otherwise
+ */
 bool compareEdges(dd_edge e1, dd_edge e2) {
 	return (e1.getEdgeCount() < e2.getEdgeCount());
 }
 
+/**
+ * Adds to the MDD the Crosstree Constraints.
+ *
+ * First, it visit the Constraint part of the XML file. Then, if needed, the constraints are
+ * sorted from the one having the lowest complexity to the one with the highest.
+ * Finally, the constraints are applied to the MDD by computing the intersection with the
+ * current initial node of the MDD.
+ *
+ * @param v the FeatureVisitor, used for accessing to variables information
+ * @param emptyNode the empty node
+ * @param startingNode the initial node of the MDD being built
+ * @param constraintNode the XML node from which the constraints start
+ * @param mdd the forest
+ * @param reduction_factor the reduction factor to be used for compressing constraints
+ *   before applying them to the MDD
+ */
 void Util::addCrossTreeConstraints(const FeatureVisitor v,
 		const dd_edge emptyNode, dd_edge &startingNode,
 		xml_node<> *constraintNode, forest *mdd, int reduction_factor) {
