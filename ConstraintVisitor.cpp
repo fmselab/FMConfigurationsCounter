@@ -188,13 +188,28 @@ dd_edge ConstraintVisitor::visitEq(xml_node<> *node) {
 	return leftEdge;
 }
 
+/**
+ * This method visits a VARIABLE in constraints.
+ *
+ * Given a VARIABLE-Node, it visit if in the following way:
+ * 	- First the variable is searched in the list of variables. If it is found, then an MDD
+ * 	  with the correct value is created
+ *
+ * 	- If the variable is not found in the list of variables, it means that it has been substituted
+ * 	  since it is an AND or ALT. For this reason, it needs to be found between the values of another
+ * 	  MDD variable. Then, when the correct values are found, an MDD is created
+ *
+ * @param node the node to be visited
+ * @return an MDD edge, i.e., the root of the MDD corresponding to the VARIABLE
+ */
 dd_edge ConstraintVisitor::visitVar(xml_node<> *node) {
 	// Name of the feature
 	string variableName = node->value();
-	// Has the variable name to be substituted?
+	// Has the variable name to be substituted? This may happen if the feature is mandatory and it is leaf
 	if (visitor.substitutions.count(variableName)) {
 		variableName = visitor.substitutions[variableName];
 	}
+
 	// Number of variables
 	const int N = mdd->getDomain()->getNumVariables();
 	// It is possible to find the feature, so we need to get its index
@@ -203,12 +218,14 @@ dd_edge ConstraintVisitor::visitVar(xml_node<> *node) {
 			&& visitor.variables.count(variableName) > 0) {
 		vector<string> *values = visitor.variables[variableName];
 		int variableIndex = visitor.variableIndex[variableName];
+
+		// Enumerative (if the size is greater than 2 or true/false are not present)
 		if (values->size() > 2
 				|| (std::find(values->begin(), values->end(), "true")
 						== values->end()
 						&& std::find(values->begin(), values->end(), "false")
 								== values->end())) {
-			// Enumerative -> Instead of looking for the "true" value, we need to look for the none value
+			// Instead of looking for the "true" value, we need to look for the none value
 			// and then complement the result
 			int noneIndex = visitor.getIndexOfNoneForVariable(variableName);
 			vector<int> constraint(N, -1);
@@ -243,7 +260,8 @@ dd_edge ConstraintVisitor::visitVar(xml_node<> *node) {
 			}
 		}
 
-		// Here the variable has not been found, since it has been compressed into a single AND variable
+		// Here the variable has not been found by none of the previous attempts
+		// since it has been compressed into a single AND variable
 		for (std::map<string, pair<string, vector<string>>>::iterator it =
 				visitor.andLeafs.begin(); it != visitor.andLeafs.end(); ++it) {
 			if (it->first == variableName) {
@@ -268,6 +286,9 @@ dd_edge ConstraintVisitor::visitVar(xml_node<> *node) {
 			}
 		}
 	}
+
+	// If none of the previous return has been performed, it means that the variable has not been found
+	// (possibily because it is hidden, and ignored). For this reason, we return an empty node.
 	return emptyNode;
 }
 
