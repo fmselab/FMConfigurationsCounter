@@ -153,8 +153,10 @@ double Util::getProductCountFromFile(string fileName, int reduction_factor_ctc) 
 	xml_node<> *constraintNode = structNode->parent()->first_node(
 			"constraints");
 	// Add Cross Tree Constraints
-	addCrossTreeConstraints(v, emptyNode, startingNode, constraintNode, mdd,
-			reduction_factor_ctc);
+	if (constraintNode != NULL) {
+		addCrossTreeConstraints(v, emptyNode, startingNode, constraintNode, mdd,
+				reduction_factor_ctc);
+	}
 	// Cardinality
 	logcout(LOG_INFO) << "Number of valid products: "
 			<< startingNode.getCardinality() << endl;

@@ -8,6 +8,18 @@
 #include "ConstraintVisitor.h"
 
 /**
+ * Comparator used for comparing edges in an MDD
+ *
+ * @param e1 the first edge
+ * @param e2 the second edge
+ * @return TRUE if the number of edges of the MDD starting with e1 is lower than that of e2,
+ *         FALSE otherwise
+ */
+bool compareConstraint(dd_edge e1, dd_edge e2) {
+	return (e1.getEdgeCount() < e2.getEdgeCount());
+}
+
+/**
  * Costructor
  *
  * @param v the FeatureVisitor object, used for retreaving information about variables
@@ -68,6 +80,26 @@ void ConstraintVisitor::visit(xml_node<> *&node, int reduction_factor) {
 		if (Util::SHUFFLE_CONSTRAINTS) {
 			std::shuffle(std::begin(constraintMddList),
 					std::end(constraintMddList), std::random_device());
+		} else {
+			// Alternate sort the constraints: the first element is the maximum, then the minimum,
+			// then the second maximum, and so on. In this way, the composition-constraint has
+			// a lower cardinality
+			std::sort(constraintMddList.begin(), constraintMddList.end(), compareConstraint);
+			vector<dd_edge> constraintMddListAlternateSorted;
+			int i = 0, j = constraintMddList.size()-1;
+
+			while (i < j) {
+				constraintMddListAlternateSorted.push_back(constraintMddList[j--]);
+				constraintMddListAlternateSorted.push_back(constraintMddList[i++]);
+			}
+
+		    // If the total element in array is odd
+		    // then print the last middle element.
+		    if (constraintMddList.size() % 2 != 0) {
+		    	constraintMddListAlternateSorted.push_back(constraintMddList[i]);
+		    }
+
+			constraintMddList = constraintMddListAlternateSorted;
 		}
 
 		vector<dd_edge> temp;
@@ -318,4 +350,3 @@ dd_edge ConstraintVisitor::visitNot(xml_node<> *node) {
 vector<dd_edge> ConstraintVisitor::getConstraintMddList() {
 	return constraintMddList;
 }
-
