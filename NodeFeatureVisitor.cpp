@@ -321,6 +321,35 @@ void FeatureVisitor::visitAlt(xml_node<> *node) {
 void FeatureVisitor::visitOr(xml_node<> *node) {
 	// Check whether children are all leafs
 	if (areChildrenAllLeaf(node)) {
+		/*
+		// If all the n children are leafs, it is enough to create a single variable
+		// with multiple values
+		string varName = node->first_attribute("name")->value();
+		int currentIndex = index;
+
+		vector<string> *values = new vector<string>;
+		// Get the possible values (i.e., all the children)
+		for (xml_node<> *n = node->first_node(); n; n = n->next_sibling()) {
+			if (isVisitable(n)) {
+				values->push_back(n->first_attribute("name")->value());
+			}
+		}
+
+		// Add to the possible values also the unselected one
+		values->push_back("NONE");
+
+		// Create the variable
+		variables[varName] = values;
+		variableIndex[varName] = currentIndex;
+		indexVariable[currentIndex] = varName;
+
+		// Set the dependency between the variable and the parent
+		setDependency(node);
+
+		// Increase the index
+		index++;
+		*/
+
 		// If all the n children are leafs, it is enough to create n variables (one for each child)
 		// and add a constraint stating that one of them must be selected, plus an additional
 		// boolean variable for the parent feature
@@ -342,6 +371,7 @@ void FeatureVisitor::visitOr(xml_node<> *node) {
 						make_pair(
 								variableIndex[node->first_attribute("name")->value()],
 								indexOfNone), orIndex));
+
 	} else {
 		// The feature is converted in a boolean variable
 		visitFeature(node);

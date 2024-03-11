@@ -6,6 +6,7 @@
  */
 
 #include "Util.hpp"
+#include <chrono>
 
 bool Util::IGNORE_HIDDEN = false;
 bool Util::SORT_CONSTRAINTS_WHEN_APPLYING = false;
@@ -92,7 +93,7 @@ double Util::getProductCountFromFile(string fileName, int reduction_factor_ctc) 
 	// Do not reduce the forest
 	policies pmdd(false);
 	pmdd.setFullyReduced();
-	pmdd.setLowestCost();
+	pmdd.setSinkDown();
 	pmdd.setPessimistic();
 	// Create a forest in the above domain
 	forest *mdd = forest::create(d, false, 	 // this is not a relation
@@ -595,6 +596,10 @@ void Util::addCrossTreeConstraints(const FeatureVisitor v,
 	double card;
 	for (dd_edge& e : constraintList) {
 		try {
+			mdd->removeAllComputeTableEntries();
+			int numVariables = mdd->getNumVariables();
+			mdd->dynamicReorderVariables(numVariables,1);
+
 			startingNode *= e;
 			apply(CARDINALITY,startingNode, card);
 			logcout(LOG_DEBUG) << "\tNew cardinality after constraint " << (++i)
@@ -602,8 +607,10 @@ void Util::addCrossTreeConstraints(const FeatureVisitor v,
 					<< startingNode.getEdgeCount() << " - Nodes: "
 					<< startingNode.getNodeCount() << endl;
 			e.detach();
-		} catch(...) {
-			cerr << "Error";
+		} catch(MEDDLY::error e) {
+			cerr   << "\nCaught meddly error '" << e.getName()
+				<< "'\n thrown in " << e.getFile()
+				<< " line " << e.getLine() << "\n";
 		}
 	}
 }
