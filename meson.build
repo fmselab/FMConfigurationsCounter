@@ -1,6 +1,6 @@
 project('FMBuilder', 'cpp')
 
-inc = include_directories('include')
+inc = include_directories('include', '/usr/include/meddly')
 
 catch_lib = subproject('catch2').get_variable('catch2_dep')
 

@@ -1,0 +1,1 @@
+[{"cmd": ["/home/bombarda/Documents/GitHub/FMConfigurationsCounter/compile/FMBuilderTest"], "env": {}, "name": "FMBuilderTest", "workdir": null, "timeout": 30, "suite": ["FMBuilder"], "is_parallel": true, "priority": 0, "protocol": "exitcode"}]

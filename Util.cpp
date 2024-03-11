@@ -6,6 +6,7 @@
  */
 
 #include "Util.hpp"
+#include <chrono>
 
 bool Util::IGNORE_HIDDEN = false;
 bool Util::SORT_CONSTRAINTS_WHEN_APPLYING = false;
@@ -77,7 +78,7 @@ double Util::getProductCountFromFile(string fileName, int reduction_factor_ctc) 
 	initialize();
 
 	// Create a domain
-	domain *d = createDomain();
+	domain *d = domain::create();
 	assert(d != 0);
 	// We have 3 variables, all booleans
 	const int N = v.getNVar();
@@ -90,14 +91,14 @@ double Util::getProductCountFromFile(string fileName, int reduction_factor_ctc) 
 	for (int i = 0; i < N; i++)
 		logcout(LOG_DEBUG) << "\t" << bounds[i] << endl;
 	// Do not reduce the forest
-	forest::policies pmdd(false);
+	policies pmdd(false);
 	pmdd.setFullyReduced();
-	pmdd.setLowestCost();
+	pmdd.setSinkDown();
 	pmdd.setPessimistic();
 	// Create a forest in the above domain
-	forest *mdd = d->createForest(false, // this is not a relation
-			forest::BOOLEAN, 			 // terminals are either true or false
-			forest::MULTI_TERMINAL, 	 // disables edge-labeling
+	forest *mdd = forest::create(d, false, 	 // this is not a relation
+			range_type::BOOLEAN, 			 // terminals are either true or false
+			edge_labeling::MULTI_TERMINAL, 	 // disables edge-labeling
 			pmdd);
 	assert(mdd != 0);
 	// Display forest properties
@@ -110,8 +111,9 @@ double Util::getProductCountFromFile(string fileName, int reduction_factor_ctc) 
 	mdd->createEdge(true, startingNode);
 	mdd->createEdge(true, emptyNode);
 	// Cardinality
-	logcout(LOG_DEBUG) << "Initial cardinality: "
-			<< startingNode.getCardinality() << endl;
+	double card;
+	apply(CARDINALITY,startingNode, card);
+	logcout(LOG_DEBUG) << "Initial cardinality: " << card << endl;
 
 	// Add the mandatory constraint for the root
 	dd_edge c = addMandatory(emptyNode, N, v, mdd);
@@ -119,35 +121,40 @@ double Util::getProductCountFromFile(string fileName, int reduction_factor_ctc) 
 	startingNode *= c;
 
 	// Cardinality
+	apply(CARDINALITY,startingNode, card);
 	logcout(LOG_DEBUG)
 			<< "Cardinality after mandatory constraints [usually for root]: "
-			<< startingNode.getCardinality() << endl;
+			<< card << endl;
 
 	// Add the mandatory constraint for the other features
 	addMandatoryNonLeaf(N, emptyNode, v, c, mdd, startingNode);
 	// Cardinality
+	apply(CARDINALITY,startingNode, card);
 	logcout(LOG_DEBUG) << "Cardinality after mandatory for other features: "
-			<< startingNode.getCardinality() << endl;
+			<< card << endl;
 
 	// Add the OR constraints
 	addOrGroupConstraints(v, emptyNode, N, startingNode, mdd);
 	// Cardinality
+	apply(CARDINALITY,startingNode, card);
 	logcout(LOG_DEBUG) << "Cardinality after OR groups: "
-			<< startingNode.getCardinality() << endl;
+			<< card << endl;
 
 	// Add the constraints for alternatives converted as boolean
 	addAltGroupConstraints(v, emptyNode, N, startingNode, mdd);
 	// Cardinality
+	apply(CARDINALITY,startingNode, card);
 	logcout(LOG_DEBUG) << "Cardinality after special ALT groups: "
-			<< startingNode.getCardinality() << endl;
+			<< card << endl;
 
 	// Add single implication constraints for each feature: a feature can be
 	// included only if the parent is included
 	addSingleImplications(N, emptyNode, v, c, mdd, startingNode);
 	// Cardinality
+	apply(CARDINALITY,startingNode, card);
 	logcout(LOG_DEBUG)
 			<< "Final cardinality after dependencies between features: "
-			<< startingNode.getCardinality() << endl;
+			<< card << endl;
 
 	// Add Cross Tree Constraints
 	xml_node<> *constraintNode = structNode->parent()->first_node(
@@ -158,10 +165,9 @@ double Util::getProductCountFromFile(string fileName, int reduction_factor_ctc) 
 				reduction_factor_ctc);
 	}
 	// Cardinality
+	apply(CARDINALITY,startingNode, card);
 	logcout(LOG_INFO) << "Number of valid products: "
-			<< startingNode.getCardinality() << endl;
-
-	double cardinality = startingNode.getCardinality();
+			<< card << endl;
 
 	mdd->removeAllComputeTableEntries();
 	mdd->removeStaleComputeTableEntries();
@@ -169,7 +175,7 @@ double Util::getProductCountFromFile(string fileName, int reduction_factor_ctc) 
 	delete fileToString;
 	delete bounds;
 
-	return cardinality;
+	return card;
 }
 
 /**
@@ -451,12 +457,15 @@ void Util::addMandatoryNonLeaf(const int N, const dd_edge &emptyNode,
 
 		// C = A <=> B
 		apply(EQUAL, tempC, tempC1, c);
-		logcout(LOG_DEBUG) << "\tConstraint cardinality: " << c.getCardinality()
+		double card;
+		apply(CARDINALITY,c, card);
+		logcout(LOG_DEBUG) << "\tConstraint cardinality: " << card
 				<< endl;
 		// Intersect this edge with the starting node
 		startingNode *= c;
+		apply(CARDINALITY,startingNode, card);
 		logcout(LOG_DEBUG) << "\tNew cardinality: "
-				<< startingNode.getCardinality() << endl;
+				<< card << endl;
 	}
 }
 
@@ -491,12 +500,15 @@ void Util::addSingleImplications(const int N, const dd_edge &emptyNode,
 		// C = A => B = notA or B
 		tempC = emptyNode - tempC;
 		c = tempC + tempC1;
-		logcout(LOG_DEBUG) << "\tConstraint cardinality: " << c.getCardinality()
+		double card;
+		apply(CARDINALITY,startingNode, card);
+		logcout(LOG_DEBUG) << "\tConstraint cardinality: " << card
 				<< endl;
 		// Intersect this edge with the starting node
 		startingNode *= c;
+		apply(CARDINALITY,startingNode, card);
 		logcout(LOG_DEBUG) << "\tNew cardinality: "
-				<< startingNode.getCardinality() << endl;
+				<< card << endl;
 	}
 
 	// Add the mandatory constraint for the other features non leaf
@@ -526,12 +538,15 @@ void Util::addSingleImplications(const int N, const dd_edge &emptyNode,
 		tempC1 = Util::getMDDFromTuple(constraint, mdd) * emptyNode;
 		// C = A => B = notA or B
 		c = tempC + tempC1;
-		logcout(LOG_DEBUG) << "\tConstraint cardinality: " << c.getCardinality()
+		double card;
+		apply(CARDINALITY,startingNode, card);
+		logcout(LOG_DEBUG) << "\tConstraint cardinality: " << card
 				<< endl;
 		// Intersect this edge with the starting node
 		startingNode *= c;
+		apply(CARDINALITY,startingNode, card);
 		logcout(LOG_DEBUG) << "\tNew cardinality: "
-				<< startingNode.getCardinality() << endl;
+				<< card << endl;
 	}
 }
 
@@ -578,12 +593,24 @@ void Util::addCrossTreeConstraints(const FeatureVisitor v,
 	}
 	// Apply the constraints
 	i = 0;
+	double card;
 	for (dd_edge& e : constraintList) {
-		startingNode *= e;
-		logcout(LOG_DEBUG) << "\tNew cardinality after constraint " << (++i)
-				<< ": " << startingNode.getCardinality() << " - Edges: "
-				<< startingNode.getEdgeCount() << " - Nodes: "
-				<< startingNode.getNodeCount() << endl;
-		e.clear();
+		try {
+			mdd->removeAllComputeTableEntries();
+			int numVariables = mdd->getNumVariables();
+			mdd->dynamicReorderVariables(numVariables,1);
+
+			startingNode *= e;
+			apply(CARDINALITY,startingNode, card);
+			logcout(LOG_DEBUG) << "\tNew cardinality after constraint " << (++i)
+					<< ": " << card << " - Edges: "
+					<< startingNode.getEdgeCount() << " - Nodes: "
+					<< startingNode.getNodeCount() << endl;
+			e.detach();
+		} catch(MEDDLY::error e) {
+			cerr   << "\nCaught meddly error '" << e.getName()
+				<< "'\n thrown in " << e.getFile()
+				<< " line " << e.getLine() << "\n";
+		}
 	}
 }

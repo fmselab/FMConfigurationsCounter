@@ -22,6 +22,12 @@ int main(int argc, char **argv) {
 	Util::SHUFFLE_CONSTRAINTS = false;
 	FeatureVisitor::COMPRESS_AND_THRESHOLD=20;
 	FeatureVisitor::COMPRESS_AND_VARS=true;
-	Util::getProductCountFromFile("examples/linuxModel.xml", IGNORE_HIDDEN_MAIN, 100);
+	if (argc > 1) {
+		if (argc == 2) {
+			Util::getProductCountFromFile(argv[1], IGNORE_HIDDEN_MAIN, 1);
+		} else {
+			Util::getProductCountFromFile(argv[1], IGNORE_HIDDEN_MAIN, atoi(argv[2]));
+		}
+	}
 	return 0;
 }

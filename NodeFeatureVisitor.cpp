@@ -321,6 +321,35 @@ void FeatureVisitor::visitAlt(xml_node<> *node) {
 void FeatureVisitor::visitOr(xml_node<> *node) {
 	// Check whether children are all leafs
 	if (areChildrenAllLeaf(node)) {
+		/*
+		// If all the n children are leafs, it is enough to create a single variable
+		// with multiple values
+		string varName = node->first_attribute("name")->value();
+		int currentIndex = index;
+
+		vector<string> *values = new vector<string>;
+		// Get the possible values (i.e., all the children)
+		for (xml_node<> *n = node->first_node(); n; n = n->next_sibling()) {
+			if (isVisitable(n)) {
+				values->push_back(n->first_attribute("name")->value());
+			}
+		}
+
+		// Add to the possible values also the unselected one
+		values->push_back("NONE");
+
+		// Create the variable
+		variables[varName] = values;
+		variableIndex[varName] = currentIndex;
+		indexVariable[currentIndex] = varName;
+
+		// Set the dependency between the variable and the parent
+		setDependency(node);
+
+		// Increase the index
+		index++;
+		*/
+
 		// If all the n children are leafs, it is enough to create n variables (one for each child)
 		// and add a constraint stating that one of them must be selected, plus an additional
 		// boolean variable for the parent feature
@@ -342,6 +371,7 @@ void FeatureVisitor::visitOr(xml_node<> *node) {
 						make_pair(
 								variableIndex[node->first_attribute("name")->value()],
 								indexOfNone), orIndex));
+
 	} else {
 		// The feature is converted in a boolean variable
 		visitFeature(node);
@@ -531,95 +561,6 @@ void FeatureVisitor::setMandatory(xml_node<> *node, int indexOfNone,
 }
 
 void FeatureVisitor::visitAnd(xml_node<> *node) {
-//	if (FeatureVisitor::COMPRESS_AND_VARS
-//			&& getNumChildren(node, this->ignoreHidden)
-//					<= FeatureVisitor::COMPRESS_AND_THRESHOLD) {
-//		int nChildren = getNumChildren(node, this->ignoreHidden);
-//		vector<string> *values = new vector<string>;
-//		vector<int> mandatories;
-//		int i = 0;
-//
-//		for (xml_node<> *n = node->first_node(); n; n = n->next_sibling()) {
-//			if (strcmp(n->name(), "description") != 0
-//					&& (!this->ignoreHidden || !(n->first_attribute("hidden")))) {
-//				if (n->first_attribute("mandatory")
-//						and strcmp(n->first_attribute("mandatory")->value(),
-//								"true") == 0) {
-//					// This index is mandatory
-//					mandatories.push_back(i);
-//				}
-//				i++;
-//			}
-//		}
-//
-//		values->push_back("NONE");
-//
-//		// Now define all the possible values
-//		for (double iD = 0; iD < pow(2, nChildren); iD++) {
-//			bool discard = false;
-//
-//			// If we have at least one mandatory feature, the 0 value cannot be assumed
-//			if (mandatories.size() == 0 || iD > 0) {
-//				for (unsigned int j = 0; j < mandatories.size(); j++) {
-//					// If the mandatory bits are not set
-//					if (!(((int) iD) & (1 << mandatories.at(j)))) {
-//						discard = true;
-//						break;
-//					}
-//				}
-//
-//				if (!discard)
-//					values->push_back(to_string(iD));
-//			}
-//		}
-//
-//		// Create a variable
-//		variables[node->first_attribute("name")->value()] = values;
-//		variableIndex[node->first_attribute("name")->value()] = index;
-//		indexVariable[index] = node->first_attribute("name")->value();
-//
-//		// Set dependencies between the feature and its parent
-//		setDependency(node);
-//
-//		// Is the variable mandatory. If it is not the root we should
-//		// set the additional constraint VAL = NONE <=> PARENT = NONE
-//		setMandatory(node, 0, index);
-//
-//		// Increase the index
-//		index++;
-//
-//		// Now, for each child, define which values make it true
-//		i = 0;
-//		for (xml_node<> *n = node->first_node(); n; n = n->next_sibling()) {
-//			if (strcmp(n->name(), "description") != 0
-//					&& (!this->ignoreHidden || !(n->first_attribute("hidden")))) {
-//				string childName = n->first_attribute("name")->value();
-//				string parentName = node->first_attribute("name")->value();
-//
-//				vector<string> parTruthValues;
-//				for (unsigned int j = 0; j < values->size(); j++) {
-//					// Do not consider NONE (since parent is not selected) and 0 (since no child feature
-//					// is selected)
-//					if (values->at(j) != "NONE" && std::stod(values->at(j)) > 0)
-//						// If the corresponding bit is set
-//						if ((std::stoi(values->at(j)) & (1 << i)))
-//							parTruthValues.push_back(values->at(j));
-//				}
-//
-//				andLeafs[childName] = make_pair(parentName, parTruthValues);
-//				i++;
-//
-//				// If the node is not a feature, then visit its siblings
-//				if (strcmp(n->name(), "feature") != 0) {
-//					for (xml_node<> *n1 = n->first_node(); n1;
-//							n1 = n1->next_sibling())
-//						if (strcmp(n1->name(), "description") != 0)
-//							visit(n1);
-//				}
-//			}
-//		}
-//	}
-
 	// All children are leaf. We can create a variable with multiple values and
 	// then substitute accordingly the constraints
 	if (areChildrenAllLeaf(node) && FeatureVisitor::COMPRESS_AND_VARS
