@@ -40,7 +40,7 @@ ConstraintVisitor::ConstraintVisitor(FeatureVisitor v, const dd_edge &emptyNode,
  */
 ConstraintVisitor::~ConstraintVisitor() {
 	for (dd_edge e : constraintMddList)
-		e.clear();
+		e.detach();
 
 	constraintMddList.clear();
 }
@@ -70,8 +70,10 @@ void ConstraintVisitor::visit(xml_node<> *&node, int reduction_factor) {
 			// Now, I'm using emptynode for every variable which is not in the FeatureVisitor lists
 			// but I'm not sure it's the best (and correct) solution
 			dd_edge c = visitConstraint(n->first_node());
+			double card;
+			apply(CARDINALITY,c, card);
 			logcout(LOG_DEBUG) << "Constraint " << ++i << " cardinality "
-					<< c.getCardinality() << endl;
+					<< card << endl;
 			constraintMddList.push_back(c);
 		}
 	}
