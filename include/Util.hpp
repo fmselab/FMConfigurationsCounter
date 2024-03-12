@@ -42,10 +42,10 @@ public:
 	static dd_edge getMDDFromTuple(vector<int> tupla, forest *mdd);
 	static string* parseXML(const string &fileName);
 	static void printVector(vector<int> v, ostream &out);
-	static double getProductCountFromFile(string fileName);
-	static double getProductCountFromFile(string fileName, bool ignore);
-	static double getProductCountFromFile(string fileName, bool ignore, int reduction_factor_ctc);
-	static double getProductCountFromFile(string fileName, int reduction_factor_ctc);
+	static long double getProductCountFromFile(string fileName);
+	static long double getProductCountFromFile(string fileName, bool ignore);
+	static long double getProductCountFromFile(string fileName, bool ignore, int reduction_factor_ctc);
+	static long double getProductCountFromFile(string fileName, int reduction_factor_ctc);
 
 	static bool IGNORE_HIDDEN;
 	static bool SORT_CONSTRAINTS_WHEN_APPLYING;
