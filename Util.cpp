@@ -620,21 +620,31 @@ void Util::addCrossTreeConstraints(const FeatureVisitor v,
 #else
 	double card;
 #endif
+
+	int oldNodes = 0;
+
 	for (dd_edge& e : constraintList) {
 		try {
-			if (startingNode.getNodeCount() > 10000) {
-				mdd->removeAllComputeTableEntries();
-				int numVariables = mdd->getNumVariables();
-				mdd->dynamicReorderVariables(numVariables,1);
+			startingNode *= e;
+
+			unsigned long nodes = startingNode.getNodeCount();
+			if (i != 0) {
+				if (nodes > 1.5 * oldNodes && nodes > 10000) {
+					mdd->removeAllComputeTableEntries();
+					int numVariables = mdd->getNumVariables();
+					mdd->dynamicReorderVariables(numVariables,1);
+				}
 			}
 
-			startingNode *= e;
 			apply(CARDINALITY,startingNode, card);
 			logcout(LOG_DEBUG) << "\tNew cardinality after constraint " << (++i)
 					<< ": " << card << " - Edges: "
 					<< startingNode.getEdgeCount() << " - Nodes: "
-					<< startingNode.getNodeCount() << endl;
+					<< nodes << endl;
 			e.detach();
+
+			oldNodes = nodes;
+
 		} catch(MEDDLY::error& e) {
 			cerr   << "\nCaught meddly error '" << e.getName()
 				<< "'\n thrown in " << e.getFile()
