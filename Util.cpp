@@ -8,8 +8,6 @@
 #include "Util.hpp"
 #include <chrono>
 
-//#define HAVE_LIBGMP
-
 bool Util::IGNORE_HIDDEN = false;
 bool Util::SORT_CONSTRAINTS_WHEN_APPLYING = false;
 bool Util::SHUFFLE_CONSTRAINTS = false;
@@ -114,7 +112,7 @@ long double Util::getProductCountFromFile(string fileName, int reduction_factor_
 	mdd->createEdge(true, emptyNode);
 	// Cardinality
 
-#ifdef HAVE_LIBGMP
+#ifdef __GMP_H__
 	mpz_t card;
 	mpz_init(card);
 #else
@@ -184,7 +182,7 @@ long double Util::getProductCountFromFile(string fileName, int reduction_factor_
 	delete fileToString;
 	delete bounds;
 
-#ifdef HAVE_LIBGMP
+#ifdef __GMP_H__
 	return mpz_get_d(card);
 #else
 	return card;
@@ -470,7 +468,12 @@ void Util::addMandatoryNonLeaf(const int N, const dd_edge &emptyNode,
 
 		// C = A <=> B
 		apply(EQUAL, tempC, tempC1, c);
+#ifdef __GMP_H__
+		mpz_t card;
+		mpz_init(card);
+#else
 		double card;
+#endif
 		apply(CARDINALITY,c, card);
 		logcout(LOG_DEBUG) << "\tConstraint cardinality: " << card
 				<< endl;
@@ -513,7 +516,12 @@ void Util::addSingleImplications(const int N, const dd_edge &emptyNode,
 		// C = A => B = notA or B
 		tempC = emptyNode - tempC;
 		c = tempC + tempC1;
+#ifdef __GMP_H__
+		mpz_t card;
+		mpz_init(card);
+#else
 		double card;
+#endif
 		apply(CARDINALITY,startingNode, card);
 		logcout(LOG_DEBUG) << "\tConstraint cardinality: " << card
 				<< endl;
@@ -606,7 +614,12 @@ void Util::addCrossTreeConstraints(const FeatureVisitor v,
 	}
 	// Apply the constraints
 	i = 0;
+#ifdef __GMP_H__
+	mpz_t card;
+	mpz_init(card);
+#else
 	double card;
+#endif
 	for (dd_edge& e : constraintList) {
 		try {
 			if (startingNode.getNodeCount() > 10000) {

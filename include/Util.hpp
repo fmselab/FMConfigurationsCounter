@@ -4,10 +4,10 @@
  *  Created on: 28 mar 2023
  *      Author: parallels
  */
-
 #ifndef INCLUDE_UTIL_HPP_
 #define INCLUDE_UTIL_HPP_
 
+#include <gmp.h>
 #include <meddly.h>
 #include <vector>
 #include <iostream>
@@ -15,7 +15,6 @@
 #include "NodeFeatureVisitor.h"
 #include <fstream>
 #include "rapidxml.hpp"
-#include <gmp.h>
 
 using namespace rapidxml;
 using namespace MEDDLY;
