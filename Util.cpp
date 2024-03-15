@@ -21,7 +21,7 @@ bool Util::SHUFFLE_CONSTRAINTS = false;
  * @param fileName the name of the file
  * @return the number of valid products
  */
-double Util::getProductCountFromFile(string fileName) {
+long double Util::getProductCountFromFile(string fileName) {
 	return getProductCountFromFile(fileName, 0);
 }
 
@@ -34,7 +34,7 @@ double Util::getProductCountFromFile(string fileName) {
  * @param ignore a boolean parameter setting whether the hidden features have to be ignored or not
  * @return the number of valid products
  */
-double Util::getProductCountFromFile(string fileName, bool ignore) {
+long double Util::getProductCountFromFile(string fileName, bool ignore) {
 	Util::IGNORE_HIDDEN = ignore;
 	return getProductCountFromFile(fileName, 0);
 }
@@ -48,7 +48,7 @@ double Util::getProductCountFromFile(string fileName, bool ignore) {
  * 		together the constraints before being applied to the MDD)
  * @return the number of valid products
  */
-double Util::getProductCountFromFile(string fileName, bool ignore,
+long double Util::getProductCountFromFile(string fileName, bool ignore,
 		int reduction_factor_ctc) {
 	Util::IGNORE_HIDDEN = ignore;
 	return getProductCountFromFile(fileName, reduction_factor_ctc);
@@ -62,7 +62,7 @@ double Util::getProductCountFromFile(string fileName, bool ignore,
  * 		together the constraints before being applied to the MDD)
  * @return the number of valid products
  */
-double Util::getProductCountFromFile(string fileName, int reduction_factor_ctc) {
+long double Util::getProductCountFromFile(string fileName, int reduction_factor_ctc) {
 	// Open and read the file, then visit it
 	std::string *fileToString = Util::parseXML(fileName);
 	// Parse the file
@@ -111,7 +111,14 @@ double Util::getProductCountFromFile(string fileName, int reduction_factor_ctc) 
 	mdd->createEdge(true, startingNode);
 	mdd->createEdge(true, emptyNode);
 	// Cardinality
+
+#ifdef __GMP_H__
+	mpz_t card;
+	mpz_init(card);
+#else
 	double card;
+#endif
+
 	apply(CARDINALITY,startingNode, card);
 	logcout(LOG_DEBUG) << "Initial cardinality: " << card << endl;
 
@@ -175,7 +182,11 @@ double Util::getProductCountFromFile(string fileName, int reduction_factor_ctc) 
 	delete fileToString;
 	delete bounds;
 
+#ifdef __GMP_H__
+	return mpz_get_d(card);
+#else
 	return card;
+#endif
 }
 
 /**
@@ -457,7 +468,12 @@ void Util::addMandatoryNonLeaf(const int N, const dd_edge &emptyNode,
 
 		// C = A <=> B
 		apply(EQUAL, tempC, tempC1, c);
+#ifdef __GMP_H__
+		mpz_t card;
+		mpz_init(card);
+#else
 		double card;
+#endif
 		apply(CARDINALITY,c, card);
 		logcout(LOG_DEBUG) << "\tConstraint cardinality: " << card
 				<< endl;
@@ -500,7 +516,12 @@ void Util::addSingleImplications(const int N, const dd_edge &emptyNode,
 		// C = A => B = notA or B
 		tempC = emptyNode - tempC;
 		c = tempC + tempC1;
+#ifdef __GMP_H__
+		mpz_t card;
+		mpz_init(card);
+#else
 		double card;
+#endif
 		apply(CARDINALITY,startingNode, card);
 		logcout(LOG_DEBUG) << "\tConstraint cardinality: " << card
 				<< endl;
@@ -593,21 +614,38 @@ void Util::addCrossTreeConstraints(const FeatureVisitor v,
 	}
 	// Apply the constraints
 	i = 0;
+#ifdef __GMP_H__
+	mpz_t card;
+	mpz_init(card);
+#else
 	double card;
+#endif
+
+	int oldNodes = 0;
+
 	for (dd_edge& e : constraintList) {
 		try {
-			mdd->removeAllComputeTableEntries();
-			int numVariables = mdd->getNumVariables();
-			mdd->dynamicReorderVariables(numVariables,1);
-
 			startingNode *= e;
+
+			unsigned long nodes = startingNode.getNodeCount();
+			if (i != 0) {
+				if (nodes > 1.5 * oldNodes && nodes > 10000) {
+					mdd->removeAllComputeTableEntries();
+					int numVariables = mdd->getNumVariables();
+					mdd->dynamicReorderVariables(numVariables,1);
+				}
+			}
+
 			apply(CARDINALITY,startingNode, card);
 			logcout(LOG_DEBUG) << "\tNew cardinality after constraint " << (++i)
 					<< ": " << card << " - Edges: "
 					<< startingNode.getEdgeCount() << " - Nodes: "
-					<< startingNode.getNodeCount() << endl;
+					<< nodes << endl;
 			e.detach();
-		} catch(MEDDLY::error e) {
+
+			oldNodes = nodes;
+
+		} catch(MEDDLY::error& e) {
 			cerr   << "\nCaught meddly error '" << e.getName()
 				<< "'\n thrown in " << e.getFile()
 				<< " line " << e.getLine() << "\n";

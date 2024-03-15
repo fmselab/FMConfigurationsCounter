@@ -4,10 +4,10 @@
  *  Created on: 28 mar 2023
  *      Author: parallels
  */
-
 #ifndef INCLUDE_UTIL_HPP_
 #define INCLUDE_UTIL_HPP_
 
+#include <gmp.h>
 #include <meddly.h>
 #include <vector>
 #include <iostream>
@@ -15,7 +15,6 @@
 #include "NodeFeatureVisitor.h"
 #include <fstream>
 #include "rapidxml.hpp"
-#include <gmp.h>
 
 using namespace rapidxml;
 using namespace MEDDLY;
@@ -42,10 +41,10 @@ public:
 	static dd_edge getMDDFromTuple(vector<int> tupla, forest *mdd);
 	static string* parseXML(const string &fileName);
 	static void printVector(vector<int> v, ostream &out);
-	static double getProductCountFromFile(string fileName);
-	static double getProductCountFromFile(string fileName, bool ignore);
-	static double getProductCountFromFile(string fileName, bool ignore, int reduction_factor_ctc);
-	static double getProductCountFromFile(string fileName, int reduction_factor_ctc);
+	static long double getProductCountFromFile(string fileName);
+	static long double getProductCountFromFile(string fileName, bool ignore);
+	static long double getProductCountFromFile(string fileName, bool ignore, int reduction_factor_ctc);
+	static long double getProductCountFromFile(string fileName, int reduction_factor_ctc);
 
 	static bool IGNORE_HIDDEN;
 	static bool SORT_CONSTRAINTS_WHEN_APPLYING;

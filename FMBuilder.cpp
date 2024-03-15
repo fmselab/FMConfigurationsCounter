@@ -1,3 +1,4 @@
+#define HAVE_CONFIG_H
 #include <iostream>
 #include "Util.hpp"
 
