@@ -629,7 +629,7 @@ void Util::addCrossTreeConstraints(const FeatureVisitor v,
 
 			unsigned long nodes = startingNode.getNodeCount();
 			if (i != 0) {
-				if ((nodes > 1.5 * oldNodes && nodes > 100000) || nodes > 1000000) {
+				if ((nodes > 1.5 * oldNodes && nodes > 100000) || (nodes > 1.1 * oldNodes && nodes > 1000000)) {
 					logcout(LOG_DEBUG) << "\t\tStart reordering" << endl;
 					mdd->removeAllComputeTableEntries();
 					int numVariables = mdd->getNumVariables();
