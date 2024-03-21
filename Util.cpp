@@ -580,7 +580,7 @@ void Util::addSingleImplications(const int N, const dd_edge &emptyNode,
  *         FALSE otherwise
  */
 bool compareEdges(dd_edge e1, dd_edge e2) {
-	return (e1.getEdgeCount() < e2.getEdgeCount());
+	return (e1.getNodeCount() < e2.getNodeCount());
 }
 
 /**
@@ -629,10 +629,12 @@ void Util::addCrossTreeConstraints(const FeatureVisitor v,
 
 			unsigned long nodes = startingNode.getNodeCount();
 			if (i != 0) {
-				if (nodes > 1.5 * oldNodes && nodes > 10000) {
+				if ((nodes > 1.5 * oldNodes && nodes > 100000) || nodes > 1000000) {
+					logcout(LOG_DEBUG) << "\t\tStart reordering" << endl;
 					mdd->removeAllComputeTableEntries();
 					int numVariables = mdd->getNumVariables();
 					mdd->dynamicReorderVariables(numVariables,1);
+					logcout(LOG_DEBUG) << "\t\tEnd reordering" << endl;
 				}
 			}
 
