@@ -38,7 +38,6 @@ private:
 	int getNumChildren(xml_node<> *node, bool ignoreHiddenFeatures);
 	void setMandatoryNoParent(rapidxml::xml_node<> *node, int varIndex);
 	void setMandatoryImplication(rapidxml::xml_node<> *node, int indexOfNone, int varIndex);
-	int getIndexOfNoneForVariable(const std::string &variableName);
 	void setDependency(xml_node<> *node);
 	void setSingleImplication(rapidxml::xml_node<> *node, int indexOfNone);
 	pair<int, int> getIndexOfValue(const string &variableName);
@@ -67,6 +66,8 @@ public:
 	vector<pair<pair<int, int>, pair<int, int>>> getSingleImplications();
 	vector<pair<pair<int, int>, pair<int, int>>> getSingleImplicationsNonLeaf();
 	vector<pair<pair<int, int>, vector<pair<int,int>>*>> getAltIndexesExclusion();
+	int getIndexOfNoneForVariable(const std::string &variableName);
+	int getIndexOfNoneForVariable(const int &variableIndex);
 	string getValueForVar(int indexVar, int indexVal);
 
 	virtual ~FeatureVisitor();

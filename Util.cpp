@@ -11,6 +11,7 @@
 bool Util::IGNORE_HIDDEN = false;
 bool Util::SORT_CONSTRAINTS_WHEN_APPLYING = false;
 bool Util::SHUFFLE_CONSTRAINTS = false;
+bool Util::PRINT_MDD = true;
 
 /**
  * Given the file name, it returns the count of the products
@@ -176,6 +177,12 @@ long double Util::getProductCountFromFile(string fileName, int reduction_factor_
 	logcout(LOG_INFO) << "Number of valid products: "
 			<< card << endl;
 
+	if (PRINT_MDD) {
+		dot_maker mdd_dot(mdd, "MDD");
+		mdd_dot.addRootEdge(startingNode);
+		mdd_dot.doneGraph();
+	}
+
 	mdd->removeAllComputeTableEntries();
 	mdd->removeStaleComputeTableEntries();
 
@@ -275,11 +282,13 @@ dd_edge Util::addMandatory(const dd_edge &emptyNode, const int N,
 	vector<int> constraint = vector<int>(N, -1);
 	vector<int> indxs = v.getMandatoryIndex();
 	for (unsigned int i = 0; i < indxs.size(); i++) {
+		int noneIndex = v.getIndexOfNoneForVariable(indxs[i]);
 		logcout(LOG_DEBUG) << "Variable with index " << indxs[i]
 				<< " set as MANDATORY" << endl;
-		constraint[N - indxs[i] - 1] = 1;
+		constraint[N - indxs[i] - 1] = noneIndex;
 	}
 	c = Util::getMDDFromTuple(constraint, mdd);
+	c = emptyNode - c;
 	return c;
 }
 
@@ -629,7 +638,7 @@ void Util::addCrossTreeConstraints(const FeatureVisitor v,
 
 			unsigned long nodes = startingNode.getNodeCount();
 			if (i != 0 && i != constraintList.size() - 1) {
-				if ((nodes > 1.5 * oldNodes && nodes > 100000) || (nodes > 1.1 * oldNodes && nodes > 1000000)) {
+				if ((nodes > 1.5 * oldNodes && nodes < 1000000 && nodes > 100000) || (nodes > 1.1 * oldNodes && nodes > 1000000)) {
 					logcout(LOG_DEBUG) << "\t\tStart reordering" << endl;
 					mdd->removeAllComputeTableEntries();
 					int numVariables = mdd->getNumVariables();
