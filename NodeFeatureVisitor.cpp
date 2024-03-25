@@ -452,6 +452,29 @@ int FeatureVisitor::getIndexOfNoneForVariable(const string &variableName) {
 }
 
 /**
+ * Given the index of the variable, it returns the index of the none element (which is used to set the feature as non selected)
+ *
+ * @param variableIndex the index of the variable of interest
+ * @return the integer corresponding to the index of the none element
+ */
+int FeatureVisitor::getIndexOfNoneForVariable(const int &variableIndex) {
+	int indexOfNone = -1;
+	string variableName = indexVariable[variableIndex];
+	if (variables.count(variableName) > 0)
+		for (unsigned int i = 0; i < variables[variableName]->size(); i++) {
+			if (variables[variableName]->data()[i] == "false")
+				indexOfNone = i;
+
+			if (variables[variableName]->data()[i] == "NONE")
+				indexOfNone = i;
+		}
+	else
+		indexOfNone = -1;
+
+	return indexOfNone;
+}
+
+/**
  * Given the name of a variable, it returns its index and value. It is used for ALT Groups,
  * where a the children features of the feature model are translated into a single enumerative MDD variable.
  *

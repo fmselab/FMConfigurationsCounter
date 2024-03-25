@@ -49,6 +49,7 @@ public:
 	static bool IGNORE_HIDDEN;
 	static bool SORT_CONSTRAINTS_WHEN_APPLYING;
 	static bool SHUFFLE_CONSTRAINTS;
+	static bool PRINT_MDD;
 };
 
 #endif /* INCLUDE_UTIL_HPP_ */
