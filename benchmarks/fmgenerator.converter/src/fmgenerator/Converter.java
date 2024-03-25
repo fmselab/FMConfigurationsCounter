@@ -21,6 +21,7 @@ public class Converter {
 		Files.walk(Paths.get(origin)).filter(x -> x.getFileName().toString().endsWith(".xml")).forEach(x -> {
 			IFeatureModel fm_original = DefaultFeatureModelFactory.getInstance().create();
 			SXFMFormat format = new SXFMFormat();
+			SimpleFileHandler.load(x, fm_original, format);
 			// save with the same name in the other directory (same format sxfm) using the
 			// featureidewriter
 			String newPath = destination + x.getFileName().toString();
