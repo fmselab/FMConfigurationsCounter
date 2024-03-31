@@ -22,7 +22,7 @@ int main(int argc, char **argv) {
 	Util::SORT_CONSTRAINTS_WHEN_APPLYING = true;
 	Util::SHUFFLE_CONSTRAINTS = false;
 	FeatureVisitor::COMPRESS_AND_THRESHOLD=5;
-	FeatureVisitor::COMPRESS_AND_VARS=false;
+	FeatureVisitor::COMPRESS_AND_VARS=true;
 	if (argc > 1) {
 		if (argc == 2) {
 			Util::getProductCountFromFile(argv[1], IGNORE_HIDDEN_MAIN, 1);

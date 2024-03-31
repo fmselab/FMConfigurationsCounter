@@ -12,6 +12,9 @@ bool Util::IGNORE_HIDDEN = false;
 bool Util::SORT_CONSTRAINTS_WHEN_APPLYING = false;
 bool Util::SHUFFLE_CONSTRAINTS = false;
 bool Util::PRINT_MDD = true;
+bool Util::REORDER_VARIABLES = true;
+double Util::N_MAX_NODES = 0;
+double Util::N_MAX_EDGES = 0;
 
 /**
  * Given the file name, it returns the count of the products
@@ -22,7 +25,7 @@ bool Util::PRINT_MDD = true;
  * @param fileName the name of the file
  * @return the number of valid products
  */
-long double Util::getProductCountFromFile(string fileName) {
+string Util::getProductCountFromFile(string fileName) {
 	return getProductCountFromFile(fileName, 0);
 }
 
@@ -35,7 +38,7 @@ long double Util::getProductCountFromFile(string fileName) {
  * @param ignore a boolean parameter setting whether the hidden features have to be ignored or not
  * @return the number of valid products
  */
-long double Util::getProductCountFromFile(string fileName, bool ignore) {
+string Util::getProductCountFromFile(string fileName, bool ignore) {
 	Util::IGNORE_HIDDEN = ignore;
 	return getProductCountFromFile(fileName, 0);
 }
@@ -49,7 +52,7 @@ long double Util::getProductCountFromFile(string fileName, bool ignore) {
  * 		together the constraints before being applied to the MDD)
  * @return the number of valid products
  */
-long double Util::getProductCountFromFile(string fileName, bool ignore,
+string Util::getProductCountFromFile(string fileName, bool ignore,
 		int reduction_factor_ctc) {
 	Util::IGNORE_HIDDEN = ignore;
 	return getProductCountFromFile(fileName, reduction_factor_ctc);
@@ -63,7 +66,7 @@ long double Util::getProductCountFromFile(string fileName, bool ignore,
  * 		together the constraints before being applied to the MDD)
  * @return the number of valid products
  */
-long double Util::getProductCountFromFile(string fileName, int reduction_factor_ctc) {
+string Util::getProductCountFromFile(string fileName, int reduction_factor_ctc) {
 	// Open and read the file, then visit it
 	std::string *fileToString = Util::parseXML(fileName);
 	// Parse the file
@@ -190,9 +193,9 @@ long double Util::getProductCountFromFile(string fileName, int reduction_factor_
 	delete bounds;
 
 #ifdef __GMP_H__
-	return mpz_get_d(card);
+	return mpz_get_str(NULL, 10, card);
 #else
-	return card;
+	return to_string(card);
 #endif
 }
 
@@ -637,7 +640,7 @@ void Util::addCrossTreeConstraints(const FeatureVisitor v,
 			startingNode *= e;
 
 			unsigned long nodes = startingNode.getNodeCount();
-			if (i != 0 && (long unsigned int)i != constraintList.size() - 1) {
+			if (Util::REORDER_VARIABLES && i != 0 && (long unsigned int)i != constraintList.size() - 1) {
 				if ((nodes > 1.5 * oldNodes && nodes < 1000000 && nodes > 100000) || (nodes > 1.1 * oldNodes && nodes > 1000000)) {
 					logcout(LOG_DEBUG) << "\t\tStart reordering" << endl;
 					mdd->removeAllComputeTableEntries();
@@ -653,6 +656,12 @@ void Util::addCrossTreeConstraints(const FeatureVisitor v,
 					<< startingNode.getEdgeCount() << " - Nodes: "
 					<< nodes << endl;
 			e.detach();
+
+			if (startingNode.getNodeCount() > N_MAX_NODES)
+				N_MAX_NODES = startingNode.getNodeCount();
+
+			if (startingNode.getEdgeCount()> N_MAX_EDGES)
+				N_MAX_EDGES = startingNode.getEdgeCount();
 
 			oldNodes = nodes;
 
