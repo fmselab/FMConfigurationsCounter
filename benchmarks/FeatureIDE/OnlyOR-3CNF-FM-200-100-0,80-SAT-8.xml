@@ -1,335 +1,1166 @@
-<feature_model name="OnlyOR-3CNF-FM-200-100-0,80-SAT-8">
-<meta>
-<data name="description">This is a 3-CNF Feature Model generated automatically</data>
-<data name="creator">SPLOT Feature Model Generator</data>
-<data name="email"></data>
-<data name="date">Tue Apr 02 08:19:46 CEST 2024</data>
-<data name="department">SPLOT Project</data>
-<data name="organization">University of Waterloo</data>
-<data name="address"></data>
-<data name="phone"></data>
-<data name="website">http://www.splot-research.org/</data>
-<data name="reference">http://www.splot-research.org/</data>
-</meta>
-<feature_tree>
-:r R(R)
-	:g _Gi__1(_Gi__1) [1,*] 
-		: g_1_1(g_1_1)
-		: g_1_2(g_1_2)
-		: g_1_3(g_1_3)
-		: g_1_4(g_1_4)
-		: g_1_5(g_1_5)
-		: g_1_6(g_1_6)
-	:g _Gi__2(_Gi__2) [1,*] 
-		: g_2_1(g_2_1)
-		: g_2_2(g_2_2)
-		: g_2_3(g_2_3)
-		: g_2_4(g_2_4)
-		: g_2_5(g_2_5)
-		: g_2_6(g_2_6)
-	:g _Gi__3(_Gi__3) [1,*] 
-		: g_3_1(g_3_1)
-		: g_3_2(g_3_2)
-		: g_3_3(g_3_3)
-		: g_3_4(g_3_4)
-		: g_3_5(g_3_5)
-		: g_3_6(g_3_6)
-		: g_3_7(g_3_7)
-		: g_3_8(g_3_8)
-		: g_3_9(g_3_9)
-		: g_3_10(g_3_10)
-		: g_3_11(g_3_11)
-		: g_3_12(g_3_12)
-		: g_3_13(g_3_13)
-		: g_3_14(g_3_14)
-		: g_3_15(g_3_15)
-		: g_3_16(g_3_16)
-		: g_3_17(g_3_17)
-		: g_3_18(g_3_18)
-		: g_3_19(g_3_19)
-		: g_3_20(g_3_20)
-	:g _Gi__4(_Gi__4) [1,*] 
-		: g_4_1(g_4_1)
-		: g_4_2(g_4_2)
-	:g _Gi__5(_Gi__5) [1,*] 
-		: g_5_1(g_5_1)
-		: g_5_2(g_5_2)
-		: g_5_3(g_5_3)
-		: g_5_4(g_5_4)
-		: g_5_5(g_5_5)
-		: g_5_6(g_5_6)
-		: g_5_7(g_5_7)
-		: g_5_8(g_5_8)
-		: g_5_9(g_5_9)
-		: g_5_10(g_5_10)
-		: g_5_11(g_5_11)
-	:g _Gi__6(_Gi__6) [1,*] 
-		: g_6_1(g_6_1)
-		: g_6_2(g_6_2)
-		: g_6_3(g_6_3)
-		: g_6_4(g_6_4)
-		: g_6_5(g_6_5)
-		: g_6_6(g_6_6)
-		: g_6_7(g_6_7)
-		: g_6_8(g_6_8)
-		: g_6_9(g_6_9)
-		: g_6_10(g_6_10)
-		: g_6_11(g_6_11)
-		: g_6_12(g_6_12)
-		: g_6_13(g_6_13)
-		: g_6_14(g_6_14)
-		: g_6_15(g_6_15)
-		: g_6_16(g_6_16)
-		: g_6_17(g_6_17)
-		: g_6_18(g_6_18)
-		: g_6_19(g_6_19)
-		: g_6_20(g_6_20)
-		: g_6_21(g_6_21)
-		: g_6_22(g_6_22)
-		: g_6_23(g_6_23)
-		: g_6_24(g_6_24)
-		: g_6_25(g_6_25)
-		: g_6_26(g_6_26)
-		: g_6_27(g_6_27)
-	:g _Gi__7(_Gi__7) [1,*] 
-		: g_7_1(g_7_1)
-		: g_7_2(g_7_2)
-		: g_7_3(g_7_3)
-		: g_7_4(g_7_4)
-		: g_7_5(g_7_5)
-		: g_7_6(g_7_6)
-		: g_7_7(g_7_7)
-		: g_7_8(g_7_8)
-		: g_7_9(g_7_9)
-		: g_7_10(g_7_10)
-		: g_7_11(g_7_11)
-		: g_7_12(g_7_12)
-	:g _Gi__8(_Gi__8) [1,*] 
-		: g_8_1(g_8_1)
-		: g_8_2(g_8_2)
-		: g_8_3(g_8_3)
-		: g_8_4(g_8_4)
-		: g_8_5(g_8_5)
-		: g_8_6(g_8_6)
-		: g_8_7(g_8_7)
-		: g_8_8(g_8_8)
-		: g_8_9(g_8_9)
-	:g _Gi__9(_Gi__9) [1,*] 
-		: g_9_1(g_9_1)
-		: g_9_2(g_9_2)
-		: g_9_3(g_9_3)
-		: g_9_4(g_9_4)
-		: g_9_5(g_9_5)
-		: g_9_6(g_9_6)
-		: g_9_7(g_9_7)
-		: g_9_8(g_9_8)
-		: g_9_9(g_9_9)
-		: g_9_10(g_9_10)
-		: g_9_11(g_9_11)
-		: g_9_12(g_9_12)
-		: g_9_13(g_9_13)
-		: g_9_14(g_9_14)
-	:g _Gi__10(_Gi__10) [1,*] 
-		: g_10_1(g_10_1)
-		: g_10_2(g_10_2)
-		: g_10_3(g_10_3)
-		: g_10_4(g_10_4)
-		: g_10_5(g_10_5)
-		: g_10_6(g_10_6)
-		: g_10_7(g_10_7)
-		: g_10_8(g_10_8)
-		: g_10_9(g_10_9)
-		: g_10_10(g_10_10)
-		: g_10_11(g_10_11)
-		: g_10_12(g_10_12)
-		: g_10_13(g_10_13)
-		: g_10_14(g_10_14)
-		: g_10_15(g_10_15)
-		: g_10_16(g_10_16)
-		: g_10_17(g_10_17)
-		: g_10_18(g_10_18)
-		: g_10_19(g_10_19)
-		: g_10_20(g_10_20)
-		: g_10_21(g_10_21)
-		: g_10_22(g_10_22)
-		: g_10_23(g_10_23)
-		: g_10_24(g_10_24)
-		: g_10_25(g_10_25)
-		: g_10_26(g_10_26)
-		: g_10_27(g_10_27)
-		: g_10_28(g_10_28)
-		: g_10_29(g_10_29)
-		: g_10_30(g_10_30)
-		: g_10_31(g_10_31)
-		: g_10_32(g_10_32)
-		: g_10_33(g_10_33)
-		: g_10_34(g_10_34)
-		: g_10_35(g_10_35)
-		: g_10_36(g_10_36)
-		: g_10_37(g_10_37)
-		: g_10_38(g_10_38)
-		: g_10_39(g_10_39)
-		: g_10_40(g_10_40)
-		: g_10_41(g_10_41)
-	:g _Gi__11(_Gi__11) [1,*] 
-		: g_11_1(g_11_1)
-		: g_11_2(g_11_2)
-		: g_11_3(g_11_3)
-		: g_11_4(g_11_4)
-	:g _Gi__12(_Gi__12) [1,*] 
-		: g_12_1(g_12_1)
-		: g_12_2(g_12_2)
-		: g_12_3(g_12_3)
-		: g_12_4(g_12_4)
-		: g_12_5(g_12_5)
-		: g_12_6(g_12_6)
-		: g_12_7(g_12_7)
-		: g_12_8(g_12_8)
-		: g_12_9(g_12_9)
-		: g_12_10(g_12_10)
-		: g_12_11(g_12_11)
-		: g_12_12(g_12_12)
-		: g_12_13(g_12_13)
-		: g_12_14(g_12_14)
-		: g_12_15(g_12_15)
-		: g_12_16(g_12_16)
-		: g_12_17(g_12_17)
-		: g_12_18(g_12_18)
-		: g_12_19(g_12_19)
-		: g_12_20(g_12_20)
-		: g_12_21(g_12_21)
-		: g_12_22(g_12_22)
-	:g _Gi__13(_Gi__13) [1,*] 
-		: g_13_1(g_13_1)
-		: g_13_2(g_13_2)
-	:g _Gi__14(_Gi__14) [1,*] 
-		: g_14_1(g_14_1)
-		: g_14_2(g_14_2)
-		: g_14_3(g_14_3)
-		: g_14_4(g_14_4)
-		: g_14_5(g_14_5)
-		: g_14_6(g_14_6)
-		: g_14_7(g_14_7)
-		: g_14_8(g_14_8)
-		: g_14_9(g_14_9)
-		: g_14_10(g_14_10)
-		: g_14_11(g_14_11)
-		: g_14_12(g_14_12)
-		: g_14_13(g_14_13)
-		: g_14_14(g_14_14)
-		: g_14_15(g_14_15)
-		: g_14_16(g_14_16)
-		: g_14_17(g_14_17)
-		: g_14_18(g_14_18)
-		: g_14_19(g_14_19)
-		: g_14_20(g_14_20)
-	:g _Gi__15(_Gi__15) [1,*] 
-		: g_15_1(g_15_1)
-		: g_15_2(g_15_2)
-		: g_15_3(g_15_3)
-</feature_tree>
-<constraints>
-Clause3CNF_1:~g_10_21 OR ~g_10_22 OR ~g_5_1
-Clause3CNF_2:g_14_1 OR ~g_6_15 OR g_6_23
-Clause3CNF_3:g_5_7 OR g_7_11 OR ~g_7_6
-Clause3CNF_4:g_11_4 OR g_6_7 OR g_8_8
-Clause3CNF_5:g_12_15 OR ~g_6_9 OR ~g_7_8
-Clause3CNF_6:~g_10_4 OR g_12_15 OR g_1_1
-Clause3CNF_7:g_10_6 OR ~g_4_2 OR g_5_11
-Clause3CNF_8:~g_10_30 OR ~g_3_18 OR ~g_6_9
-Clause3CNF_9:g_10_25 OR g_10_29 OR g_5_11
-Clause3CNF_10:g_12_12 OR ~g_5_10 OR g_6_14
-Clause3CNF_11:g_10_41 OR g_6_20 OR g_6_24
-Clause3CNF_12:~g_10_36 OR ~g_10_40 OR ~g_9_6
-Clause3CNF_13:g_10_9 OR g_2_1 OR ~g_9_6
-Clause3CNF_14:g_10_29 OR g_1_4 OR g_3_4
-Clause3CNF_15:g_3_15 OR ~g_4_2 OR g_6_6
-Clause3CNF_16:g_12_19 OR ~g_3_2 OR ~g_6_4
-Clause3CNF_17:g_10_25 OR ~g_10_29 OR g_12_8
-Clause3CNF_18:g_10_24 OR ~g_5_6 OR g_6_26
-Clause3CNF_19:~g_5_1 OR g_6_14 OR ~g_7_1
-Clause3CNF_20:~g_14_16 OR g_5_10 OR ~g_7_8
-Clause3CNF_21:g_10_7 OR g_5_9 OR g_7_6
-Clause3CNF_22:g_10_32 OR g_6_26 OR g_8_2
-Clause3CNF_23:~g_10_36 OR ~g_12_15 OR g_3_4
-Clause3CNF_24:~g_10_36 OR g_4_1 OR g_6_26
-Clause3CNF_25:g_10_5 OR g_7_8 OR ~g_9_12
-Clause3CNF_26:g_11_4 OR g_3_9 OR ~g_5_11
-Clause3CNF_27:g_10_12 OR ~g_10_27 OR g_10_37
-Clause3CNF_28:~g_10_4 OR g_10_40 OR g_14_17
-Clause3CNF_29:g_10_21 OR ~g_1_2 OR g_6_22
-Clause3CNF_30:~g_12_16 OR ~g_3_3 OR g_7_4
-Clause3CNF_31:g_10_5 OR ~g_14_1 OR ~g_6_26
-Clause3CNF_32:g_14_17 OR ~g_6_6 OR ~g_7_8
-Clause3CNF_33:~g_12_13 OR g_15_2 OR g_6_7
-Clause3CNF_34:~g_10_29 OR ~g_5_1 OR ~g_6_7
-Clause3CNF_35:g_10_36 OR g_10_4 OR ~g_7_8
-Clause3CNF_36:g_10_6 OR g_14_17 OR ~g_9_12
-Clause3CNF_37:~g_3_20 OR g_4_2 OR g_7_4
-Clause3CNF_38:g_2_6 OR g_5_11 OR ~g_6_20
-Clause3CNF_39:g_10_36 OR ~g_14_8 OR ~g_8_8
-Clause3CNF_40:g_10_31 OR ~g_14_16 OR g_2_4
-Clause3CNF_41:~g_10_14 OR ~g_12_8 OR ~g_7_1
-Clause3CNF_42:g_14_14 OR ~g_5_1 OR ~g_6_6
-Clause3CNF_43:g_10_29 OR g_3_18 OR ~g_6_15
-Clause3CNF_44:g_10_12 OR g_10_39 OR g_6_14
-Clause3CNF_45:~g_2_5 OR g_3_20 OR ~g_7_1
-Clause3CNF_46:g_10_17 OR g_10_22 OR ~g_7_5
-Clause3CNF_47:g_10_25 OR ~g_12_15 OR ~g_14_8
-Clause3CNF_48:g_12_12 OR g_6_4 OR ~g_9_8
-Clause3CNF_49:~g_11_4 OR g_3_4 OR ~g_8_3
-Clause3CNF_50:~g_10_4 OR g_3_14 OR g_5_10
-Clause3CNF_51:g_10_29 OR g_5_11 OR g_8_2
-Clause3CNF_52:~g_2_1 OR g_6_17 OR ~g_8_8
-Clause3CNF_53:g_10_9 OR ~g_11_1 OR g_14_17
-Clause3CNF_54:g_10_27 OR g_2_6 OR g_5_9
-Clause3CNF_55:~g_10_41 OR g_3_3 OR ~g_7_11
-Clause3CNF_56:g_12_8 OR g_14_17 OR ~g_6_4
-Clause3CNF_57:g_10_38 OR g_12_12 OR g_2_1
-Clause3CNF_58:g_1_6 OR ~g_6_7 OR g_7_11
-Clause3CNF_59:~g_10_21 OR g_10_7 OR ~g_9_6
-Clause3CNF_60:g_10_37 OR ~g_10_38 OR g_3_3
-Clause3CNF_61:g_10_6 OR ~g_3_15 OR ~g_6_6
-Clause3CNF_62:g_3_18 OR ~g_3_3 OR g_6_10
-Clause3CNF_63:g_10_24 OR g_3_15 OR g_6_23
-Clause3CNF_64:g_10_36 OR g_1_4 OR g_3_9
-Clause3CNF_65:g_1_4 OR g_5_9 OR g_7_8
-Clause3CNF_66:~g_1_2 OR ~g_6_6 OR g_8_3
-Clause3CNF_67:g_10_26 OR g_12_13 OR ~g_2_5
-Clause3CNF_68:g_10_14 OR g_6_24 OR ~g_6_9
-Clause3CNF_69:~g_12_19 OR g_2_4 OR ~g_5_9
-Clause3CNF_70:~g_10_21 OR ~g_5_11 OR g_6_23
-Clause3CNF_71:~g_12_19 OR g_14_16 OR ~g_9_6
-Clause3CNF_72:~g_3_2 OR g_6_15 OR ~g_7_6
-Clause3CNF_73:g_10_11 OR g_10_28 OR g_10_4
-Clause3CNF_74:~g_10_27 OR ~g_11_1 OR ~g_3_9
-Clause3CNF_75:~g_10_4 OR ~g_10_40 OR g_9_6
-Clause3CNF_76:~g_12_16 OR ~g_14_5 OR g_2_1
-Clause3CNF_77:~g_10_21 OR g_10_24 OR g_10_30
-Clause3CNF_78:~g_14_16 OR g_6_6 OR g_7_4
-Clause3CNF_79:~g_10_36 OR ~g_10_37 OR g_10_7
-Clause3CNF_80:~g_11_4 OR g_12_13 OR ~g_14_17
-</constraints>
-</feature_model>
-<!--
-*************************************************************
-FEATURE TREE STATISTICS
-  Model name.: OnlyOR-3CNF-FM-200-100-0,80-SAT-8
-  tree depth.: 2
-  #root......: 1
-  #opt.......: 0
-  #man.......: 0
-  #grouped...: 199
-  #grouped [1,1]: 0
-  #grouped [1,n]: 199
-  #fgrp [1,1]: 0 (exclusive-OR)
-  #fgrp [1,N]: 15 (inclusive-OR)
-  #total features: 200
-  #total nodes: 215
-*************************************************************
-CROSS-TREE CONSTRAINTS (Random 3-CNF Formula)
-  CTC Representativeness (CTCR): 38,5%
-  Number of 3-CNF clauses......: 80
-  CTC clause density specified.: 0,80
-*************************************************************
--->
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<featureModel>
+	<struct>
+		<and mandatory="true" name="R">
+			<or abstract="true" mandatory="true" name="R_1">
+				<feature name="g_1_1"/>
+				<feature name="g_1_2"/>
+				<feature name="g_1_3"/>
+				<feature name="g_1_4"/>
+				<feature name="g_1_5"/>
+				<feature name="g_1_6"/>
+			</or>
+			<or abstract="true" mandatory="true" name="R_2">
+				<feature name="g_2_1"/>
+				<feature name="g_2_2"/>
+				<feature name="g_2_3"/>
+				<feature name="g_2_4"/>
+				<feature name="g_2_5"/>
+				<feature name="g_2_6"/>
+			</or>
+			<or abstract="true" mandatory="true" name="R_3">
+				<feature name="g_3_1"/>
+				<feature name="g_3_2"/>
+				<feature name="g_3_3"/>
+				<feature name="g_3_4"/>
+				<feature name="g_3_5"/>
+				<feature name="g_3_6"/>
+				<feature name="g_3_7"/>
+				<feature name="g_3_8"/>
+				<feature name="g_3_9"/>
+				<feature name="g_3_10"/>
+				<feature name="g_3_11"/>
+				<feature name="g_3_12"/>
+				<feature name="g_3_13"/>
+				<feature name="g_3_14"/>
+				<feature name="g_3_15"/>
+				<feature name="g_3_16"/>
+				<feature name="g_3_17"/>
+				<feature name="g_3_18"/>
+				<feature name="g_3_19"/>
+				<feature name="g_3_20"/>
+			</or>
+			<or abstract="true" mandatory="true" name="R_4">
+				<feature name="g_4_1"/>
+				<feature name="g_4_2"/>
+			</or>
+			<or abstract="true" mandatory="true" name="R_5">
+				<feature name="g_5_1"/>
+				<feature name="g_5_2"/>
+				<feature name="g_5_3"/>
+				<feature name="g_5_4"/>
+				<feature name="g_5_5"/>
+				<feature name="g_5_6"/>
+				<feature name="g_5_7"/>
+				<feature name="g_5_8"/>
+				<feature name="g_5_9"/>
+				<feature name="g_5_10"/>
+				<feature name="g_5_11"/>
+			</or>
+			<or abstract="true" mandatory="true" name="R_6">
+				<feature name="g_6_1"/>
+				<feature name="g_6_2"/>
+				<feature name="g_6_3"/>
+				<feature name="g_6_4"/>
+				<feature name="g_6_5"/>
+				<feature name="g_6_6"/>
+				<feature name="g_6_7"/>
+				<feature name="g_6_8"/>
+				<feature name="g_6_9"/>
+				<feature name="g_6_10"/>
+				<feature name="g_6_11"/>
+				<feature name="g_6_12"/>
+				<feature name="g_6_13"/>
+				<feature name="g_6_14"/>
+				<feature name="g_6_15"/>
+				<feature name="g_6_16"/>
+				<feature name="g_6_17"/>
+				<feature name="g_6_18"/>
+				<feature name="g_6_19"/>
+				<feature name="g_6_20"/>
+				<feature name="g_6_21"/>
+				<feature name="g_6_22"/>
+				<feature name="g_6_23"/>
+				<feature name="g_6_24"/>
+				<feature name="g_6_25"/>
+				<feature name="g_6_26"/>
+				<feature name="g_6_27"/>
+			</or>
+			<or abstract="true" mandatory="true" name="R_7">
+				<feature name="g_7_1"/>
+				<feature name="g_7_2"/>
+				<feature name="g_7_3"/>
+				<feature name="g_7_4"/>
+				<feature name="g_7_5"/>
+				<feature name="g_7_6"/>
+				<feature name="g_7_7"/>
+				<feature name="g_7_8"/>
+				<feature name="g_7_9"/>
+				<feature name="g_7_10"/>
+				<feature name="g_7_11"/>
+				<feature name="g_7_12"/>
+			</or>
+			<or abstract="true" mandatory="true" name="R_8">
+				<feature name="g_8_1"/>
+				<feature name="g_8_2"/>
+				<feature name="g_8_3"/>
+				<feature name="g_8_4"/>
+				<feature name="g_8_5"/>
+				<feature name="g_8_6"/>
+				<feature name="g_8_7"/>
+				<feature name="g_8_8"/>
+				<feature name="g_8_9"/>
+			</or>
+			<or abstract="true" mandatory="true" name="R_9">
+				<feature name="g_9_1"/>
+				<feature name="g_9_2"/>
+				<feature name="g_9_3"/>
+				<feature name="g_9_4"/>
+				<feature name="g_9_5"/>
+				<feature name="g_9_6"/>
+				<feature name="g_9_7"/>
+				<feature name="g_9_8"/>
+				<feature name="g_9_9"/>
+				<feature name="g_9_10"/>
+				<feature name="g_9_11"/>
+				<feature name="g_9_12"/>
+				<feature name="g_9_13"/>
+				<feature name="g_9_14"/>
+			</or>
+			<or abstract="true" mandatory="true" name="R_10">
+				<feature name="g_10_1"/>
+				<feature name="g_10_2"/>
+				<feature name="g_10_3"/>
+				<feature name="g_10_4"/>
+				<feature name="g_10_5"/>
+				<feature name="g_10_6"/>
+				<feature name="g_10_7"/>
+				<feature name="g_10_8"/>
+				<feature name="g_10_9"/>
+				<feature name="g_10_10"/>
+				<feature name="g_10_11"/>
+				<feature name="g_10_12"/>
+				<feature name="g_10_13"/>
+				<feature name="g_10_14"/>
+				<feature name="g_10_15"/>
+				<feature name="g_10_16"/>
+				<feature name="g_10_17"/>
+				<feature name="g_10_18"/>
+				<feature name="g_10_19"/>
+				<feature name="g_10_20"/>
+				<feature name="g_10_21"/>
+				<feature name="g_10_22"/>
+				<feature name="g_10_23"/>
+				<feature name="g_10_24"/>
+				<feature name="g_10_25"/>
+				<feature name="g_10_26"/>
+				<feature name="g_10_27"/>
+				<feature name="g_10_28"/>
+				<feature name="g_10_29"/>
+				<feature name="g_10_30"/>
+				<feature name="g_10_31"/>
+				<feature name="g_10_32"/>
+				<feature name="g_10_33"/>
+				<feature name="g_10_34"/>
+				<feature name="g_10_35"/>
+				<feature name="g_10_36"/>
+				<feature name="g_10_37"/>
+				<feature name="g_10_38"/>
+				<feature name="g_10_39"/>
+				<feature name="g_10_40"/>
+				<feature name="g_10_41"/>
+			</or>
+			<or abstract="true" mandatory="true" name="R_11">
+				<feature name="g_11_1"/>
+				<feature name="g_11_2"/>
+				<feature name="g_11_3"/>
+				<feature name="g_11_4"/>
+			</or>
+			<or abstract="true" mandatory="true" name="R_12">
+				<feature name="g_12_1"/>
+				<feature name="g_12_2"/>
+				<feature name="g_12_3"/>
+				<feature name="g_12_4"/>
+				<feature name="g_12_5"/>
+				<feature name="g_12_6"/>
+				<feature name="g_12_7"/>
+				<feature name="g_12_8"/>
+				<feature name="g_12_9"/>
+				<feature name="g_12_10"/>
+				<feature name="g_12_11"/>
+				<feature name="g_12_12"/>
+				<feature name="g_12_13"/>
+				<feature name="g_12_14"/>
+				<feature name="g_12_15"/>
+				<feature name="g_12_16"/>
+				<feature name="g_12_17"/>
+				<feature name="g_12_18"/>
+				<feature name="g_12_19"/>
+				<feature name="g_12_20"/>
+				<feature name="g_12_21"/>
+				<feature name="g_12_22"/>
+			</or>
+			<or abstract="true" mandatory="true" name="R_13">
+				<feature name="g_13_1"/>
+				<feature name="g_13_2"/>
+			</or>
+			<or abstract="true" mandatory="true" name="R_14">
+				<feature name="g_14_1"/>
+				<feature name="g_14_2"/>
+				<feature name="g_14_3"/>
+				<feature name="g_14_4"/>
+				<feature name="g_14_5"/>
+				<feature name="g_14_6"/>
+				<feature name="g_14_7"/>
+				<feature name="g_14_8"/>
+				<feature name="g_14_9"/>
+				<feature name="g_14_10"/>
+				<feature name="g_14_11"/>
+				<feature name="g_14_12"/>
+				<feature name="g_14_13"/>
+				<feature name="g_14_14"/>
+				<feature name="g_14_15"/>
+				<feature name="g_14_16"/>
+				<feature name="g_14_17"/>
+				<feature name="g_14_18"/>
+				<feature name="g_14_19"/>
+				<feature name="g_14_20"/>
+			</or>
+			<or abstract="true" mandatory="true" name="R_15">
+				<feature name="g_15_1"/>
+				<feature name="g_15_2"/>
+				<feature name="g_15_3"/>
+			</or>
+		</and>
+	</struct>
+	<constraints>
+		<rule>
+			<disj>
+				<not>
+					<var>g_10_21</var>
+				</not>
+				<disj>
+					<not>
+						<var>g_10_22</var>
+					</not>
+					<not>
+						<var>g_5_1</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_14_1</var>
+				<disj>
+					<not>
+						<var>g_6_15</var>
+					</not>
+					<var>g_6_23</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_5_7</var>
+				<disj>
+					<var>g_7_11</var>
+					<not>
+						<var>g_7_6</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_11_4</var>
+				<disj>
+					<var>g_6_7</var>
+					<var>g_8_8</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_12_15</var>
+				<disj>
+					<not>
+						<var>g_6_9</var>
+					</not>
+					<not>
+						<var>g_7_8</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>g_10_4</var>
+				</not>
+				<disj>
+					<var>g_12_15</var>
+					<var>g_1_1</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_10_6</var>
+				<disj>
+					<not>
+						<var>g_4_2</var>
+					</not>
+					<var>g_5_11</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>g_10_30</var>
+				</not>
+				<disj>
+					<not>
+						<var>g_3_18</var>
+					</not>
+					<not>
+						<var>g_6_9</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_10_25</var>
+				<disj>
+					<var>g_10_29</var>
+					<var>g_5_11</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_12_12</var>
+				<disj>
+					<not>
+						<var>g_5_10</var>
+					</not>
+					<var>g_6_14</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_10_41</var>
+				<disj>
+					<var>g_6_20</var>
+					<var>g_6_24</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>g_10_36</var>
+				</not>
+				<disj>
+					<not>
+						<var>g_10_40</var>
+					</not>
+					<not>
+						<var>g_9_6</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_10_9</var>
+				<disj>
+					<var>g_2_1</var>
+					<not>
+						<var>g_9_6</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_10_29</var>
+				<disj>
+					<var>g_1_4</var>
+					<var>g_3_4</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_3_15</var>
+				<disj>
+					<not>
+						<var>g_4_2</var>
+					</not>
+					<var>g_6_6</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_12_19</var>
+				<disj>
+					<not>
+						<var>g_3_2</var>
+					</not>
+					<not>
+						<var>g_6_4</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_10_25</var>
+				<disj>
+					<not>
+						<var>g_10_29</var>
+					</not>
+					<var>g_12_8</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_10_24</var>
+				<disj>
+					<not>
+						<var>g_5_6</var>
+					</not>
+					<var>g_6_26</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>g_5_1</var>
+				</not>
+				<disj>
+					<var>g_6_14</var>
+					<not>
+						<var>g_7_1</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>g_14_16</var>
+				</not>
+				<disj>
+					<var>g_5_10</var>
+					<not>
+						<var>g_7_8</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_10_7</var>
+				<disj>
+					<var>g_5_9</var>
+					<var>g_7_6</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_10_32</var>
+				<disj>
+					<var>g_6_26</var>
+					<var>g_8_2</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>g_10_36</var>
+				</not>
+				<disj>
+					<not>
+						<var>g_12_15</var>
+					</not>
+					<var>g_3_4</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>g_10_36</var>
+				</not>
+				<disj>
+					<var>g_4_1</var>
+					<var>g_6_26</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_10_5</var>
+				<disj>
+					<var>g_7_8</var>
+					<not>
+						<var>g_9_12</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_11_4</var>
+				<disj>
+					<var>g_3_9</var>
+					<not>
+						<var>g_5_11</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_10_12</var>
+				<disj>
+					<not>
+						<var>g_10_27</var>
+					</not>
+					<var>g_10_37</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>g_10_4</var>
+				</not>
+				<disj>
+					<var>g_10_40</var>
+					<var>g_14_17</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_10_21</var>
+				<disj>
+					<not>
+						<var>g_1_2</var>
+					</not>
+					<var>g_6_22</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>g_12_16</var>
+				</not>
+				<disj>
+					<not>
+						<var>g_3_3</var>
+					</not>
+					<var>g_7_4</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_10_5</var>
+				<disj>
+					<not>
+						<var>g_14_1</var>
+					</not>
+					<not>
+						<var>g_6_26</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_14_17</var>
+				<disj>
+					<not>
+						<var>g_6_6</var>
+					</not>
+					<not>
+						<var>g_7_8</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>g_12_13</var>
+				</not>
+				<disj>
+					<var>g_15_2</var>
+					<var>g_6_7</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>g_10_29</var>
+				</not>
+				<disj>
+					<not>
+						<var>g_5_1</var>
+					</not>
+					<not>
+						<var>g_6_7</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_10_36</var>
+				<disj>
+					<var>g_10_4</var>
+					<not>
+						<var>g_7_8</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_10_6</var>
+				<disj>
+					<var>g_14_17</var>
+					<not>
+						<var>g_9_12</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>g_3_20</var>
+				</not>
+				<disj>
+					<var>g_4_2</var>
+					<var>g_7_4</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_2_6</var>
+				<disj>
+					<var>g_5_11</var>
+					<not>
+						<var>g_6_20</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_10_36</var>
+				<disj>
+					<not>
+						<var>g_14_8</var>
+					</not>
+					<not>
+						<var>g_8_8</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_10_31</var>
+				<disj>
+					<not>
+						<var>g_14_16</var>
+					</not>
+					<var>g_2_4</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>g_10_14</var>
+				</not>
+				<disj>
+					<not>
+						<var>g_12_8</var>
+					</not>
+					<not>
+						<var>g_7_1</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_14_14</var>
+				<disj>
+					<not>
+						<var>g_5_1</var>
+					</not>
+					<not>
+						<var>g_6_6</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_10_29</var>
+				<disj>
+					<var>g_3_18</var>
+					<not>
+						<var>g_6_15</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_10_12</var>
+				<disj>
+					<var>g_10_39</var>
+					<var>g_6_14</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>g_2_5</var>
+				</not>
+				<disj>
+					<var>g_3_20</var>
+					<not>
+						<var>g_7_1</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_10_17</var>
+				<disj>
+					<var>g_10_22</var>
+					<not>
+						<var>g_7_5</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_10_25</var>
+				<disj>
+					<not>
+						<var>g_12_15</var>
+					</not>
+					<not>
+						<var>g_14_8</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_12_12</var>
+				<disj>
+					<var>g_6_4</var>
+					<not>
+						<var>g_9_8</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>g_11_4</var>
+				</not>
+				<disj>
+					<var>g_3_4</var>
+					<not>
+						<var>g_8_3</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>g_10_4</var>
+				</not>
+				<disj>
+					<var>g_3_14</var>
+					<var>g_5_10</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_10_29</var>
+				<disj>
+					<var>g_5_11</var>
+					<var>g_8_2</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>g_2_1</var>
+				</not>
+				<disj>
+					<var>g_6_17</var>
+					<not>
+						<var>g_8_8</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_10_9</var>
+				<disj>
+					<not>
+						<var>g_11_1</var>
+					</not>
+					<var>g_14_17</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_10_27</var>
+				<disj>
+					<var>g_2_6</var>
+					<var>g_5_9</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>g_10_41</var>
+				</not>
+				<disj>
+					<var>g_3_3</var>
+					<not>
+						<var>g_7_11</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_12_8</var>
+				<disj>
+					<var>g_14_17</var>
+					<not>
+						<var>g_6_4</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_10_38</var>
+				<disj>
+					<var>g_12_12</var>
+					<var>g_2_1</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_1_6</var>
+				<disj>
+					<not>
+						<var>g_6_7</var>
+					</not>
+					<var>g_7_11</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>g_10_21</var>
+				</not>
+				<disj>
+					<var>g_10_7</var>
+					<not>
+						<var>g_9_6</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_10_37</var>
+				<disj>
+					<not>
+						<var>g_10_38</var>
+					</not>
+					<var>g_3_3</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_10_6</var>
+				<disj>
+					<not>
+						<var>g_3_15</var>
+					</not>
+					<not>
+						<var>g_6_6</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_3_18</var>
+				<disj>
+					<not>
+						<var>g_3_3</var>
+					</not>
+					<var>g_6_10</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_10_24</var>
+				<disj>
+					<var>g_3_15</var>
+					<var>g_6_23</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_10_36</var>
+				<disj>
+					<var>g_1_4</var>
+					<var>g_3_9</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_1_4</var>
+				<disj>
+					<var>g_5_9</var>
+					<var>g_7_8</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>g_1_2</var>
+				</not>
+				<disj>
+					<not>
+						<var>g_6_6</var>
+					</not>
+					<var>g_8_3</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_10_26</var>
+				<disj>
+					<var>g_12_13</var>
+					<not>
+						<var>g_2_5</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_10_14</var>
+				<disj>
+					<var>g_6_24</var>
+					<not>
+						<var>g_6_9</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>g_12_19</var>
+				</not>
+				<disj>
+					<var>g_2_4</var>
+					<not>
+						<var>g_5_9</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>g_10_21</var>
+				</not>
+				<disj>
+					<not>
+						<var>g_5_11</var>
+					</not>
+					<var>g_6_23</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>g_12_19</var>
+				</not>
+				<disj>
+					<var>g_14_16</var>
+					<not>
+						<var>g_9_6</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>g_3_2</var>
+				</not>
+				<disj>
+					<var>g_6_15</var>
+					<not>
+						<var>g_7_6</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_10_11</var>
+				<disj>
+					<var>g_10_28</var>
+					<var>g_10_4</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>g_10_27</var>
+				</not>
+				<disj>
+					<not>
+						<var>g_11_1</var>
+					</not>
+					<not>
+						<var>g_3_9</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>g_10_4</var>
+				</not>
+				<disj>
+					<not>
+						<var>g_10_40</var>
+					</not>
+					<var>g_9_6</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>g_12_16</var>
+				</not>
+				<disj>
+					<not>
+						<var>g_14_5</var>
+					</not>
+					<var>g_2_1</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>g_10_21</var>
+				</not>
+				<disj>
+					<var>g_10_24</var>
+					<var>g_10_30</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>g_14_16</var>
+				</not>
+				<disj>
+					<var>g_6_6</var>
+					<var>g_7_4</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>g_10_36</var>
+				</not>
+				<disj>
+					<not>
+						<var>g_10_37</var>
+					</not>
+					<var>g_10_7</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>g_11_4</var>
+				</not>
+				<disj>
+					<var>g_12_13</var>
+					<not>
+						<var>g_14_17</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+	</constraints>
+</featureModel>
