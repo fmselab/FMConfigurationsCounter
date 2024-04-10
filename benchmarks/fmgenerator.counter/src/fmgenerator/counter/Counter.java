@@ -61,10 +61,11 @@ public class Counter implements Runnable {
 		// Write to the output file
 		FileWriter writer;
 		try {
-			writer = new FileWriter(new File(outputFile));
+			writer = new FileWriter(new File(outputFile), true);
 			double count = bddNew.satCount();
 
-			writer.append(modelPath + ";" + count + ";" + (System.currentTimeMillis() - initialTime) + ";" + bddBuilder.getMaxNodes());
+			writer.append(modelPath + ";" + count + ";" + (System.currentTimeMillis() - initialTime) + ";"
+					+ bddBuilder.getMaxNodes());
 
 			writer.close();
 		} catch (IOException e) {
