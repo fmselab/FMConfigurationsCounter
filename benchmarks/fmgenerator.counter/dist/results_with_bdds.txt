@@ -1,0 +1,11 @@
+../../../examples/SPLC/berkeleyDBModel.xml;4.025968128E9;74;492.0
+../../../examples/SPLC/axTLSModel.xml;8.26244333568E11;90;493.0
+../../../examples/SPLC/uClibCModel.xml;1.6601881363009993E40;17150;433428.0
+../../../examples/SPLC/uClinuxBase.xml;2.6161747473967067E22;592;604.0
+../../../examples/SPLC/FinancialServices01.xml;9.7451212554676E13;235555;166574.0
+../../../examples/SPLC/Embtoolkit.xml;NaN;21700;29602.0
+../../../examples/SPLC/automotive01.xml;timeout;timeout;timeout
+../../../examples/SPLC/automotive02v4Model.xml;timeout;timeout;timeout
+../../../examples/SPLC/BusyBox.xml;timeout;timeout;timeout
+../../../examples/SPLC/uClinuxDistribution.xml;timeout;timeout;timeout
+../../../examples/SPLC/linuxModel.xml;timeout;timeout;timeout
