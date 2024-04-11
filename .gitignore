@@ -3,4 +3,4 @@
 *.pdf
 ~/build/
 /subprojects/Catch2-2.13.8/
-/build/
+/build/meson.debug.linux.x86_64/
