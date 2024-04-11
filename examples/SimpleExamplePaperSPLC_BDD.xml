@@ -11,23 +11,15 @@
 		<graphics key="layoutalgorithm" value="1"/>
 	</properties>
 	<struct>
-		<and abstract="true" mandatory="true" name="root">
-			<or name="A">
-				<feature name="C"/>
-				<feature name="D"/>
-			</or>
-			<or name="B">
+		<or abstract="true" mandatory="true" name="root">
 				<feature name="E"/>
 				<feature name="F"/>
-			</or>
-			<feature mandatory="true" name="G"/>
-			<feature name="H"/>
-		</and>
+		</or>
 	</struct>
 	<constraints>
 		<rule>
 			<imp>
-				<var>B</var>
+				<var>root</var>
 				<eq>
 					<var>E</var>
 					<not>

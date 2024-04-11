@@ -11,30 +11,9 @@
 		<graphics key="layoutalgorithm" value="1"/>
 	</properties>
 	<struct>
-		<and abstract="true" mandatory="true" name="root">
-			<or name="A">
-				<feature name="C"/>
-				<feature name="D"/>
-			</or>
-			<or name="B">
-				<feature name="E"/>
-				<feature name="F"/>
-			</or>
-			<feature mandatory="true" name="G"/>
-			<feature name="H"/>
-		</and>
+		<alt abstract="true" mandatory="true" name="root">
+			<feature name="E"/>
+			<feature name="F"/>
+		</alt>
 	</struct>
-	<constraints>
-		<rule>
-			<imp>
-				<var>B</var>
-				<eq>
-					<var>E</var>
-					<not>
-						<var>F</var>
-					</not>
-				</eq>
-			</imp>
-		</rule>
-	</constraints>
 </featureModel>
