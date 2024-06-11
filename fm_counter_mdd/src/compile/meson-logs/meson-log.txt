@@ -1,0 +1,103 @@
+Build started at 2024-03-07T13:46:46.637359
+Main binary: /usr/bin/python3
+Build Options: 
+Python system: Linux
+The Meson build system
+Version: 0.53.2
+Source dir: /home/bombarda/Documents/GitHub/FMConfigurationsCounter
+Build dir: /home/bombarda/Documents/GitHub/FMConfigurationsCounter/compile
+Build type: native build
+Project name: FMBuilder
+Project version: undefined
+No CXXFLAGS in the environment, not changing global flags.
+No LDFLAGS in the environment, not changing global flags.
+No CPPFLAGS in the environment, not changing global flags.
+Sanity testing C++ compiler: c++
+Is cross compiler: False.
+Sanity check compiler command line: c++ /home/bombarda/Documents/GitHub/FMConfigurationsCounter/compile/meson-private/sanitycheckcpp.cc -o /home/bombarda/Documents/GitHub/FMConfigurationsCounter/compile/meson-private/sanitycheckcpp.exe -pipe -D_FILE_OFFSET_BITS=64
+Sanity check compile stdout:
+
+-----
+Sanity check compile stderr:
+
+-----
+Running test binary command: /home/bombarda/Documents/GitHub/FMConfigurationsCounter/compile/meson-private/sanitycheckcpp.exe
+C++ compiler for the build machine: c++ (gcc 11.4.0 "c++ (Ubuntu 11.4.0-2ubuntu1~20.04) 11.4.0")
+C++ linker for the build machine: c++ ld.bfd 2.34
+No CXXFLAGS in the environment, not changing global flags.
+No LDFLAGS in the environment, not changing global flags.
+No CPPFLAGS in the environment, not changing global flags.
+Sanity testing C++ compiler: c++
+Is cross compiler: False.
+Sanity check compiler command line: c++ /home/bombarda/Documents/GitHub/FMConfigurationsCounter/compile/meson-private/sanitycheckcpp.cc -o /home/bombarda/Documents/GitHub/FMConfigurationsCounter/compile/meson-private/sanitycheckcpp.exe -pipe -D_FILE_OFFSET_BITS=64
+Sanity check compile stdout:
+
+-----
+Sanity check compile stderr:
+
+-----
+Running test binary command: /home/bombarda/Documents/GitHub/FMConfigurationsCounter/compile/meson-private/sanitycheckcpp.exe
+C++ compiler for the host machine: c++ (gcc 11.4.0 "c++ (Ubuntu 11.4.0-2ubuntu1~20.04) 11.4.0")
+C++ linker for the host machine: c++ ld.bfd 2.34
+Build machine cpu family: x86_64
+Build machine cpu: x86_64
+Host machine cpu family: x86_64
+Host machine cpu: x86_64
+Target machine cpu family: x86_64
+Target machine cpu: x86_64
+
+Executing subproject catch2 method meson 
+
+Project name: catch2
+Project version: 2.13.8
+C++ compiler for the build machine: c++ (gcc 11.4.0 "c++ (Ubuntu 11.4.0-2ubuntu1~20.04) 11.4.0")
+C++ linker for the build machine: c++ ld.bfd 2.34
+C++ compiler for the host machine: c++ (gcc 11.4.0 "c++ (Ubuntu 11.4.0-2ubuntu1~20.04) 11.4.0")
+C++ linker for the host machine: c++ ld.bfd 2.34
+Build targets in project: 0
+Subproject catch2 finished.
+
+Running compile:
+Working directory:  /home/bombarda/Documents/GitHub/FMConfigurationsCounter/compile/meson-private/tmpgntdyvp7
+Command line:  c++ /home/bombarda/Documents/GitHub/FMConfigurationsCounter/compile/meson-private/tmpgntdyvp7/testfile.cpp -o /home/bombarda/Documents/GitHub/FMConfigurationsCounter/compile/meson-private/tmpgntdyvp7/output.exe -pipe -D_FILE_OFFSET_BITS=64 -O0 -fpermissive -Wl,--start-group -lgmp -Wl,--end-group -Wl,--allow-shlib-undefined 
+
+Code:
+ int main(void) { return 0; }
+Compiler stdout:
+ 
+Compiler stderr:
+ 
+Library gmp found: YES
+Running compile:
+Working directory:  /home/bombarda/Documents/GitHub/FMConfigurationsCounter/compile/meson-private/tmpgtpm5s96
+Command line:  c++ /home/bombarda/Documents/GitHub/FMConfigurationsCounter/compile/meson-private/tmpgtpm5s96/testfile.cpp -o /home/bombarda/Documents/GitHub/FMConfigurationsCounter/compile/meson-private/tmpgtpm5s96/output.exe -pipe -D_FILE_OFFSET_BITS=64 -O0 -fpermissive -Wl,--start-group -lmeddly -Wl,--end-group -Wl,--allow-shlib-undefined 
+
+Code:
+ int main(void) { return 0; }
+Compiler stdout:
+ 
+Compiler stderr:
+ 
+Library meddly found: YES
+Adding test "FMBuilderTest"
+Build targets in project: 2
+
+FMBuilder undefined
+
+  Subprojects
+    catch2: YES
+
+Found ninja-1.10.0 at /bin/ninja
+Running compile:
+Working directory:  /home/bombarda/Documents/GitHub/FMConfigurationsCounter/compile/meson-private/tmp9mhhc3el
+Command line:  c++ /home/bombarda/Documents/GitHub/FMConfigurationsCounter/compile/meson-private/tmp9mhhc3el/testfile.cpp -o /home/bombarda/Documents/GitHub/FMConfigurationsCounter/compile/meson-private/tmp9mhhc3el/output.obj -pipe -c -D_FILE_OFFSET_BITS=64 -O0 -fpermissive --print-search-dirs 
+
+Code:
+ 
+Compiler stdout:
+ install: /usr/lib/gcc/x86_64-linux-gnu/11/
+programs: =/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../../x86_64-linux-gnu/bin/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../../x86_64-linux-gnu/bin/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../../x86_64-linux-gnu/bin/
+libraries: =/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../../x86_64-linux-gnu/lib/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../../x86_64-linux-gnu/lib/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../../x86_64-linux-gnu/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib/:/lib/x86_64-linux-gnu/11/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/11/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../../x86_64-linux-gnu/lib/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../:/lib/:/usr/lib/
+
+Compiler stderr:
+ 

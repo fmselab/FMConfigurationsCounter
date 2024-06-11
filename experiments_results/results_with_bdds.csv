@@ -1,0 +1,12 @@
+PATH;NUM_PRODUCTS;TIME;N_NODES
+berkeleyDBModel.xml;4.025968128E9;0.074;492.0
+axTLSModel.xml;8.26244333568E11;0.090;493.0
+uClibCModel.xml;1.6601881363009993E40;17.150;433428.0
+uClinuxBase.xml;2.6161747473967067E22;0.592;604.0
+FinancialServices01.xml;9.7451212554676E13;235.555;166574.0
+Embtoolkit.xml;NaN;21.700;29602.0
+automotive01.xml;timeout;timeout;timeout
+automotive02v4Model.xml;timeout;timeout;timeout
+BusyBox.xml;timeout;timeout;timeout
+uClinuxDistribution.xml;timeout;timeout;timeout
+linuxModel.xml;timeout;timeout;timeout

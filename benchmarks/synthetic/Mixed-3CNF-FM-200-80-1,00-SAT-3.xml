@@ -1,0 +1,1250 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<featureModel>
+	<struct>
+		<and mandatory="true" name="R">
+			<and mandatory="true" name="m_1">
+				<alt abstract="true" mandatory="true" name="m_1_1">
+					<and name="g_1_1_1">
+						<alt abstract="true" mandatory="true" name="g_1_1_1_1">
+							<feature name="g_1_1_1_1_1"/>
+							<feature name="g_1_1_1_1_2"/>
+							<feature name="g_1_1_1_1_3"/>
+							<feature name="g_1_1_1_1_4"/>
+							<feature name="g_1_1_1_1_5"/>
+							<feature name="g_1_1_1_1_6"/>
+						</alt>
+						<feature mandatory="true" name="m_1_1_1_2"/>
+					</and>
+					<and name="g_1_1_2">
+						<feature name="o_1_1_2_1"/>
+						<feature name="o_1_1_2_2"/>
+					</and>
+				</alt>
+				<and name="o_1_2">
+					<alt mandatory="true" name="m_1_2_1">
+						<feature name="g_1_2_1_1_1"/>
+						<feature name="g_1_2_1_1_2"/>
+					</alt>
+					<alt name="o_1_2_2">
+						<feature name="g_1_2_2_1_1"/>
+						<feature name="g_1_2_2_1_2"/>
+					</alt>
+				</and>
+				<or abstract="true" mandatory="true" name="m_1_3">
+					<and name="g_1_3_1">
+						<feature mandatory="true" name="m_1_3_1_1"/>
+						<feature name="o_1_3_1_2"/>
+					</and>
+					<and name="g_1_3_2">
+						<feature mandatory="true" name="m_1_3_2_1"/>
+						<feature name="o_1_3_2_2"/>
+					</and>
+				</or>
+				<and name="o_1_4">
+					<and name="o_1_4_1">
+						<feature mandatory="true" name="m_1_4_1_1"/>
+					</and>
+					<alt abstract="true" mandatory="true" name="o_1_4_2">
+						<feature name="g_1_4_2_1"/>
+						<feature name="g_1_4_2_2"/>
+						<feature name="g_1_4_2_3"/>
+					</alt>
+				</and>
+				<and mandatory="true" name="m_1_5">
+					<alt abstract="true" mandatory="true" name="m_1_5_1">
+						<feature name="g_1_5_1_1"/>
+						<feature name="g_1_5_1_2"/>
+					</alt>
+					<and mandatory="true" name="m_1_5_2">
+						<feature name="o_1_5_2_1"/>
+					</and>
+				</and>
+				<and name="o_1_6">
+					<alt abstract="true" mandatory="true" name="o_1_6_1">
+						<feature name="g_1_6_1_1"/>
+						<feature name="g_1_6_1_2"/>
+						<feature name="g_1_6_1_3"/>
+						<feature name="g_1_6_1_4"/>
+						<feature name="g_1_6_1_5"/>
+						<feature name="g_1_6_1_6"/>
+					</alt>
+					<and name="o_1_6_2">
+						<feature mandatory="true" name="m_1_6_2_1"/>
+					</and>
+					<feature mandatory="true" name="m_1_6_3"/>
+				</and>
+			</and>
+			<alt abstract="true" mandatory="true" name="R_2">
+				<and name="g_2_1">
+					<alt abstract="true" mandatory="true" name="g_2_1_1">
+						<feature name="g_2_1_1_1"/>
+						<feature name="g_2_1_1_2"/>
+						<feature name="g_2_1_1_3"/>
+					</alt>
+					<and mandatory="true" name="m_2_1_2">
+						<feature mandatory="true" name="m_2_1_2_1"/>
+					</and>
+					<alt abstract="true" mandatory="true" name="g_2_1_3">
+						<feature name="g_2_1_3_1"/>
+						<feature name="g_2_1_3_2"/>
+						<feature name="g_2_1_3_3"/>
+						<feature name="g_2_1_3_4"/>
+					</alt>
+					<and name="o_2_1_4">
+						<feature name="o_2_1_4_1"/>
+					</and>
+				</and>
+				<and name="g_2_2">
+					<and mandatory="true" name="m_2_2_1">
+						<and mandatory="true" name="m_2_2_1_1">
+							<feature mandatory="true" name="m_2_2_1_1_1"/>
+						</and>
+						<and mandatory="true" name="m_2_2_1_2">
+							<feature mandatory="true" name="m_2_2_1_2_1"/>
+						</and>
+						<and mandatory="true" name="m_2_2_1_3">
+							<feature name="o_2_2_1_3_1"/>
+						</and>
+					</and>
+				</and>
+				<and name="g_2_3">
+					<and mandatory="true" name="m_2_3_1">
+						<feature mandatory="true" name="m_2_3_1_1"/>
+						<feature name="o_2_3_1_2"/>
+						<or abstract="true" mandatory="true" name="m_2_3_1_3">
+							<feature name="g_2_3_1_3_1"/>
+							<feature name="g_2_3_1_3_2"/>
+						</or>
+					</and>
+					<and name="o_2_3_2">
+						<and name="o_2_3_2_1">
+							<alt abstract="true" mandatory="true" name="o_2_3_2_1_1">
+								<feature name="g_2_3_2_1_1_1"/>
+								<feature name="g_2_3_2_1_1_2"/>
+							</alt>
+							<feature name="o_2_3_2_1_2"/>
+						</and>
+					</and>
+				</and>
+				<and name="g_2_4">
+					<and name="o_2_4_1">
+						<feature mandatory="true" name="m_2_4_1_1"/>
+					</and>
+					<and name="o_2_4_2">
+						<feature name="o_2_4_2_1"/>
+					</and>
+					<and name="o_2_4_3">
+						<feature name="o_2_4_3_1"/>
+					</and>
+					<alt abstract="true" mandatory="true" name="g_2_4_4">
+						<feature name="g_2_4_4_1"/>
+						<feature name="g_2_4_4_2"/>
+						<feature name="g_2_4_4_3"/>
+						<feature name="g_2_4_4_4"/>
+						<feature name="g_2_4_4_5"/>
+						<feature name="g_2_4_4_6"/>
+					</alt>
+				</and>
+			</alt>
+			<and name="o_3">
+				<and mandatory="true" name="m_3_1">
+					<or abstract="true" mandatory="true" name="m_3_1_1">
+						<feature name="g_3_1_1_1"/>
+						<feature name="g_3_1_1_2"/>
+						<feature name="g_3_1_1_3"/>
+						<feature name="g_3_1_1_4"/>
+						<feature name="g_3_1_1_5"/>
+					</or>
+					<alt abstract="true" mandatory="true" name="m_3_1_2">
+						<feature name="g_3_1_2_1"/>
+						<feature name="g_3_1_2_2"/>
+						<feature name="g_3_1_2_3"/>
+						<feature name="g_3_1_2_4"/>
+						<feature name="g_3_1_2_5"/>
+						<feature name="g_3_1_2_6"/>
+					</alt>
+					<and mandatory="true" name="m_3_1_3">
+						<feature mandatory="true" name="m_3_1_3_1"/>
+						<feature name="o_3_1_3_2"/>
+					</and>
+					<and mandatory="true" name="m_3_1_4">
+						<feature mandatory="true" name="m_3_1_4_1"/>
+					</and>
+					<alt abstract="true" mandatory="true" name="m_3_1_5">
+						<feature name="g_3_1_5_1"/>
+						<feature name="g_3_1_5_2"/>
+						<feature name="g_3_1_5_3"/>
+					</alt>
+				</and>
+				<and mandatory="true" name="m_3_2">
+					<feature mandatory="true" name="m_3_2_1"/>
+					<feature mandatory="true" name="m_3_2_2"/>
+					<feature name="o_3_2_3"/>
+					<feature name="o_3_2_4"/>
+					<feature name="o_3_2_5"/>
+					<alt abstract="true" mandatory="true" name="m_3_2_6">
+						<feature name="g_3_2_6_1"/>
+						<feature name="g_3_2_6_2"/>
+						<feature name="g_3_2_6_3"/>
+					</alt>
+				</and>
+			</and>
+			<and name="o_4">
+				<and mandatory="true" name="m_4_1">
+					<feature mandatory="true" name="m_4_1_1"/>
+					<alt abstract="true" mandatory="true" name="m_4_1_2">
+						<feature name="g_4_1_2_1"/>
+						<feature name="g_4_1_2_2"/>
+						<feature name="g_4_1_2_3"/>
+						<feature name="g_4_1_2_4"/>
+						<feature name="g_4_1_2_5"/>
+					</alt>
+					<alt abstract="true" mandatory="true" name="m_4_1_3">
+						<feature name="g_4_1_3_1"/>
+						<feature name="g_4_1_3_2"/>
+					</alt>
+					<feature mandatory="true" name="m_4_1_4"/>
+					<feature name="o_4_1_5"/>
+				</and>
+				<and mandatory="true" name="m_4_2">
+					<feature name="o_4_2_1"/>
+					<feature name="o_4_2_2"/>
+					<feature name="o_4_2_3"/>
+					<feature mandatory="true" name="m_4_2_4"/>
+					<feature mandatory="true" name="m_4_2_5"/>
+					<feature name="o_4_2_6"/>
+				</and>
+				<and mandatory="true" name="m_4_3">
+					<feature name="o_4_3_1"/>
+					<feature mandatory="true" name="m_4_3_2"/>
+				</and>
+			</and>
+			<and name="o_5">
+				<or abstract="true" mandatory="true" name="o_5_1">
+					<and name="g_5_1_1">
+						<alt abstract="true" mandatory="true" name="g_5_1_1_1">
+							<feature name="g_5_1_1_1_1"/>
+							<feature name="g_5_1_1_1_2"/>
+							<feature name="g_5_1_1_1_3"/>
+							<feature name="g_5_1_1_1_4"/>
+							<feature name="g_5_1_1_1_5"/>
+							<feature name="g_5_1_1_1_6"/>
+						</alt>
+						<feature name="o_5_1_1_2"/>
+					</and>
+					<and name="g_5_1_2">
+						<or abstract="true" mandatory="true" name="g_5_1_2_1">
+							<feature name="g_5_1_2_1_1"/>
+							<feature name="g_5_1_2_1_2"/>
+							<feature name="g_5_1_2_1_3"/>
+							<feature name="g_5_1_2_1_4"/>
+							<feature name="g_5_1_2_1_5"/>
+							<feature name="g_5_1_2_1_6"/>
+						</or>
+						<feature mandatory="true" name="m_5_1_2_2"/>
+					</and>
+					<and name="g_5_1_3">
+						<feature mandatory="true" name="m_5_1_3_1"/>
+						<feature name="o_5_1_3_2"/>
+					</and>
+				</or>
+				<alt abstract="true" mandatory="true" name="o_5_2">
+					<and name="g_5_2_1">
+						<feature name="o_5_2_1_1"/>
+						<feature mandatory="true" name="m_5_2_1_2"/>
+					</and>
+					<and name="g_5_2_2">
+						<feature mandatory="true" name="m_5_2_2_1"/>
+						<feature name="o_5_2_2_2"/>
+					</and>
+					<and name="g_5_2_3">
+						<feature name="o_5_2_3_1"/>
+						<feature mandatory="true" name="m_5_2_3_2"/>
+					</and>
+				</alt>
+				<and mandatory="true" name="m_5_3">
+					<feature mandatory="true" name="m_5_3_1"/>
+					<feature name="o_5_3_2"/>
+				</and>
+				<and mandatory="true" name="m_5_4">
+					<or abstract="true" mandatory="true" name="m_5_4_1">
+						<feature name="g_5_4_1_1"/>
+						<feature name="g_5_4_1_2"/>
+						<feature name="g_5_4_1_3"/>
+						<feature name="g_5_4_1_4"/>
+					</or>
+					<feature mandatory="true" name="m_5_4_2"/>
+					<feature name="o_5_4_3"/>
+					<feature mandatory="true" name="m_5_4_4"/>
+					<feature name="o_5_4_5"/>
+					<alt abstract="true" mandatory="true" name="m_5_4_6">
+						<feature name="g_5_4_6_1"/>
+						<feature name="g_5_4_6_2"/>
+						<feature name="g_5_4_6_3"/>
+						<feature name="g_5_4_6_4"/>
+					</alt>
+				</and>
+			</and>
+			<and mandatory="true" name="m_6">
+				<and name="o_6_1">
+					<feature name="o_6_1_1"/>
+					<feature name="o_6_1_2"/>
+					<feature name="o_6_1_3"/>
+					<feature mandatory="true" name="m_6_1_4"/>
+					<feature name="o_6_1_5"/>
+					<alt abstract="true" mandatory="true" name="o_6_1_6">
+						<feature name="g_6_1_6_1"/>
+						<feature name="g_6_1_6_2"/>
+						<feature name="g_6_1_6_3"/>
+						<feature name="g_6_1_6_4"/>
+						<feature name="g_6_1_6_5"/>
+					</alt>
+				</and>
+			</and>
+		</and>
+	</struct>
+	<constraints>
+		<rule>
+			<disj>
+				<var>g_1_4_2_2</var>
+				<disj>
+					<not>
+						<var>g_5_1_2_1_4</var>
+					</not>
+					<var>o_5_1_3_2</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>o_2_1_4</var>
+				<disj>
+					<not>
+						<var>o_2_3_2_1</var>
+					</not>
+					<var>o_5_1_3_2</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>g_1_1_1_1_5</var>
+				</not>
+				<disj>
+					<var>g_5_4_6_1</var>
+					<var>o_6_1</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_2_4_4_1</var>
+				<disj>
+					<var>g_4_1_2_2</var>
+					<not>
+						<var>o_4_2_3</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>g_1_3_1</var>
+				</not>
+				<disj>
+					<var>g_3_2_6_1</var>
+					<not>
+						<var>g_4_1_2_2</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_1_6_1_6</var>
+				<disj>
+					<var>g_5_4_1_2</var>
+					<var>m_1_5_2</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>g_1_5_1_2</var>
+				</not>
+				<disj>
+					<not>
+						<var>g_2_3_2_1_1_2</var>
+					</not>
+					<var>o_2_1_4</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_4_1_3_2</var>
+				<disj>
+					<not>
+						<var>g_5_4_1_4</var>
+					</not>
+					<not>
+						<var>o_2_1_4</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>g_4_1_3_2</var>
+				</not>
+				<disj>
+					<not>
+						<var>g_5_4_1_4</var>
+					</not>
+					<not>
+						<var>m_2_3_1_1</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>g_3_2_6_1</var>
+				</not>
+				<disj>
+					<not>
+						<var>g_3_2_6_3</var>
+					</not>
+					<var>m_2_2_1_2</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_2_1_1_2</var>
+				<disj>
+					<var>g_6_1_6_1</var>
+					<not>
+						<var>m_1_6_2_1</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_1_3_1</var>
+				<disj>
+					<not>
+						<var>g_1_5_1_2</var>
+					</not>
+					<not>
+						<var>m_1_5_2</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_1_2_1_1_2</var>
+				<disj>
+					<var>g_1_6_1_6</var>
+					<var>g_5_1_3</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>g_2_3_2_1_1_2</var>
+				</not>
+				<disj>
+					<var>o_2_1_4_1</var>
+					<not>
+						<var>o_5_1_3_2</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>g_1_5_1_2</var>
+				</not>
+				<disj>
+					<var>g_1_6_1_3</var>
+					<not>
+						<var>g_5_4_1_2</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>g_1_2_1_1_1</var>
+				</not>
+				<disj>
+					<var>g_4_1_3_2</var>
+					<var>m_5_2_1_2</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_1_1_1_1_2</var>
+				<disj>
+					<var>g_5_4_6_1</var>
+					<not>
+						<var>m_4_3_2</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_1_1_2</var>
+				<disj>
+					<var>m_6_1_4</var>
+					<var>o_2_3_2_1</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_1_4_2_2</var>
+				<disj>
+					<not>
+						<var>o_3</var>
+					</not>
+					<var>o_5_2_3_1</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_3_1_1_1</var>
+				<disj>
+					<not>
+						<var>g_5_1_1_1_2</var>
+					</not>
+					<var>g_5_1_2_1_4</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>g_2_4_4_5</var>
+				</not>
+				<disj>
+					<var>g_3_2_6_1</var>
+					<var>m_5_2_1_2</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_5_4_1_3</var>
+				<disj>
+					<var>o_1_3_1_2</var>
+					<var>o_4_2_3</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_1_6_1_5</var>
+				<disj>
+					<not>
+						<var>g_5_1_2_1_4</var>
+					</not>
+					<var>m_1_5_2</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_4_1_2_2</var>
+				<disj>
+					<not>
+						<var>g_5_4_1_2</var>
+					</not>
+					<not>
+						<var>m_1_5_2</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_1_1_1_1_2</var>
+				<disj>
+					<not>
+						<var>g_1_6_1_3</var>
+					</not>
+					<not>
+						<var>g_1_6_1_5</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>g_1_5_1_2</var>
+				</not>
+				<disj>
+					<not>
+						<var>m_2_1_2</var>
+					</not>
+					<var>o_1_3_1_2</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_3_1_1_2</var>
+				<disj>
+					<var>g_5_1_2_1_3</var>
+					<var>g_6_1_6_4</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_2_4_4_5</var>
+				<disj>
+					<not>
+						<var>o_5_1_1_2</var>
+					</not>
+					<not>
+						<var>o_5_1_3_2</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>g_3_2_6_1</var>
+				</not>
+				<disj>
+					<not>
+						<var>g_6_1_6_3</var>
+					</not>
+					<var>o_2_3_2_1</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>m_2_2_1_2</var>
+				<disj>
+					<not>
+						<var>m_3_1_3_1</var>
+					</not>
+					<var>o_1_1_2_2</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>g_1_1_1_1_2</var>
+				</not>
+				<disj>
+					<not>
+						<var>g_2_3_1_3_2</var>
+					</not>
+					<var>g_6_1_6_1</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_2_1_3_4</var>
+				<disj>
+					<not>
+						<var>g_5_2_3</var>
+					</not>
+					<var>m_6_1_4</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_1_2_1_1_1</var>
+				<disj>
+					<not>
+						<var>m_2_2_1_2</var>
+					</not>
+					<var>m_4_3_2</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>g_1_4_2_2</var>
+				</not>
+				<disj>
+					<not>
+						<var>g_2_1_3_4</var>
+					</not>
+					<var>o_4_2_3</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>g_2_4_4_1</var>
+				</not>
+				<disj>
+					<not>
+						<var>g_6_1_6_3</var>
+					</not>
+					<var>m_1_5_2</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>m_1_5</var>
+				<disj>
+					<var>o_1_1_2_2</var>
+					<var>o_4_2_3</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_1_1_1_1_4</var>
+				<disj>
+					<not>
+						<var>g_1_6_1_5</var>
+					</not>
+					<not>
+						<var>m_6_1_4</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>g_3_2_6_2</var>
+				</not>
+				<disj>
+					<not>
+						<var>g_5_1_2_1_3</var>
+					</not>
+					<var>o_2_1_4</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_1_4_2_2</var>
+				<disj>
+					<var>g_1_5_1_2</var>
+					<var>m_5_2_1_2</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_5_4_1_3</var>
+				<disj>
+					<not>
+						<var>m_3_1_4_1</var>
+					</not>
+					<var>m_3_2_1</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>g_1_2_1_1_1</var>
+				</not>
+				<disj>
+					<not>
+						<var>m_3_2_1</var>
+					</not>
+					<not>
+						<var>m_5_4_2</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>g_2_3_1_3_2</var>
+				</not>
+				<disj>
+					<var>m_1_5_2</var>
+					<var>o_4_1_5</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_3_1_1_1</var>
+				<disj>
+					<var>m_2_4_1_1</var>
+					<not>
+						<var>o_3_2_4</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_2_1_3_4</var>
+				<disj>
+					<not>
+						<var>g_5_1_1_1_2</var>
+					</not>
+					<not>
+						<var>g_5_4_1_4</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>g_3_1_5_1</var>
+				</not>
+				<disj>
+					<var>g_4_1_2_5</var>
+					<not>
+						<var>o_6_1</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_3_2_6_1</var>
+				<disj>
+					<not>
+						<var>g_4_1_3_2</var>
+					</not>
+					<var>m_1_5</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_6_1_6_4</var>
+				<disj>
+					<var>o_4_2_3</var>
+					<var>o_5_1_1_2</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_1_1_2</var>
+				<disj>
+					<not>
+						<var>m_2_1_2</var>
+					</not>
+					<not>
+						<var>m_4_3</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>g_1_1_1_1_2</var>
+				</not>
+				<disj>
+					<var>m_1_5_2</var>
+					<not>
+						<var>o_4_1_5</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_1_6_1_3</var>
+				<disj>
+					<var>g_6_1_6_3</var>
+					<var>m_4_3_2</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_2_1_3_4</var>
+				<disj>
+					<not>
+						<var>g_6_1_6_4</var>
+					</not>
+					<var>m_4_3</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>g_2_3_1_3_2</var>
+				</not>
+				<disj>
+					<not>
+						<var>m_2_1_2</var>
+					</not>
+					<var>m_5_2_1_2</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>g_3_2_6_2</var>
+				</not>
+				<disj>
+					<var>g_5_1_1_1_2</var>
+					<var>g_5_4_1_3</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>m_2_3_1_1</var>
+				</not>
+				<disj>
+					<not>
+						<var>m_3_1_3</var>
+					</not>
+					<var>o_5_1_1_2</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_3_1_1_1</var>
+				<disj>
+					<not>
+						<var>g_5_4_1_2</var>
+					</not>
+					<var>o_4_1_5</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>m_3_1_3</var>
+				<disj>
+					<not>
+						<var>o_2_3_2_1</var>
+					</not>
+					<var>o_4_2_6</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>g_6_1_6_3</var>
+				</not>
+				<disj>
+					<var>m_1_5_2</var>
+					<not>
+						<var>o_1_3_1_2</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_5_2_1</var>
+				<disj>
+					<var>m_3_1_4_1</var>
+					<not>
+						<var>o_5_1_3_2</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_1_2_1_1_2</var>
+				<disj>
+					<not>
+						<var>g_2_4_4_5</var>
+					</not>
+					<not>
+						<var>o_3</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>g_2_3_1_3_2</var>
+				</not>
+				<disj>
+					<var>g_5_4_1_4</var>
+					<var>o_4_1_5</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>g_1_3_1</var>
+				</not>
+				<disj>
+					<not>
+						<var>g_2_4_4_3</var>
+					</not>
+					<not>
+						<var>g_5_1_1_1_2</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_1_6_1_5</var>
+				<disj>
+					<not>
+						<var>g_5_4_1_3</var>
+					</not>
+					<var>o_4_2_3</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>g_2_1_1_2</var>
+				</not>
+				<disj>
+					<not>
+						<var>m_5_1_2_2</var>
+					</not>
+					<not>
+						<var>o_2_1_4</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>m_2_1_2_1</var>
+				<disj>
+					<not>
+						<var>m_3_1_4_1</var>
+					</not>
+					<var>o_3_2_4</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_2_1_1_2</var>
+				<disj>
+					<not>
+						<var>m_2_2_1_2</var>
+					</not>
+					<not>
+						<var>o_6_1</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>g_6_1_6_3</var>
+				</not>
+				<disj>
+					<not>
+						<var>m_2_2_1_1_1</var>
+					</not>
+					<var>o_4_1_5</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_1_1_1_1_4</var>
+				<disj>
+					<var>m_3_1_3_1</var>
+					<not>
+						<var>m_5_4_2</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_5_1_3</var>
+				<disj>
+					<var>g_5_4_6_1</var>
+					<var>m_2_1_2_1</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>g_1_2_1_1_2</var>
+				</not>
+				<disj>
+					<not>
+						<var>m_2_1_2_1</var>
+					</not>
+					<not>
+						<var>o_2_1_4_1</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_2_4_4_3</var>
+				<disj>
+					<not>
+						<var>g_3_2_6_2</var>
+					</not>
+					<not>
+						<var>o_4_2_6</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>g_2_3_1_3_2</var>
+				</not>
+				<disj>
+					<not>
+						<var>o_1_1_2_2</var>
+					</not>
+					<not>
+						<var>o_1_3_1_2</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_2_4_4_1</var>
+				<disj>
+					<not>
+						<var>g_5_2_3</var>
+					</not>
+					<var>m_2_3_1_1</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_2_4_4_1</var>
+				<disj>
+					<not>
+						<var>g_5_2_3</var>
+					</not>
+					<not>
+						<var>m_3_1_4_1</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_1_3_1</var>
+				<disj>
+					<var>m_1_3_2_1</var>
+					<var>o_6_1</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_1_2_1_1_1</var>
+				<disj>
+					<not>
+						<var>g_6_1_6_3</var>
+					</not>
+					<var>m_1_5_2</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_1_3_1</var>
+				<disj>
+					<var>g_1_6_1_6</var>
+					<var>o_1_6</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_3_1_5_2</var>
+				<disj>
+					<var>g_5_1_3</var>
+					<not>
+						<var>g_5_2_1</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_1_1_2</var>
+				<disj>
+					<not>
+						<var>g_3_1_1_2</var>
+					</not>
+					<var>m_5_4_2</var>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_6_1_6_3</var>
+				<disj>
+					<not>
+						<var>m_2_2_1_1_1</var>
+					</not>
+					<not>
+						<var>m_5_2_1_2</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<var>g_1_1_1_1_2</var>
+				<disj>
+					<not>
+						<var>g_1_1_2</var>
+					</not>
+					<not>
+						<var>m_1_6_2_1</var>
+					</not>
+				</disj>
+			</disj>
+		</rule>
+	</constraints>
+</featureModel>
