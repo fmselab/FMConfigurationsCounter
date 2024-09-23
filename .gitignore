@@ -6,3 +6,4 @@
 /build/meson.debug.linux.x86_64/
 /build/
 .DS_Store
+/fm_counter_mdd/src/meddly
